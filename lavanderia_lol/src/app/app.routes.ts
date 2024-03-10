@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { AutoCadastroComponent } from './pages/auto-cadastro/auto-cadastro.component';
 import { HomeComponent } from './pages/home/home.component';
+import { InicialClienteComponent } from './pages/inicial-cliente/inicial-cliente.component';
 
 export const routes: Routes = [
 
@@ -24,6 +25,11 @@ export const routes: Routes = [
   {
     path: 'cadastro',
     component: AutoCadastroComponent
+  },
+
+  {
+    path: 'inicialCliente',
+    component: InicialClienteComponent
   }
 
 ];
