@@ -1,1 +1,131 @@
-/* You can add global styles to this file, and also import other style files */
+.card-login {
+  padding: 30px 0 0 0;
+  width: 350px;
+  margin: 0 auto;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-pedido {
+  width: 48%; /* 48% para deixar um espaço entre os botões */
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 10px 0;
+}
+
+.orcamento {
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.menu-navegacao {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.menu-navegacao ul li a {
+  color: #000;
+  margin-left: 20px;
+}
+
+.botao-cadastro a {
+  background-color: #67bea6;
+  border-radius: 10px;
+}
+
+.titulo-inicial {
+  text-align: center;
+  margin: 0 auto;
+  margin-block: 40px;
+  font-weight: 900;
+  color: #000;
+  font-size: 5rem;
+  width: 90%;
+}
+
+.sub-titulo-inicial {
+  text-align: center;
+  font-size: 2.5rem;
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+.botao-inicial {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.botao-inicial a {
+  text-decoration: none;
+  background-color: #67bea6;
+  border-radius: 10px;
+  color: #000;
+  font-size: 2em;
+  padding: 10px;
+  font-weight: 900;
+  display: inline-block;
+  margin: 120px;
+}
+
+.botao-confirmar {
+  margin-inline: 15px;
+}
+
+.card-inicial {
+  text-align: center;
+}
+
+.imagem-card {
+  width: 90%;
+  text-align: center;
+}
+
+.pedido-online {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.orcamento {
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.botao-pedido {
+  margin: 0 auto;
+  width: 30%;
+  margin-top: 20px;
+}
+
+.btn-pedido {
+  width: 100%;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 10px 0;
+}
+
+.orcamento {
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}

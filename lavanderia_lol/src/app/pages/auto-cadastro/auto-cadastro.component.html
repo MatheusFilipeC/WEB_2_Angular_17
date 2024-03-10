@@ -1,1 +1,51 @@
-<p>auto-cadastro works!</p>
+<div class="container overflow-auto">
+  <div class="row">
+
+    <div class="card-login">
+      <div class="card">
+        <div class="card-header bg-success">
+          Cadastre-se
+        </div>
+        <div class="card-body">
+          <form #formCliente="ngForm">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Digite seu nome" [(ngModel)]="cliente.nomeCliente"
+                name="nomeCliente" required>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Digite seu e-mail" [(ngModel)]="cliente.email"
+                name="email" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Digite seu CPF" [(ngModel)]="cliente.cpf" name="cpf"
+                mask="000.000.000-00" placeholder="000.000.000-00" maxlength="14" minlength="11" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Digite seu CEP" [(ngModel)]="cliente.cep" name="cep"
+                required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Logradouro" [(ngModel)]="cliente.logradouro"
+                name="logradouro" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Bairro" [(ngModel)]="cliente.bairro" name="bairro"
+                required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Cidade" [(ngModel)]="cliente.cidade" name="cidade"
+                required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Digite sua senha" [(ngModel)]="cliente.senha"
+                name="senha" required>
+            </div>
+
+            <button class="btn btn-lg btn-info btn-info" type="submit" (click)="inserir()">Cadastrar</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
