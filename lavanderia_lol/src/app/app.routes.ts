@@ -3,6 +3,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AutoCadastroComponent } from './pages/auto-cadastro/auto-cadastro.component';
 import { HomeComponent } from './pages/home/home.component';
 import { InicialClienteComponent } from './pages/inicial-cliente/inicial-cliente.component';
+import { NovoPedidoClienteComponent } from './pages/novo-pedido-cliente/novo-pedido-cliente.component';
 
 export const routes: Routes = [
 
@@ -30,6 +31,11 @@ export const routes: Routes = [
   {
     path: 'inicialCliente',
     component: InicialClienteComponent
+  },
+  {
+    path: 'novoPedido',
+    component: NovoPedidoClienteComponent
   }
+
 
 ];
