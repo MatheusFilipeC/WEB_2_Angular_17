@@ -40,45 +40,69 @@
     </nav>
   </div>
 
-  <h1>Novo Pedido</h1>
-
-<div class="well">
-  <form>
-
-    <div class="form-group">
-      <label for="roupa"> Selecione uma roupa:</label>
-        <table></table>
-      <div class="margem-esquerda">
-        <input type="radio" class="form-check-input m" name="roupa">
-        <label> </label><br/>
-      </div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card card-login">
+                <div class="card-body">
+                    <h5 class="card-title text-center"><strong style="text-transform: uppercase;">PEDIDO ONLINE</strong></h5>
+                    <br>
+                    <form>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="pecasIntimas">Peças Íntimas:</label>
+                                <input type="number" class="form-control" id="pecasIntimas" name="pecasIntimas" min="0" value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="camisetas">Camisetas:</label>
+                                <input type="number" class="form-control" id="camisetas" name="camisetas" min="0" value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="calcas">Calças:</label>
+                                <input type="number" class="form-control" id="calcas" name="calcas" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="vestido">Vestido:</label>
+                                <input type="number" class="form-control" id="vestido" name="vestido" min="0" value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="saia">Saia:</label>
+                                <input type="number" class="form-control" id="saia" name="saia" min="0" value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="camisa">Camisa:</label>
+                                <input type="number" class="form-control" id="camisa" name="camisa" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="cobertores">Cobertores:</label>
+                                <input type="number" class="form-control" id="cobertores" name="cobertores" min="0" value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lencol">Lençol:</label>
+                                <input type="number" class="form-control" id="lencol" name="lencol" min="0" value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="fronha">Fronha:</label>
+                                <input type="number" class="form-control" id="fronha" name="fronha" min="0" value="0">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-pedido">Fazer Pedido</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="orcamento text-center">
+                <label for="valorOrcamento">Orçamento:</label>
+                <input type="text" class="form-control" id="valorOrcamento" name="valorOrcamento" readonly value="Valor">
+                <br>
+                <button type="button" class="btn btn-success">Aprovar</button>
+                <button type="button" class="btn btn-danger">Rejeitar</button>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">
-        <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
-      </button>
-      <a class="btn btn-secondary">
-        <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
-      </a>
-    </div>
-
-    <div>
-      <h2>Itens do Pedido:</h2>
-      <ul>
-        <li>
-        </li>
-      </ul>
-      <p></p>
-      <button type="button" class="btn btn-success">
-      <i class="fa fa-check" aria-hidden="true"></i>
-        Aceitar
-      </button>
-      <button type="button" class="btn btn-danger">
-        <i class="fa fa-times" aria-hidden="true"></i>
-        Recusar
-      </button>
-    </div>
-
-  </form>
 </div>
