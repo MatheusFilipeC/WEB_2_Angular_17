@@ -1,1 +1,119 @@
-<p>relatorio-funcionario works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOL-Lavanderia - Relatórios</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    /* Estilos personalizados para o número do pedido */
+    .numero-pedido {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333; /* Cor do texto */
+      border: 2px solid #333; /* Borda */
+      padding: 10px; /* Espaçamento interno */
+      border-radius: 5px; /* Borda arredondada */
+      margin-bottom: 20px; /* Espaçamento inferior */
+    }
+
+    /* Estilos para centralizar e alinhar os ícones */
+    .mb-3.text-center i {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="navbar-collapse collapsed justify-content-between" id="navbarContent">
+    <nav class="navbar navbar-expand-md n navbar-dark bg-dark">
+      <a class="navbar-brand nav-link" href="#">
+        <i class="fa fa-user-edit"> LOL-Lavanderia </i>
+      </a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Página Inicial </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Novo Pedido </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Consultar Pedidos </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Listagem de Pedidos </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#"> SAIR </a>
+        </li>
+        <li class="nav-item">
+          <p class="navbar-text mb-0 text-white">
+            <i class="fa fa-user"></i>
+          </p>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card card-login">
+          <div class="card-body">
+            <h5 class="card-title text-center"><strong style="text-transform: uppercase;">PEDIDO ONLINE</strong></h5>
+            <br>
+            <form>
+              <div class="row mb-3">
+                <!-- Form inputs here -->
+              </div>
+              <button type="submit" class="btn btn-primary btn-pedido">Fazer Pedido</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="mb-3">
+          <p class="text-center">NÚMERO DO PEDIDO:</p>
+          <div class="text-center numero-pedido" id="numeroPedido">12345</div> <!-- Número de pedido preenchido -->
+        </div>
+        <div class="mb-3 text-center">
+          <i class="fas fa-clock fa-3x"></i> <!-- Ícone para exibir prazo em dias -->
+          <span class="d-block">Prazo em dias: 7</span> <!-- Exemplo de prazo em dias -->
+        </div>
+        <div class="orcamento text-center">
+          <label for="valorOrcamento">Orçamento:</label>
+          <input type="text" class="form-control form-control-lg" id="valorOrcamento" name="valorOrcamento" readonly value="112.85">
+          <br>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-success mr-2" onclick="gerarNumeroPedido()">Aprovar</button>
+            <button type="button" class="btn btn-danger ml-2">Rejeitar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botões de download de PDF -->
+    <div class="row mt-5">
+      <div class="col-md-4 offset-md-2">
+        <a href="#" class="btn btn-primary btn-block" download="relatorio_receitas.pdf">RELATÓRIO DE RECEITAS</a>
+      </div>
+      <div class="col-md-4">
+        <a href="#" class="btn btn-primary btn-block" download="relatorio_clientes.pdf">RELATÓRIO DE CLIENTES</a>
+      </div>
+      <div class="col-md-4 offset-md-4 mt-3">
+        <a href="#" class="btn btn-primary btn-block" download="relatorio_clientes_fieis.pdf">RELATÓRIO DE CLIENTES FIEIS</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
