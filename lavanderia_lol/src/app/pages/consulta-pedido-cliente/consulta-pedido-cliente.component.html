@@ -1,1 +1,79 @@
-<p>consulta-pedido-cliente works!</p>
+<div class="navbar-collapse collapsed justify-content-between" id="navbarContent">
+
+    <nav class="navbar navbar-expand-md n navbar-dark bg-dark">
+
+      <a class="navbar-brand nav-link" href="#">
+        <i class="fa fa-user-edit"> LOL-Lavanderia </i>
+      </a>
+
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Página Inicial </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Novo Pedido </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Consultar Pedidos </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Listagem de Pedidos </a>
+        </li>        
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#"> SAIR </a>
+        </li>
+
+        <li class="nav-item">
+          <p class="navbar-text mb-0 text-white">
+            <i class="fa fa-user"></i>
+          </p>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+<div class="container">
+    <div class="row">
+        <div class="container mt-5">
+            <h2>Detalhes do Pedido</h2>
+            <div class="form-group">
+                <label for="pedidoNumber">Número do Pedido:</label>
+                <input type="text" class="form-control" id="pedidoNumber" placeholder="Digite o número do pedido" [(ngModel)]="pedido">
+                <button class="btn btn-primary mt-2" (click)="pedido !== null ? buscarPedido(pedido) : null">Buscar</button>
+            </div>
+            <div id="pedidoDetalhes">
+                <h3>Dados do Pedido</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Peça de Roupa</th>
+                                    <th>Valor (R$)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let roupa of roupas">
+                                    <td> {{roupa.nomeRoupa}} </td>
+                                    <td> {{roupa.valorLavagemPeca}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Preço Total (R$):</strong> {{detalhesPedido.valor}} </p>
+                        <p><strong>Prazo do Serviço:</strong> {{detalhesPedido.dataEstimativa }} </p>
+                        <p><strong>Situação:</strong> {{detalhesPedido.statusPedido}} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

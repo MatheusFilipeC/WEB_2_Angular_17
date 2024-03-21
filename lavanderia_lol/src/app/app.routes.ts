@@ -4,6 +4,7 @@ import { AutoCadastroComponent } from './pages/auto-cadastro/auto-cadastro.compo
 import { HomeComponent } from './pages/home/home.component';
 import { InicialClienteComponent } from './pages/inicial-cliente/inicial-cliente.component';
 import { NovoPedidoClienteComponent } from './pages/novo-pedido-cliente/novo-pedido-cliente.component';
+import { ConsultaPedidoClienteComponent } from './pages/consulta-pedido-cliente/consulta-pedido-cliente.component';
 
 export const routes: Routes = [
 
@@ -32,10 +33,16 @@ export const routes: Routes = [
     path: 'inicialCliente',
     component: InicialClienteComponent
   },
+  
   {
     path: 'novoPedido',
     component: NovoPedidoClienteComponent
-  }
+  },
+
+  {
+    path: 'consultaPedidoC',
+    component: ConsultaPedidoClienteComponent
+}
 
 
 ];
