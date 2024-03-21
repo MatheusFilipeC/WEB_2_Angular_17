@@ -5,6 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { InicialClienteComponent } from './pages/inicial-cliente/inicial-cliente.component';
 import { NovoPedidoClienteComponent } from './pages/novo-pedido-cliente/novo-pedido-cliente.component';
 import { ConsultaPedidoClienteComponent } from './pages/consulta-pedido-cliente/consulta-pedido-cliente.component';
+import { ListagemPedidosClienteComponent } from './pages/listagem-pedidos-cliente/listagem-pedidos-cliente.component';
 
 export const routes: Routes = [
 
@@ -42,7 +43,10 @@ export const routes: Routes = [
   {
     path: 'consultaPedidoC',
     component: ConsultaPedidoClienteComponent
-}
+  },
 
-
+  {
+    path: 'listagemPedido',
+    component: ListagemPedidosClienteComponent
+  }
 ];

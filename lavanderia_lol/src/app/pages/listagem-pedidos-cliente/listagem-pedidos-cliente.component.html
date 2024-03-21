@@ -1,1 +1,55 @@
-<p>listagem-pedidos-cliente works!</p>
+<div class="container">
+    <div class="row">
+        <div class="container mt-5">
+            <h2>Tabela de Pedidos</h2>
+            <div class="form-group">
+                <label for="statusFilter">Filtrar por Status:</label>
+                <select class="form-control" id="statusFilter">
+                    <option value="">Todos</option>
+                    <option value="Em Aberto">Em Aberto</option>
+                    <option value="Recolhido">Recolhido</option>
+                    <option value="Aguardando Pagamento">Aguardando Pagamento</option>
+                    <option value="Pago">Pago</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Número do Pedido</th>
+                        <th>Status do Pedido</th>
+                        <th>Valor do Pedido</th>
+                        <th>Data do Pedido</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td> 00</td>
+                        <td>  </td>
+                        <td>  </td>
+                        <td> </td>
+                        
+                        <td>
+                            <button type="button" class="btn btn-xs btn-primary"
+                             
+                                >
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                Pagar
+                            </button>
+
+                            <button type="button" class="btn btn-xs btn-danger"
+                                
+                               >
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                                Cancelar
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
