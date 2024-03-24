@@ -3,8 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Pedido } from '../../shared';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PedidoService } from '../../services';
-import { ModalDadosPedidoComponent } from '../modal-dados-pedido/modal-dados-pedido.component';
-import { RouterModule } from '@angular/router';
+import { ModalDadosPedidoComponent } from '../modal-pedido-confirmado/modal-dados-pedido.component';
 
 @Component({
   selector: 'app-modal-aceitar',

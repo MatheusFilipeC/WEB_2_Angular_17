@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PedidoService } from '../../services';
 import { Pedido } from '../../shared';
-import { ModalConfirmadoComponent } from '../modal-confirmado/modal-confirmado.component';
+import { ModalConfirmadoComponent } from '../modal-pedido-recolhido/modal-confirmado.component';
 
 @Component({
   selector: 'app-modal-recolhimento',

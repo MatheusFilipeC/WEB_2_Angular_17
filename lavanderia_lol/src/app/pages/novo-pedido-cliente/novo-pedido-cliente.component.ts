@@ -3,7 +3,7 @@ import { Pedido, Roupa, SharedModule } from '../../shared';
 import { PedidoService } from '../../services';
 import { RoupaService } from '../../services/roupa.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalAceitarComponent } from '../modal-aceitar/modal-aceitar.component';
+import { ModalAceitarComponent } from '../modal-aceitar-orcamento/modal-aceitar.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';

@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { PedidoService } from '../../services';
 import { Pedido, SharedModule } from '../../shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalCancelarComponent } from '../modal-cancelar/modal-cancelar.component';
-import { ModalPedidoComponent } from '../modal-pedido/modal-pedido.component';
+import { ModalCancelarComponent } from '../modal-cancelar-pedido/modal-cancelar.component';
+import { ModalPedidoComponent } from '../modal-confirma-pagamento/modal-pedido.component';
 
 @Component({
   selector: 'app-listagem-pedidos-cliente',

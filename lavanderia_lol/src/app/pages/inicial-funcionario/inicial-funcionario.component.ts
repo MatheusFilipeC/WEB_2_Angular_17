@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ModalRecolhimentoComponent } from '../modal-recolhimento/modal-recolhimento.component';
+import { ModalRecolhimentoComponent } from '../modal-confirma-recolhimento/modal-recolhimento.component';
 import { Pedido } from '../../shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PedidoService } from '../../services';
