@@ -1,1 +1,41 @@
-<p>manutencao-roupas-funcionario works!</p>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <button class="btn btn-primary mr-2" (click)="adicionarNovaLinha()">Inserir</button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Peça de Roupa</th>
+            <th>Preço</th>
+            <th>Prazo de Lavagem (Em dias)</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let Roupa of roupas; let i = index">
+            <td>
+              <input [(ngModel)]="Roupa.nomPecaRoupa" name="nome" [disabled]="!Roupa.habilitada" />
+            </td>
+            <td>
+              <input [(ngModel)]="Roupa.precoRoupa" name="preco" [disabled]="!Roupa.habilitada" />
+            </td>
+            <td>
+              <input [(ngModel)]="Roupa.prazoLavagemRoupa" name="prazo" [disabled]="!Roupa.habilitada" />
+            </td>
+            <td>
+              <button class="btn btn-warning mr-2" (click)="selecionarLinha(Roupa)">Editar</button>
+              <button class="btn btn-danger mr-2" (click)="excluirLinha($event, Roupa)">Excluir</button>
+              <button *ngIf="Roupa.idRoupa === 0" class="btn btn-info" (click)="inserir(Roupa)">Salvar</button>
+              <button *ngIf="Roupa.idRoupa !== 0" class="btn btn-success" (click)="salvarEdicao(Roupa)">Salvar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -16,17 +16,15 @@ import { Funcionario } from '../../shared';
 })
 export class ManutencaoFuncionariosComponent implements OnInit {
 
-  funcionarios : Funcionario[] = [];
-  funcionario : Funcionario = new Funcionario()
-  constructor (private funcionarioService: FuncionarioService) { }
+  funcionario! : Funcionario;
+  funcionarios: Funcionario[] = [];
 
-  ngOnInit(): void {
-    this.funcionarios = this.funcionarioService.listarTodos();
-  }
+  constructor(
+    private funcionarioService: FuncionarioService) { }
 
-  listarFuncionarios(): Funcionario[] {
-    return this.funcionarioService.listarTodos();
-  }
+    ngOnInit(): void {
+      this.funcionarios = this.listarTodos();
+      }
 
   linhaSelecionada: any = null;
 
@@ -34,38 +32,40 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     const novoFuncionario: Funcionario = {
       idFuncionario: 0,
       nomeFuncionario: '',
-      cpf: '',
-      email: '',
-      senha: '',
+      email: "",
+      senha: "",
       dataNascimento: new Date(),
       habilitada: true,
     };
     this.funcionarios.push(novoFuncionario);
-    this.linhaSelecionada = 0;
+    this.linhaSelecionada = null;
   }
 
-  selecionarLinha(index: Funcionario): void  {
+  selecionarLinha(index: Funcionario): void {
     this.linhaSelecionada = index.idFuncionario;
     index.habilitada = true;
   }
 
-  excluirLinha($event: any, funcionario: Funcionario): void {
+  excluirLinha ($event: any, funcionario: Funcionario): void {
     $event.preventDefault();
-    {
       this.funcionarioService.remover(funcionario.idFuncionario!);
-      this.funcionarios = this.listarFuncionarios();
-    }
+      this.funcionarios = this.listarTodos();
+  }
+
+  inserir(obj: Funcionario): void {
+    this.funcionarioService.inserir(obj);
+    this.linhaSelecionada = null;
+    this.listarTodos();
   }
 
   salvarEdicao(obj: Funcionario): void {
-    this.funcionarioService.inserir(this.funcionario)
     this.linhaSelecionada = null;
-    obj.habilitada = false;
+    this.funcionarioService.atualizar(obj);
+    this.listarTodos();
   }
 
-  inserir(): void {
-      this.funcionarioService.inserir(this.funcionario);
-      console.log(this.funcionarios)
+  listarTodos(): Funcionario[] {
+    return this.funcionarioService.listarTodos();
   }
 }
 
