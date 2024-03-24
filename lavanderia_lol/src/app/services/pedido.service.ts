@@ -98,6 +98,6 @@ recusarOrcamento (pedido: Pedido) {
   pedido.statusPedido = 'Rejeitado';
   pedidos.push(pedido);
   localStorage[LS_CHAVE] = JSON.stringify(pedidos);
-  console.log(pedido);
+  location.reload();
 }
 }
