@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { Pedido } from '../shared/models/pedido.model';
+import { Pedido } from '../shared';
 
 const LS_CHAVE: string = "Pedidos";
 

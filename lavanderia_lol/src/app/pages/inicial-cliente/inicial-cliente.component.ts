@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { PedidoService } from '../../services/pedido.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Pedido, SharedModule } from '../../shared';
+import { PedidoService } from '../../services';
 
 @Component({
   selector: 'app-inicial-cliente',

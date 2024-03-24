@@ -4,7 +4,7 @@
             <h2>Tabela de Pedidos</h2>
             <div class="form-group">
                 <label for="statusFilter">Filtrar por Status:</label>
-                <select class="form-control" id="statusFilter">
+                <select class="form-control" id="statusFilter" [(ngModel)]="statusSelecionado">
                     <option value="">Todos</option>
                     <option value="Em Aberto">Em Aberto</option>
                     <option value="Recolhido">Recolhido</option>
@@ -25,23 +25,23 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td> 00</td>
-                        <td>  </td>
-                        <td>  </td>
-                        <td> </td>
+                    <tr *ngFor="let pedido of ordenarPedidos() | statusFilter: statusSelecionado">
+                        <td> 00{{pedido.idPedido}} </td>
+                        <td> {{pedido.statusPedido}} </td>
+                        <td> R${{pedido.valor}} </td>
+                        <td> {{ formatarData(pedido.dataPedido) }} </td>
                         
                         <td>
                             <button type="button" class="btn btn-xs btn-primary"
-                             
-                                >
+                                *ngIf="pedido.statusPedido === 'Aguardando Pagamento'"
+                                (click)="abrirModalPedido(pedido)">
                                 <i class="fa fa-check" aria-hidden="true"></i>
                                 Pagar
                             </button>
 
                             <button type="button" class="btn btn-xs btn-danger"
-                                
-                               >
+                                *ngIf="pedido.statusPedido === 'Em Aberto'"
+                                (click)="abrirModalCancelar(pedido)">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                                 Cancelar
                             </button>
