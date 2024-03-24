@@ -2,13 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Login } from '../../shared/models';
-import { LoginService } from '../../services/login.service';
+import { Login, SharedModule } from '../../shared';
+import { LoginService } from '../../services';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    RouterModule,
+    SharedModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -42,8 +47,13 @@ export class LoginComponent implements OnInit {
           if (usu != null) {
             this.loginService.usuarioLogado = usu;
             this.loading = false;
-            this.router.navigate( ["/login"] );
+            
+            if (usu.perfil === 'CLIENTE') {
+              this.router.navigate(['/cliente/inicial']);
+            } else if (usu.perfil === 'FUNC') {
+              this.router.navigate(['/funcionario/inicial']);
           }
+        }
           else {
             this.message = "Usuário/Senha inválidos.";
           }

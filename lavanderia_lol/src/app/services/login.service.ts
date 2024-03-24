@@ -24,13 +24,10 @@ export class LoginService {
 
   login(login: Login): Observable<Usuario | null> {
     let usu = new Usuario(1, login.login,
-                  login.login, login.senha, "FUNC");
+                  login.login, login.senha, "CLIENTE");
     if (login.login == login.senha) {
       if (login.login == "admin") {
-        usu.perfil = "ADMIN";
-      }
-      else if (login.login == "gerente") {
-        usu.perfil = "GERENTE";
+        usu.perfil = "FUNC";
       }
       return of(usu);
     }
@@ -38,7 +35,4 @@ export class LoginService {
       return of(null);
     }
   }
-
-  constructor() { }
-
 }

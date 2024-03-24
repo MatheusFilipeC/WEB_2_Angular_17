@@ -2,12 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Cliente } from '../../shared/models/cliente.model';
+import { Cliente, SharedModule } from '../../shared';
 
 @Component({
   selector: 'app-auto-cadastro',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    RouterModule,
+    SharedModule
+  ],
   templateUrl: './auto-cadastro.component.html',
   styleUrl: './auto-cadastro.component.css'
 })

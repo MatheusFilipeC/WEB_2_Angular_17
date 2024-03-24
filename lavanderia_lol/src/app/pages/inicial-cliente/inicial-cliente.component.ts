@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
 import { PedidoService } from '../../services/pedido.service';
-import { Pedido } from '../../shared/models/pedido.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import { Pedido, SharedModule } from '../../shared';
 
 @Component({
   selector: 'app-inicial-cliente',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    RouterModule,
+    SharedModule
+  ],
   templateUrl: './inicial-cliente.component.html',
   styleUrl: './inicial-cliente.component.css'
 })

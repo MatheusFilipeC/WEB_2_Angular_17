@@ -1,10 +1,135 @@
 <div class="container-fluid">
 
+  <div *ngIf="!usuarioLogado">
+    <nav class="navbar navbar-expand-lg navbar-white bg-white">
+      <div class="container">
+        <a class="navbar-brand" href="#">LOL-Lavanderia</a>
+        <button class="navbar-toggler" type="button">
+        </button>
+        <div class="collapse navbar-collapse menu-navegacao" id="menu">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Quem somos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Serviços</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/login']">Login</a>
+            </li>
+            <li class="nav-item botao-cadastro">
+              <a class="nav-link white" [routerLink]="['/cadastro']">Cadastre-se</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div *ngIf="usuarioLogado" 
+        class="navbar-collapse collapsed justify-content-between" id="navbarContent">
+
+    <nav class="navbar navbar-expand-md n navbar-dark bg-dark">
+
+      <a class="navbar-brand nav-link" href="#">
+        <i class="fa fa-user-edit"> {{ title }} </i>
+      </a>
+
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('CLIENTE')" class="nav-link" href="#" routerLink="/cliente/inicial"> Página Inicial </a>
+        </li>
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('CLIENTE')" class="nav-link" href="#" routerLink="/cliente/novo"> Novo Pedido </a>
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('CLIENTE')" class="nav-link" href="#" routerLink="/cliente/consulta"> Consultar Pedidos </a>
+        </li>
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('CLIENTE')" class="nav-link" href="#" routerLink="/cliente/listagem"> Listagem de Pedidos </a>
+        </li>
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('FUNC')" class="nav-link" href="#" routerLink="/funcionario/inicial"> Página Inicial </a>
+        </li>
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('FUNC')" class="nav-link" href="#" routerLink="/funcionario/manutencao"> Funcionários </a>
+        </li>
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('FUNC')" class="nav-link" href="#" routerLink="/funcionario/roupas"> Roupas </a>
+        </li>
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('FUNC')" class="nav-link" href="#" routerLink="/funcionario/visualizacao"> Visualizar Pedidos </a>
+        </li>
+
+        <li class="nav-item">
+          <a *ngIf="temPermissao('FUNC')" class="nav-link" href="#" routerLink="/funcionario/relatorios"> Relatórios </a>
+        </li>
+
+        <li class="nav-item" ngbDropdown>
+          <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button"> Menu </a>
+
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
+
+            <a *ngIf="temPermissao('CLIENTE')" ngbDropdownItem href="#" routerLink="/cliente"
+              (click)="$event.preventDefault()"> Página Inicial </a>
+
+            <a *ngIf="temPermissao('CLIENTE')" ngbDropdownItem href="#" routerLink="/cliente/pedido/novo"
+              (click)="$event.preventDefault()"> Novo Pedido </a>
+
+            <a *ngIf="temPermissao('CLIENTE')" ngbDropdownItem href="#" routerLink="/cliente/consulta"
+              (click)="$event.preventDefault()"> Consultar Pedidos </a>
+
+            <a *ngIf="temPermissao('CLIENTE')" ngbDropdownItem href="#" routerLink="/cliente/pedido/listagem"
+              (click)="$event.preventDefault()"> Listagem de Pedidos </a>
+
+            <a *ngIf="temPermissao('FUNC')" ngbDropdownItem href="#" routerLink="/funcionario"
+              (click)="$event.preventDefault()"> Página Inicial </a>
+
+            <a *ngIf="temPermissao('FUNC')" ngbDropdownItem href="#"
+              routerLink="/funcionario/manutencao" (click)="$event.preventDefault()"> Manutenção de
+              Funcionários </a>
+
+            <a *ngIf="temPermissao('FUNC')" ngbDropdownItem href="#"
+              routerLink="/funcionario/roupas" (click)="$event.preventDefault()"> Manutenção Roupas </a>
+
+            <a *ngIf="temPermissao('FUNC')" ngbDropdownItem href="#"
+              routerLink="/funcionario/visualizacao" (click)="$event.preventDefault()"> Visualizar Pedidos </a>
+
+            <a *ngIf="temPermissao('FUNC')" ngbDropdownItem href="#"
+              routerLink="/funcionario/relatorios" (click)="$event.preventDefault()"> Relatórios </a>
+
+          </div>
+        </li>
+      </ul>
+
+      <ul *ngIf="usuarioLogado" class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="logout()"> SAIR </a>
+        </li>
+
+        <li class="nav-item">
+          <p class="navbar-text mb-0 text-white">
+            <i class="fa fa-user"></i> {{ usuarioLogado.nome }}
+          </p>
+        </li>
+
+      </ul>
+  </nav>
+</div>
+
   <router-outlet></router-outlet>
 
   <footer class="footer fixed-bottom mt-auto py-3 bg-light">
     <div class="container text-center">
-      Copyright © 2023 | Lucas, Matheus e Murilo | Web2
+      Copyright © 2023 | Matheus, Lucas e Murilo | Web2
     </div>
   </footer>
+
 </div>

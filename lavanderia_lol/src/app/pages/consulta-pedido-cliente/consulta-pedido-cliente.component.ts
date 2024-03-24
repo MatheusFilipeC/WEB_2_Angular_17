@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
-import { Pedido, RoupasPedido } from '../../shared/models/pedido.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Pedido, RoupasPedido, SharedModule } from '../../shared';
 
 @Component({
   selector: 'app-consulta-pedido-cliente',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    RouterModule,
+    SharedModule
+  ],
   templateUrl: './consulta-pedido-cliente.component.html',
   styleUrl: './consulta-pedido-cliente.component.css'
 })
