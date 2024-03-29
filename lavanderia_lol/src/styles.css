@@ -14,12 +14,21 @@
   width: 48%; /* 48% para deixar um espaço entre os botões */
 }
 
+.barra-menu {
+  width: 90%;
+  margin: 0 auto;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
   width: 100%;
   background-color: #f8f9fa;
   padding: 10px 0;
+}
+
+.botao-logout {
+  margin-right: 10px;
 }
 
 .orcamento {

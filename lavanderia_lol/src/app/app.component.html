@@ -26,14 +26,10 @@
     </nav>
   </div>
 
-  <div *ngIf="usuarioLogado" 
-        class="navbar-collapse collapsed" id="navbarContent">
+  <div *ngIf="usuarioLogado" class="barra-menu">
 
-    <nav class="navbar navbar-expand-md n navbar-dark bg-dark">
-
-      <a class="navbar-brand nav-link" href="#">
-        <i class="fa fa-user-edit"> {{ title }} </i>
-      </a>
+        <nav class="navbar navbar-expand-md n navbar-dark bg-dark">
+          <div class="navbar-collapse collapsed" id="navbarContent">
 
       <ul class="navbar-nav mr-auto">
 
@@ -115,21 +111,23 @@
           </div>
         </li>
       </ul>
+      </div>
 
-      <ul *ngIf="usuarioLogado" class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" (click)="logout()"> SAIR </a>
-        </li>
+      <div *ngIf="usuarioLogado" id="navbarContent2" class="botao-logout">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#" (click)="logout()">SAIR</a>
+          </li>
+          <li class="nav-item">
+            <p class="navbar-text mb-0 text-white">
+              <i class="fa fa-user"></i> {{ usuarioLogado.nome }} - {{ usuarioLogado.perfil }}
+            </p>
+          </li>
+        </ul>
+      </div>
 
-        <li class="nav-item">
-          <p class="navbar-text mb-0 text-white">
-            <i class="fa fa-user"></i> {{ usuarioLogado.nome }}
-          </p>
-        </li>
-
-      </ul>
-  </nav>
-</div>
+    </nav>
+  </div>
 
   <router-outlet></router-outlet>
 
