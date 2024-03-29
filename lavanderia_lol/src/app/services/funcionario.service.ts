@@ -37,6 +37,7 @@ export class FuncionarioService {
     const funcionarios: Funcionario[] = this.listarTodos();
     funcionarios.forEach( (obj, index, objs) => {
       if (funcionario.idFuncionario === obj.idFuncionario) {
+        funcionario.habilitada = false;
         objs[index] = funcionario;
       }
     });

@@ -33,8 +33,6 @@ export class ConsultaPedidoClienteComponent {
     {idPedido: 2, idRoupa: 34, nomeRoupa: 'Cueca', valorLavagemPeca: 12.00}
   ];
     
-
-    
     roupa: RoupasPedido | undefined;
     pedido: number | null = null;
     detalhesPedido: Pedido = {};

@@ -27,6 +27,10 @@ export class ManutencaoRoupasFuncionarioComponent implements OnInit {
 
   linhaSelecionada: any = null;
 
+  listarTodos(): Roupa[] {
+    return this.roupaService.listarTodos();
+  }
+
   adicionarNovaLinha(): void {
     const novaRoupa: Roupa = {
       idRoupa: 0,
@@ -60,10 +64,7 @@ export class ManutencaoRoupasFuncionarioComponent implements OnInit {
     this.linhaSelecionada = null;
     this.roupaService.atualizar(obj);
     this.listarTodos();
-  }
-
-  listarTodos(): Roupa[] {
-    return this.roupaService.listarTodos();
+    console.log(this.roupas)
   }
 }
 

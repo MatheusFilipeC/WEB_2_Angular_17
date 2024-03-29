@@ -29,7 +29,7 @@ export class AppComponent {
 
   logout() {
     this.loginService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
   temPermissao(...perfis: string[]): boolean {
     let usu = this.usuarioLogado;

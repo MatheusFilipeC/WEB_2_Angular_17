@@ -12,6 +12,8 @@ import { ManutencaoFuncionariosComponent } from './pages/manutencao-funcionarios
 import { ManutencaoRoupasFuncionarioComponent } from './pages/manutencao-roupas-funcionario/manutencao-roupas-funcionario.component';
 import { RelatorioFuncionarioComponent } from './pages/relatorio-funcionario/relatorio-funcionario.component';
 import { VisualizacaoPedidosFuncionarioComponent } from './pages/visualizacao-pedidos-funcionario/visualizacao-pedidos-funcionario.component';
+import { ListarUsuarioComponent } from './usuario/listar-usuario/listar-usuario.component';
+import { InserirEditarUsuarioComponent } from './usuario/inserir-editar-usuario/inserir-editar-usuario.component';
 
 export const routes: Routes = [
 
@@ -20,27 +22,22 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
-
   {
     path: 'home',
     component: HomeComponent
   },
-
   {
     path: 'login',
     component: LoginComponent
   },
-
   {
     path: 'cadastro',
     component: AutoCadastroComponent
   },
-
   { 
     path: 'cliente',
     redirectTo: 'cliente/inicial' 
   },
-
   {
     path: 'cliente/inicial',
     component: InicialClienteComponent,
@@ -49,7 +46,6 @@ export const routes: Routes = [
       role: 'CLIENTE'
     } 
   },
-  
   {
     path: 'cliente/novo',
     component: NovoPedidoClienteComponent,
@@ -58,7 +54,6 @@ export const routes: Routes = [
       role: 'CLIENTE'
     } 
   },
-
   {
     path: 'cliente/consulta',
     component: ConsultaPedidoClienteComponent,
@@ -67,7 +62,6 @@ export const routes: Routes = [
       role: 'CLIENTE'
     } 
   },
-
   {
     path: 'cliente/listagem',
     component: ListagemPedidosClienteComponent,
@@ -76,12 +70,10 @@ export const routes: Routes = [
       role: 'CLIENTE'
     } 
   },
-
   { 
     path: 'funcionario',
     redirectTo: 'funcionario/inicial' 
   },
-
   { 
     path: 'funcionario/inicial', 
     component: InicialFuncionarioComponent,
@@ -90,15 +82,14 @@ export const routes: Routes = [
       role: 'FUNC'
     }  
   },
-
   { 
     path: 'funcionario/manutencao', 
     component: ManutencaoFuncionariosComponent,
     canActivate: [authGuard],
     data: {
       role: 'FUNC'
-    }   },
-
+    }   
+  },
   { 
     path: 'funcionario/roupas', 
     component: ManutencaoRoupasFuncionarioComponent,
@@ -107,7 +98,6 @@ export const routes: Routes = [
       role: 'FUNC'
     }   
   },
-
   { 
     path: 'funcionario/relatorios', 
     component: RelatorioFuncionarioComponent,
@@ -116,7 +106,6 @@ export const routes: Routes = [
       role: 'FUNC'
     }   
   },
-
   { 
     path: 'funcionario/visualizacao', 
     component: VisualizacaoPedidosFuncionarioComponent,
@@ -125,4 +114,33 @@ export const routes: Routes = [
       role: 'FUNC'
     }   
   },
+  {
+    path: 'usuarios',
+    redirectTo: 'usuarios/listar'
+  },
+  {
+    path: 'usuarios/listar',
+    component: ListarUsuarioComponent,
+    canActivate: [authGuard],
+    data: {
+    role: 'FUNC'
+    }
+  },
+  {
+    path: 'usuarios/novo',
+    component: InserirEditarUsuarioComponent,
+    canActivate: [authGuard],
+    data: {
+    role: 'FUNC'
+    }
+  },
+    {
+    path: 'usuarios/editar/:id',
+    component: InserirEditarUsuarioComponent,
+    canActivate: [authGuard],
+    data: {
+    role: 'FUNC'
+    }
+  }
+  
 ];
