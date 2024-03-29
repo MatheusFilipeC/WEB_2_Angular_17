@@ -18,14 +18,15 @@ import { Pedido, RoupasPedido, SharedModule } from '../../shared';
 })
 export class ConsultaPedidoClienteComponent {
 
-  roupas: RoupasPedido[] = [
-    {idPedido: 1, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
+  roupas: RoupasPedido[] = [];
+
+    roupasPedidos: RoupasPedido[] = [{idPedido: 1, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
     {idPedido: 1, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
     {idPedido: 1, idRoupa: 36, nomeRoupa: 'Short', valorLavagemPeca: 10.00},
     {idPedido: 2, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
     {idPedido: 2, idRoupa: 34, nomeRoupa: 'Calça', valorLavagemPeca: 30.00},
     {idPedido: 2, idRoupa: 34, nomeRoupa: 'Cueca', valorLavagemPeca: 12.00}
-    ];
+  ];
     
     pedidos: Pedido[] = [
       { idPedido: 1, dataPedido: new Date('2023-09-15T14:30:00'), dataEstimativa: new Date('2023-09-15T14:30:00'), dataColeta: new Date('2023-09-15T14:30:00'), 
@@ -54,11 +55,14 @@ export class ConsultaPedidoClienteComponent {
     roupasPedido: RoupasPedido | undefined;
     
     buscarPedido(pedidoNumero?: number) {
-      const pedidoEncontrado = this.pedidos.filter(p => p.idPedido === pedidoNumero);
-      if (pedidoEncontrado.length > 0) {
-        this.detalhesPedido = pedidoEncontrado[0];
+      const pedidoEncontrado = this.pedidos.find(p => p.idPedido == pedidoNumero);
+      
+      if (pedidoEncontrado) {
+        this.detalhesPedido = pedidoEncontrado;
+        this.roupas = this.roupasPedidos.filter(rp => rp.idPedido == pedidoNumero);
       } else {
         this.detalhesPedido = {};
+        this.roupas = [];
       }
     }
     

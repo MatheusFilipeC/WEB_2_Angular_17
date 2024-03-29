@@ -20,16 +20,16 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let roupa of roupas">
-                                    <td> {{roupa.nomeRoupa}} </td>
-                                    <td> {{roupa.valorLavagemPeca}} </td>
+                                    <td [textContent]="roupa.nomeRoupa"></td>
+                                    <td [textContent]="roupa.valorLavagemPeca"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="card-body">
-                        <p><strong>Preço Total (R$):</strong> {{detalhesPedido.valor}} </p>
-                        <p><strong>Prazo do Serviço:</strong> {{detalhesPedido.dataEstimativa }} </p>
-                        <p><strong>Situação:</strong> {{detalhesPedido.statusPedido}} </p>
+                        <p><strong>Preço Total (R$):</strong> <span [textContent]="detalhesPedido.valor"></span> </p>
+                        <p><strong>Prazo do Serviço:</strong> <span [textContent]="detalhesPedido.dataEstimativa"></span> </p>
+                        <p><strong>Situação:</strong> <span [textContent]="detalhesPedido.statusPedido"></span> </p>
                     </div>
                 </div>
             </div>
