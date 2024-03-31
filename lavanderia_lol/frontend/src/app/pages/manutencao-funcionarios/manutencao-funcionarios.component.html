@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <div class="row">
+
+        <div class="col-md-4">
+            <button class="btn btn-primary mr-2" (click)="adicionarNovaLinha()">Inserir</button>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Login/E-mail</th>
+                        <th>Nome</th>
+                        <th>Data de Nascimento</th>
+                        <th>Senha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let Funcionario of funcionarios; let i = index">
+                        <td>
+                            <input [(ngModel)]="Funcionario.nomeFuncionario" [disabled]="!Funcionario.habilitada" />
+                        </td>
+                        <td>
+                            <input [(ngModel)]="Funcionario.email" [disabled]="!Funcionario.habilitada" />
+                        </td>
+                        <td>
+                            <input [(ngModel)]="Funcionario.dataNascimento" [disabled]="!Funcionario.habilitada" />
+                        </td>
+                        <td>
+                            <input [(ngModel)]="Funcionario.senha" [disabled]="!Funcionario.habilitada" />
+                        </td>
+                        <td>
+                            <button class="btn btn-warning mr-2" (click)="selecionarLinha(Funcionario)">Editar</button>
+                            <button class="btn btn-danger mr-2"(click)="excluirLinha($event, Funcionario)">Excluir</button>
+                            <button *ngIf="Funcionario.idFuncionario === 0" class="btn btn-info" (click)="inserir(Funcionario)">Salvar</button>
+                            <button *ngIf="Funcionario.idFuncionario !== 0" class="btn btn-success" (click)="salvarEdicao(Funcionario)">Salvar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

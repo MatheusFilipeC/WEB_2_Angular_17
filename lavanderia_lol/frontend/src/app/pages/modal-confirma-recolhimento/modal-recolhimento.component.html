@@ -1,0 +1,25 @@
+<div class="modal-header d-flex justify-content-center">
+
+  <h4 class="modal-title" id="modalLabel"> Confirma que o pedido 00{{ pedido.idPedido }} foi recolhido pelo motoboy? </h4>
+</div>
+
+<div class="modal-body text-center">
+  <div>
+
+  <button type="button" class="btn btn-xs btn-primary botao-confirmar"
+    (click)="recolher($event, pedido)">
+    <i class="fa fa-check" aria-hidden="true"></i>
+    Sim
+  </button>
+
+  <button type="button" class="btn btn-xs btn-danger botao-confirmar"
+    (click)="this.activeModal.close()">
+    <i class="fa fa-times" aria-hidden="true"></i>
+    Não
+  </button>
+    </div>
+  </div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()"> Fechar </button>
+</div>

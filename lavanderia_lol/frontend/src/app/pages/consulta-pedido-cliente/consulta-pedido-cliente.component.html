@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div class="container mt-5">
+            <h2>Detalhes do Pedido</h2>
+            <div class="form-group">
+                <label for="pedidoNumber">Número do Pedido:</label>
+                <input type="text" class="form-control" id="pedidoNumber" placeholder="Digite o número do pedido" [(ngModel)]="pedido">
+                <button class="btn btn-primary mt-2" (click)="pedido !== null ? buscarPedido(pedido) : null">Buscar</button>
+            </div>
+            <div id="pedidoDetalhes">
+                <h3>Dados do Pedido</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Peça de Roupa</th>
+                                    <th>Valor (R$)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let roupa of roupas">
+                                    <td [textContent]="roupa.nomeRoupa"></td>
+                                    <td [textContent]="roupa.valorLavagemPeca"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Preço Total (R$):</strong> <span [textContent]="detalhesPedido.valor"></span> </p>
+                        <p><strong>Prazo do Serviço:</strong> <span [textContent]="detalhesPedido.dataEstimativa"></span> </p>
+                        <p><strong>Situação:</strong> <span [textContent]="detalhesPedido.statusPedido"></span> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

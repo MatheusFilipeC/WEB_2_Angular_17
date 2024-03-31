@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="container mt-5">
+            <h2>Tabela de Pedidos</h2>
+            <div class="form-group">
+                <label for="statusFilter">Filtrar por Status:</label>
+                <select class="form-control" id="statusFilter" [(ngModel)]="statusSelecionado">
+                    <option value="">Todos</option>
+                    <option value="Em Aberto">Em Aberto</option>
+                    <option value="Recolhido">Recolhido</option>
+                    <option value="Aguardando Pagamento">Aguardando Pagamento</option>
+                    <option value="Pago">Pago</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Número do Pedido</th>
+                        <th>Status do Pedido</th>
+                        <th>Valor do Pedido</th>
+                        <th>Data do Pedido</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let pedido of ordenarPedidos() | statusFilter: statusSelecionado">
+                        <td> 00{{pedido.idPedido}} </td>
+                        <td> {{pedido.statusPedido}} </td>
+                        <td> R${{pedido.valor}} </td>
+                        <td> {{ formatarData(pedido.dataPedido) }} </td>
+                        
+                        <td>
+                            <button type="button" class="btn btn-xs btn-primary"
+                                *ngIf="pedido.statusPedido === 'Aguardando Pagamento'"
+                                (click)="abrirModalPedido(pedido)">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                Pagar
+                            </button>
+
+                            <button type="button" class="btn btn-xs btn-danger"
+                                *ngIf="pedido.statusPedido === 'Em Aberto'"
+                                (click)="abrirModalCancelar(pedido)">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                                Cancelar
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

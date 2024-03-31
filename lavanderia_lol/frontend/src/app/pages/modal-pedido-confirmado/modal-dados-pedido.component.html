@@ -1,0 +1,14 @@
+<div class="modal-header d-flex justify-content-center">
+  <h4 class="modal-title" id="modalLabel"> Pedido Confirmado: </h4>
+</div>
+
+<div class="modal-body text-center">
+  <div>
+      <p><strong>Data do Pedido:</strong> {{ formatarData(pedido.dataPedido) }}</p>
+      <p><strong>Data da Coleta:</strong> {{ formatarData(pedido.dataColeta) }}</p>
+      <p><strong>Data da Entrega:</strong> {{ formatarData(pedido.dataEntrega) }}</p>
+      <p><strong>Valor Total do Pedido:</strong> {{ pedido.valor | currency:'BRL':'symbol':'1.2-2' }}</p>
+      </div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="fecharModal()"> Fechar </button>
+</div>
