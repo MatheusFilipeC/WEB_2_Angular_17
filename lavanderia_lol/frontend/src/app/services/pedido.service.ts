@@ -38,6 +38,7 @@ export class PedidoService {
       if (!pedidosCadastradosAdicionados) {
     pedidos = pedidos.concat(pedidosCadastrados); 
       }
+      console.log(pedidos);
   return pedidos;
 }
 
@@ -52,6 +53,11 @@ inserir(pedido: Pedido): void {
   pedido.statusPedido = 'Em Aberto';
   pedidos.push(pedido);
   localStorage[LS_CHAVE] = JSON.stringify(pedidos);
+}
+
+buscarPorId(id: number): Pedido | undefined {
+  const pedidos = this.listarTodos();
+  return pedidos.find(pedido => pedido.idPedido === id);
 }
 
 atualizar(pedido: Pedido): void {

@@ -33,6 +33,11 @@ export class FuncionarioService {
     localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
   }
 
+  buscarPorId(id: number): Funcionario | undefined {
+    const funcionarios = this.listarTodos();
+    return funcionarios.find(funcionario => funcionario.idFuncionario === id);
+  }
+
   atualizar(funcionario: Funcionario): void {
     const funcionarios: Funcionario[] = this.listarTodos();
     funcionarios.forEach( (obj, index, objs) => {

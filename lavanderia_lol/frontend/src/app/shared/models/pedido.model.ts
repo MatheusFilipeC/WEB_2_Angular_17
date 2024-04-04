@@ -1,3 +1,6 @@
+import { RoupasPedido } from "./roupas-pedido.model";
+import { Cliente } from "./cliente.model";
+
 export class Pedido {
     constructor(
       public idPedido?: number,
@@ -7,14 +10,6 @@ export class Pedido {
       public dataEntrega?: Date,
       public valor?: number,
       public statusPedido?: string,
-      public roupas?: RoupasPedido[]) {}
-  }
-  
-  export class RoupasPedido {
-    constructor(
-      public idPedido?: number,
-      public idRoupa?: number,
-      public nomeRoupa?: string,
-      public valorLavagemPeca?: number,
-      public prazo?: number,) {}
+      public roupas?: RoupasPedido[],
+      public cliente?: Cliente[]) {}
   }
