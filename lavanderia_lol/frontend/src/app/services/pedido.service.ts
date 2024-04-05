@@ -39,7 +39,7 @@ inserir(pedido: Pedido): void {
 
 buscarPorId(id: number): Pedido | undefined {
   const pedidos = this.listarTodos();
-  return pedidos.find(pedido => pedido.idPedido === id);
+  return pedidos.find(pedido => pedido.idPedido == id);
 }
 
 atualizar(pedido: Pedido): void {
