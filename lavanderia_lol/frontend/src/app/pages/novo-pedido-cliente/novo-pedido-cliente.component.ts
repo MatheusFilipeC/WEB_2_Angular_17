@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Pedido, Roupa, SharedModule } from '../../shared';
-import { PedidoService } from '../../services';
+import { Cliente, Pedido, Roupa, SharedModule } from '../../shared';
+import { LoginService, PedidoService } from '../../services';
 import { RoupaService } from '../../services/roupa.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalAceitarComponent } from '../modal-aceitar-orcamento/modal-aceitar.component';
@@ -23,11 +23,13 @@ import { FormsModule } from '@angular/forms';
 export class NovoPedidoClienteComponent implements OnInit {
   pedido: Pedido = new Pedido();
   roupas: Roupa[] = [];
+  cliente: Cliente = new Cliente();
   roupaSelecionada: Roupa | undefined;
 
   constructor(
     private pedidoService: PedidoService,
     private roupaService: RoupaService,
+    private loginService: LoginService,
     private modalService: NgbModal
   ) {}
 
@@ -44,12 +46,21 @@ export class NovoPedidoClienteComponent implements OnInit {
         valorLavagemPeca: Number(this.roupaSelecionada.precoRoupa),
         prazo: this.roupaSelecionada.prazoLavagemRoupa
       });
-
+      if (this.loginService.usuarioLogado) {
+        const usuarioLogado = this.loginService.usuarioLogado;
+        const clientePedido: Cliente = {
+          idCliente: usuarioLogado.id,
+          nomeCliente: usuarioLogado.nome
+        };
+        this.pedido.cliente = clientePedido;
+  
       valorPedido += Number(this.roupaSelecionada.precoRoupa)
       this.roupaSelecionada = undefined;
       if (this.pedido) {
         this.pedido.roupas = roupasPedido;
         this.pedido.valor = valorPedido;
+        console.log('Pedido com cliente', this.pedido);
+        }
       }
     }
   }
