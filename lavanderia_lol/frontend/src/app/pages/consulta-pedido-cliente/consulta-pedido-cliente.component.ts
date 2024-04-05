@@ -24,16 +24,7 @@ export class ConsultaPedidoClienteComponent {
     this.pedidos = pedidoService.listarTodos();
   }
 
-  roupas: RoupasPedido[] = [];
-
-  roupasPedidos: RoupasPedido[] = [{idPedido: 1, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
-    {idPedido: 1, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
-    {idPedido: 1, idRoupa: 36, nomeRoupa: 'Short', valorLavagemPeca: 10.00},
-    {idPedido: 2, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
-    {idPedido: 2, idRoupa: 34, nomeRoupa: 'Calça', valorLavagemPeca: 30.00},
-    {idPedido: 2, idRoupa: 34, nomeRoupa: 'Cueca', valorLavagemPeca: 12.00}
-  ];
-    
+  roupas: RoupasPedido[] = [];    
   roupa: RoupasPedido | undefined;
   pedido: number | null = null;
   detalhesPedido: Pedido = {};
@@ -41,6 +32,10 @@ export class ConsultaPedidoClienteComponent {
     
   buscarPedido(pedidoNumero?: number) {
     this.detalhesPedido = this.pedidoService.buscarPorId(pedidoNumero || 0) || {};
-    this.roupas = this.roupasPedidos.filter(rp => rp.idPedido == pedidoNumero);
+    if (this.detalhesPedido && this.detalhesPedido.roupas) {
+      this.roupas = this.detalhesPedido.roupas.filter(rp => rp.idPedido == pedidoNumero);
+    } else {
+      this.roupas = [];
+    }
   }
 }
