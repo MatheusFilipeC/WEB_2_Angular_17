@@ -19,34 +19,23 @@ import { PedidoService } from '../../services';
 })
 export class ConsultaPedidoClienteComponent {
   pedidos: Pedido[] = [];
+  
   constructor (private pedidoService: PedidoService) { 
     this.pedidos = pedidoService.listarTodos();
   }
 
-  roupas: RoupasPedido[] = [];
-
-    roupasPedidos: RoupasPedido[] = [{idPedido: 1, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
-    {idPedido: 1, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
-    {idPedido: 1, idRoupa: 36, nomeRoupa: 'Short', valorLavagemPeca: 10.00},
-    {idPedido: 2, idRoupa: 34, nomeRoupa: 'Camiseta', valorLavagemPeca: 20.00},
-    {idPedido: 2, idRoupa: 34, nomeRoupa: 'Calça', valorLavagemPeca: 30.00},
-    {idPedido: 2, idRoupa: 34, nomeRoupa: 'Cueca', valorLavagemPeca: 12.00}
-  ];
+  roupas: RoupasPedido[] = [];    
+  roupa: RoupasPedido | undefined;
+  pedido: number | null = null;
+  detalhesPedido: Pedido = {};
+  roupasPedido: RoupasPedido | undefined;
     
-    roupa: RoupasPedido | undefined;
-    pedido: number | null = null;
-    detalhesPedido: Pedido = {};
-    roupasPedido: RoupasPedido | undefined;
-    
-    buscarPedido(pedidoNumero?: number) {
-      const pedidoEncontrado = this.pedidos.find(p => p.idPedido == pedidoNumero);
-      
-      if (pedidoEncontrado) {
-        this.detalhesPedido = pedidoEncontrado;
-        this.roupas = this.roupasPedidos.filter(rp => rp.idPedido == pedidoNumero);
-      } else {
-        this.detalhesPedido = {};
-        this.roupas = [];
-      }
+  buscarPedido(pedidoNumero?: number) {
+    this.detalhesPedido = this.pedidoService.buscarPorId(pedidoNumero || 0) || {};
+    if (this.detalhesPedido && this.detalhesPedido.roupas) {
+      this.roupas = this.detalhesPedido.roupas.filter(rp => rp.idPedido == pedidoNumero);
+    } else {
+      this.roupas = [];
     }
+  }
 }
