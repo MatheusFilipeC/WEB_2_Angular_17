@@ -10,6 +10,7 @@ export class Cliente {
     public bairro?: string,
     public cep?: string,
     public cidade?: string,
-    public uf?: string
+    public uf?: string,
+    public senha?: string,
   ) {}
 }
