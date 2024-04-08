@@ -1,16 +1,15 @@
 export class Cliente {
   constructor(
     public idCliente?: number,
-    public cpf?: number,
+    public cpf?: string,
     public nomeCliente?: string,
     public email?: string,
-    public cep?: number,
-    public endereco?: string,
-    public bairro?: string,
     public logradouro?: string,
+    public endereco?: string,
     public numero?: number,
+    public bairro?: string,
+    public cep?: string,
     public cidade?: string,
-    public uf?: string,
-    public senha?: string
+    public uf?: string
   ) {}
 }

@@ -9,13 +9,25 @@ export const pedidosHardCode: Pedido[] = [
     dataEstimativa: new Date('2023-09-15T14:30:00'), 
     dataColeta: new Date('2023-09-15T14:30:00'), 
     dataEntrega: new Date('2023-09-15T14:30:00'), 
-    valor: 30.00, 
+    valor: 45.00, 
     statusPedido: 'Em Aberto',
     roupas: [
       new RoupasPedido(1, 1, 'Camisa', 15.00, 1),
       new RoupasPedido(1, 2, 'Calça', 25.00, 1),
       new RoupasPedido(1, 3, 'Meia', 5.00, 1),
-    ]
+    ],
+    cliente: new Cliente (
+      3, 
+      '123456789-01', 
+      'João', 
+      'joao@mail.com', 
+      'rua', 
+      'dos perdizes',
+      174, 
+      '30010-200',
+      'Cidade Feliz',
+      'PR'
+    )
   },
 { idPedido: 2, dataPedido: new Date('2023-09-20T10:00:00'), dataEstimativa: new Date('2023-09-20T10:00:00'), dataColeta: new Date('2023-09-20T10:00:00'), 
   dataEntrega: new Date('2023-09-20T10:00:00'), valor: 49.90, statusPedido: 'Cancelado' },
