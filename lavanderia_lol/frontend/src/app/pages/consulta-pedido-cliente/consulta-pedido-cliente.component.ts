@@ -23,7 +23,7 @@ export class ConsultaPedidoClienteComponent {
   constructor (private pedidoService: PedidoService) { 
     this.pedidos = pedidoService.listarTodos();
   }
-
+///lembrete para adicionar método que filtre apenas os pedidos do cliente logado
   roupas: RoupasPedido[] = [];    
   roupa: RoupasPedido | undefined;
   pedido: number | null = null;
