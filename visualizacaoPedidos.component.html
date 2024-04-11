@@ -1,0 +1,18 @@
+<div>
+    <h2>Listagem de Pedidos</h2>
+    <select [(ngModel)]="filter">
+      <option value="all">Todos</option>
+      <option value="today">Hoje</option>
+      <option value="custom">Personalizado</option>
+    </select>
+    <input type="date" [(ngModel)]="startDate" *ngIf="filter === 'custom'">
+    <input type="date" [(ngModel)]="endDate" *ngIf="filter === 'custom'">
+    <button (click)="filterOrders()">Filtrar</button>
+  
+    <ul>
+      <li *ngFor="let order of filteredOrders">
+        {{ order.id }} - {{ order.date | date: 'medium' }} <!-- Exemplo de visualização de pedidos -->
+      </li>
+    </ul>
+  </div>
+  
