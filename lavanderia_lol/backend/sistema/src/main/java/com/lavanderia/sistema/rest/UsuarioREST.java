@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lavanderia.sistema.model.Login;
 import com.lavanderia.sistema.model.Usuario;
 
 @CrossOrigin
@@ -22,6 +23,19 @@ import com.lavanderia.sistema.model.Usuario;
 public class UsuarioREST {
 
   public static List<Usuario> lista = new ArrayList<>();
+
+  @PostMapping("/login")
+  public ResponseEntity<Usuario> login(@RequestBody Login login) {
+
+    Usuario usuario = lista.stream().filter(
+      usu -> usu.getLogin().equals(login.getLogin()) &&
+      usu.getSenha().equals(login.getSenha())).findAny().orElse(null);
+    
+    if (usuario == null)
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    else
+      return ResponseEntity.ok (usuario);
+  }
 
   @GetMapping("/usuarios")
   public List<Usuario> obterTodosUsuarios() {
@@ -37,7 +51,6 @@ public class UsuarioREST {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     else
       return ResponseEntity.ok(u);
-
   }
 
   @PostMapping("/usuarios")
@@ -57,7 +70,6 @@ public class UsuarioREST {
       usuario.setId(u.getId() + 1);
     lista.add(usuario);
     return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
-
   }
 
   @PutMapping ("/usuarios/{id}")
@@ -75,7 +87,6 @@ public class UsuarioREST {
     }
     else
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-  
   }
 
   @DeleteMapping("/usuarios/{id}")
