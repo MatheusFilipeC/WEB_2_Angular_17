@@ -32,7 +32,7 @@ public class Usuario {
     return this.nome;
   }
 
-  public void SetNome (String nome) {
+  public void setNome (String nome) {
     this.nome = nome;
   }
 
