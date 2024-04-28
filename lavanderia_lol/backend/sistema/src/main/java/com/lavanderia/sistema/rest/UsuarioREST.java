@@ -20,6 +20,7 @@ import com.lavanderia.sistema.model.Usuario;
 
 @CrossOrigin
 @RestController
+
 public class UsuarioREST {
 
   public static List<Usuario> lista = new ArrayList<>();
@@ -28,7 +29,7 @@ public class UsuarioREST {
   public ResponseEntity<Usuario> login(@RequestBody Login login) {
 
     Usuario usuario = lista.stream().filter(
-      usu -> usu.getLogin().equals(login.getLogin()) &&
+      usu -> usu.getEmail().equals(login.getLogin()) &&
       usu.getSenha().equals(login.getSenha())).findAny().orElse(null);
     
     if (usuario == null)
@@ -38,7 +39,7 @@ public class UsuarioREST {
   }
 
   @GetMapping("/usuarios")
-  public List<Usuario> obterTodosUsuarios() {
+  public static List<Usuario> obterTodosUsuarios() {
     return lista;
   }
 
@@ -57,7 +58,7 @@ public class UsuarioREST {
   public ResponseEntity<Usuario> inserirUsuario(@RequestBody Usuario usuario) {
 
     Usuario u = lista.stream().filter (
-      usu -> usu.getLogin().equals(usuario.getLogin())).findAny().orElse(null);
+      usu -> usu.getEmail().equals(usuario.getEmail())).findAny().orElse(null);
 
     if (u != null) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -80,7 +81,7 @@ public class UsuarioREST {
     
     if (u != null) {
       u.setNome(usuario.getNome());
-      u.setLogin(usuario.getLogin());
+      u.setEmail(usuario.getEmail());
       u.setSenha(usuario.getSenha());
       u.setPerfil(usuario.getPerfil());
       return ResponseEntity.ok(u);
