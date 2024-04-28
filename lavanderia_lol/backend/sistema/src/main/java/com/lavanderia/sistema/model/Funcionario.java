@@ -1,6 +1,6 @@
 package com.lavanderia.sistema.model;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Funcionario extends Usuario {
   }
 
   @Setter @Getter
-  private Date dataNascimento;
+  private LocalDateTime dataNascimento;
 
   @Setter @Getter
   private boolean habilitada;
