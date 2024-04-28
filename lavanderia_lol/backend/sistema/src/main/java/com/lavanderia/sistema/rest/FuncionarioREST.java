@@ -60,42 +60,46 @@ public class FuncionarioREST {
     else
       funcionario.setId(u.getId() + 1);
 
-    Usuario usuario = new Usuario (funcionario.getId(), funcionario.getNome(), funcionario.getEmail(), funcionario.getSenha(), "FUNC");
+    Usuario usuario = new Usuario(funcionario.getId(), funcionario.getNome(), funcionario.getEmail(),
+        funcionario.getSenha(), "FUNC");
     usuarios.add(usuario);
+
+    funcionario.setPerfil("FUNC");
+    funcionario.setHabilitada(false);
     funcionarios.add(funcionario);
+    
     return ResponseEntity.status(HttpStatus.CREATED).body(funcionario);
   }
 
-    @PutMapping ("/funcionarios/{id}")
-      public ResponseEntity<Funcionario> alterarFuncionario(@PathVariable("id") int id, @RequestBody Funcionario funcionario) {
+  @PutMapping("/funcionarios/{id}")
+  public ResponseEntity<Funcionario> alterarFuncionario(@PathVariable("id") int id,
+      @RequestBody Funcionario funcionario) {
 
-    Funcionario f = funcionarios.stream().filter (
-      func -> func.getId() == id).findAny().orElse(null);
-    
+    Funcionario f = funcionarios.stream().filter(
+        func -> func.getId() == id).findAny().orElse(null);
+
     if (f != null) {
       f.setNome(funcionario.getNome());
       f.setEmail(funcionario.getEmail());
       f.setSenha(funcionario.getSenha());
       f.setDataNascimento(funcionario.getDataNascimento());
       return ResponseEntity.ok(f);
-    }
-    else
+    } else
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 
   @DeleteMapping("/funcionarios/{id}")
-  public ResponseEntity<Funcionario> removerFuncionario (@PathVariable("id") int id) {
+  public ResponseEntity<Funcionario> removerFuncionario(@PathVariable("id") int id) {
 
     Funcionario funcionario = funcionarios.stream().filter(
-      func -> func.getId() == id).findAny().orElse(null);
-    
-      if (funcionario != null) {
-        funcionarios.removeIf(f -> f.getId() == id);
-        return ResponseEntity.ok (funcionario);
-      }
-      else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-      }
+        func -> func.getId() == id).findAny().orElse(null);
+
+    if (funcionario != null) {
+      funcionarios.removeIf(f -> f.getId() == id);
+      return ResponseEntity.ok(funcionario);
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
   }
 
   static {
