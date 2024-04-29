@@ -15,8 +15,16 @@
 }
 
 .barra-menu {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
+}
+
+.barra-menu ul {
+  margin-inline: 10px;
+}
+
+.barra-menu ul li a {
+  margin-inline: 5px;
 }
 
 .footer {
@@ -47,6 +55,10 @@
 .menu-navegacao ul li a {
   color: #000;
   margin-left: 20px;
+}
+
+.menu-home {
+  margin-left: auto;
 }
 
 .botao-cadastro a {

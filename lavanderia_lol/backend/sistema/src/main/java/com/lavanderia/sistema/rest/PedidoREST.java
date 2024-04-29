@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -85,6 +86,20 @@ public static double somarValoresRoupasDePedido(Pedido pedido) {
       pedido.setStatusPedido("Em Aberto");
       pedidos.add(pedido);
       return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+  }
+
+  @PutMapping("/pedidos/{id}")
+  public ResponseEntity<Pedido> alterarPedido(@PathVariable("id") int id, @RequestBody Pedido pedido) {
+
+   Pedido p = pedidos.stream().filter(
+        usu -> usu.getId() == id).findAny().orElse(null);
+
+    if (p != null) {
+      p.setStatusPedido(pedido.getStatusPedido());
+
+      return ResponseEntity.ok(p);
+    } else
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 
     static {
