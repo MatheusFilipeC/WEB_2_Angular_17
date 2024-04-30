@@ -18,7 +18,11 @@ import { PedidoService } from '../../services';
   styleUrl: './inicial-cliente.component.css'
 })
 export class InicialClienteComponent {
-  constructor (private pedidoService: PedidoService) { }
+  pedidos: Pedido[] = [];
+  
+  constructor (private pedidoService: PedidoService) { 
+    this.pedidos = pedidoService.listarTodos();
+  }
 
   listarPedidos(): Pedido[] {
     return this.pedidoService.listarTodos();

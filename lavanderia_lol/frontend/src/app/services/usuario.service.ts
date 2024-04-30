@@ -66,7 +66,7 @@ export class UsuarioService {
     return this.httpClient.post<Usuario>(
       this.BASE_URL, JSON.stringify(usuario), this.httpOptions).pipe(
         map((resp: HttpResponse<Usuario>) => {
-          if (resp.status==200) {
+          if (resp.status==201) {
             return resp.body;
           }
           else {

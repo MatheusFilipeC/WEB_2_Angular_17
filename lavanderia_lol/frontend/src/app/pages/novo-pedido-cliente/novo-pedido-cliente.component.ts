@@ -59,7 +59,6 @@ export class NovoPedidoClienteComponent implements OnInit {
       if (this.pedido) {
         this.pedido.roupas = roupasPedido;
         this.pedido.valor = valorPedido;
-        console.log('Pedido com cliente', this.pedido);
         }
       }
     }

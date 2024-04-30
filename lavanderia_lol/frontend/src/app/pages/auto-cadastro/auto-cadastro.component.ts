@@ -36,9 +36,7 @@ export class AutoCadastroComponent {
   inserir() {
     if (this.momentForm.valid) {
       this.cliente = this.momentForm.value;
-      console.log('Inserindo cliente:', this.cliente);
     } else {
-      console.log('Formulário inválido. Verifique os campos.');
     }
   }
 }

@@ -17,9 +17,12 @@ import { PedidoService } from '../../services';
 export class InicialFuncionarioComponent {
 
   statusSelecionado: string = '';
+    pedidos: Pedido[] = [];
   
-  constructor (private modalService: NgbModal,
-    private pedidoService: PedidoService) { }
+    constructor (private modalService: NgbModal,
+      private pedidoService: PedidoService) { 
+      this.pedidos = pedidoService.listarTodos();
+    }
 
   listarPedidos(): Pedido[] {
     return this.pedidoService.listarTodos();
@@ -50,7 +53,7 @@ mostrarBotao(statusPedido: string | undefined): boolean {
 }
 
 ordenarPedidos(): Pedido[] {
-  const pedidosOrdenados = this.listarPedidos().slice();
+  const pedidosOrdenados = this.pedidos.slice();
   pedidosOrdenados.sort((a, b) => {
     const dataA = a.dataPedido ? new Date(a.dataPedido).getTime() : 0;
     const dataB = b.dataPedido ? new Date(b.dataPedido).getTime() : 0;

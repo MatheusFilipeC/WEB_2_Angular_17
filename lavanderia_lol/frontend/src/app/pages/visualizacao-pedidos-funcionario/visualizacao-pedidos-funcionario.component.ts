@@ -16,9 +16,11 @@ import { Pedido } from '../../shared';
 export class VisualizacaoPedidosFuncionarioComponent {
   statusSelecionado: string = '';
   pedido!:Pedido;
+  pedidos: Pedido[] = [];
   
-  constructor (
-    private pedidoService: PedidoService) { }
+  constructor (private pedidoService: PedidoService) { 
+    this.pedidos = pedidoService.listarTodos();
+  }
 
   listarPedidos(): Pedido[] {
     return this.pedidoService.listarTodos();
@@ -91,7 +93,7 @@ finalizarPedido(pedido: Pedido): void {
 }
 
 ordenarPedidos(): Pedido[] {
-  const pedidosOrdenados = this.listarPedidos().slice();
+  const pedidosOrdenados = this.pedidos.slice();
   pedidosOrdenados.sort((a, b) => {
     const dataA = a.dataPedido ? new Date(a.dataPedido).getTime() : 0;
     const dataB = b.dataPedido ? new Date(b.dataPedido).getTime() : 0;

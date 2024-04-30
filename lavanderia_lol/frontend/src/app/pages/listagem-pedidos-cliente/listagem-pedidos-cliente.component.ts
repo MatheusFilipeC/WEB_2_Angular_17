@@ -21,13 +21,18 @@ import { ModalPedidoComponent } from '../modal-confirma-pagamento/modal-pedido.c
   styleUrl: './listagem-pedidos-cliente.component.css'
 })
 export class ListagemPedidosClienteComponent {
+  pedidos: Pedido[] = [];
   statusSelecionado: string="";
+
   constructor (private pedidoService: PedidoService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal) { 
+                this.pedidos = pedidoService.listarTodos();
+              }
 
   listarPedidos(): Pedido[] {
     return this.pedidoService.listarTodos();
   }
+  
   abrirModalPedido(pedido: Pedido) {
     const modalRef = this.modalService.open(ModalPedidoComponent);
     modalRef.componentInstance.pedido = pedido;
@@ -39,7 +44,7 @@ export class ListagemPedidosClienteComponent {
   }
 
   ordenarPedidos(): Pedido[] {
-    const pedidosOrdenados = this.listarPedidos().slice();
+    const pedidosOrdenados = this.pedidos.slice();
     pedidosOrdenados.sort((a, b) => {
       const dataA = a.dataPedido ? new Date(a.dataPedido).getTime() : 0;
       const dataB = b.dataPedido ? new Date(b.dataPedido).getTime() : 0;

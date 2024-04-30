@@ -64,7 +64,6 @@ export class ManutencaoRoupasFuncionarioComponent implements OnInit {
     this.linhaSelecionada = null;
     this.roupaService.atualizar(obj);
     this.listarTodos();
-    console.log(this.roupas)
   }
 }
 

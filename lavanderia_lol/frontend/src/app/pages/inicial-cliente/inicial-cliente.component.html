@@ -11,7 +11,7 @@
                         <th>Valor</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let pedido of listarPedidos()">
+                <tbody *ngFor="let pedido of pedidos">
                     <tr *ngIf="pedido.statusPedido === 'Em Aberto'">
                         <td>00{{ pedido.idPedido }}</td>
                         <td>{{ pedido.statusPedido }}</td>
