@@ -43,22 +43,31 @@ export class LoginComponent implements OnInit {
     logar(): void {
       this.loading = true;
       if (this.formLogin.form.valid) {
-        this.loginService.login(this.login).subscribe((usu) => {
-          if (usu != null) {
-            this.loginService.usuarioLogado = usu;
+        this.loginService.login(this.login).subscribe({
+          next: (usu) => {
+            if (usu != null) {
+              this.loginService.usuarioLogado = usu;
+              this.loading = false;
+                if (usu.perfil == "CLIENTE") {
+                  this.router.navigate( ["cliente/inicial"] );
+                }
+                if (usu.perfil == "FUNC") {
+                  this.router.navigate( ["funcionario/inicial"] );
+                }
+            }
+            else {
+              this.loading = false;
+              this.message = "Usuário/Senha inválidos.";
+            }
+          },
+          error: (err) => {
             this.loading = false;
-            
-            if (usu.perfil === 'CLIENTE') {
-              this.router.navigate(['/cliente/inicial']);
-            } else if (usu.perfil === 'FUNC') {
-              this.router.navigate(['/funcionario/inicial']);
-          }
-        }
-          else {
-            this.message = "Usuário/Senha inválidos.";
-          }
+            this.message = `Erro efetuando login: ${err.message}`;
+          },
         });
       }
-      this.loading = false;
+      else {
+        this.loading = false;
+      }
     }
 }
