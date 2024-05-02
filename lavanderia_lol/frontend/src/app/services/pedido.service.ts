@@ -20,7 +20,6 @@ export class PedidoService {
       if (!pedidosCadastradosAdicionados) {
     pedidos = pedidos.concat(pedidosCadastrados); 
       }
-      console.log(pedidos);
   return pedidos;
 }
 
@@ -30,7 +29,7 @@ inserir(pedido: Pedido): void {
   pedido.idPedido = novoId;
   pedido.dataPedido = new Date();
   pedido.dataColeta = this.adicionarHoras(new Date(), 2);
-  pedido.dataEntrega = this.adicionarDias(new Date(), this.encontrarMaior(pedido));
+  pedido.dataEntrega = this.adicionarDias(pedido.dataColeta, this.encontrarMaior(pedido));
   pedido.dataEstimativa = pedido.dataEntrega;
   pedido.statusPedido = 'Em Aberto';
   pedidos.push(pedido);

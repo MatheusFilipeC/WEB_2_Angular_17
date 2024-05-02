@@ -9,6 +9,7 @@
         <strong>Valor da Lavagem:</strong> {{ roupa.valorLavagemPeca | currency:'BRL':'symbol':'1.2-2' }}
       </p>
         <p><strong>Valor Total:</strong> {{ pedido.valor | currency:'BRL':'symbol':'1.2-2' }}</p>
+        <p><strong>Prazo para lavagem:</strong> {{ encontrarMaior(pedido) }} dias após a coleta</p>
         <p><strong>Confirma o pedido ?</strong></p>
         
         <button type="button" class="btn btn-xs btn-primary botao-confirmar" (click)="realizarPedido(pedido)">
@@ -16,7 +17,7 @@
           Sim
         </button>
 
-        <button type="button" class="btn btn-xs btn-danger botao-confirmar" (click)="this.activeModal.close()">
+        <button type="button" class="btn btn-xs btn-danger botao-confirmar" (click)="naoConfirma()">
           <i class="fa fa-times" aria-hidden="true"></i>
           Não
         </button>

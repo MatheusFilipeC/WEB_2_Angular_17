@@ -32,4 +32,13 @@ export class ModalAceitarComponent {
       const modalRef = this.modalService.open(ModalDadosPedidoComponent);
       modalRef.componentInstance.pedido = pedido;
     }
+
+    encontrarMaior(pedido: Pedido): number {
+        return this.pedidoService.encontrarMaior(pedido)
+    }
+
+    naoConfirma() {
+      this.activeModal.close()
+      location.reload();
+    }
 }

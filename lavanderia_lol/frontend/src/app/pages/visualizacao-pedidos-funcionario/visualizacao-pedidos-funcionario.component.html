@@ -5,11 +5,13 @@
       <h2>Visualização de Pedidos</h2>
 
       <div class="form-group">
-        <label for="statusFilter">Filtrar Pedidos:</label>
-        <select class="form-control" id="statusFilter">
+        <label for="dataFilter">Filtrar Pedidos:</label>
+        <select class="form-control" id="dataFilter" [(ngModel)]="filtroData">
           <option value="">Todos</option>
-          <option value="Em Processo">Pedidos de Hoje</option>
-          <option value="Aguardando Pagamento">Pedidos por período de datas</option>
+          <option value="hoje">Pedidos de Hoje</option>
+          <option value="semana">Pedidos da Semana</option>
+          <option value="mes">Pedidos do Mês</option>
+          <option value="ano">Pedidos do Ano</option>
         </select>
       </div>
 
@@ -24,7 +26,7 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let pedido of ordenarPedidos()">
+          <tr *ngFor="let pedido of ordenarPedidos() | dataFilter: filtroData">
             <td> 00{{pedido.idPedido}} </td>
             <td [ngClass]="getStatusClass(pedido.statusPedido)"> {{pedido.statusPedido}} </td>
             <td *ngIf="pedido.dataPedido !== undefined"> {{ formatarData(pedido.dataPedido) }}</td>

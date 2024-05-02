@@ -5,15 +5,6 @@
   margin: 0 auto;
 }
 
-.btn-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.btn-pedido {
-  width: 48%; /* 48% para deixar um espaço entre os botões */
-}
-
 .barra-menu {
   width: 100%;
   margin: 0 auto;
@@ -61,7 +52,7 @@
   margin-left: auto;
 }
 
-.botao-cadastro a {
+.btn-cadastrar a {
   background-color: #67bea6;
   border-radius: 10px;
 }
@@ -132,10 +123,6 @@
   margin-top: 20px;
 }
 
-.btn-pedido {
-  width: 100%;
-}
-
 .footer {
   position: fixed;
   bottom: 0;
@@ -150,4 +137,12 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
+}
+
+.campos-cadastro div {
+  margin-block: 20px;
+}
+
+.bg-orange {
+  background-color: orange !important;
 }

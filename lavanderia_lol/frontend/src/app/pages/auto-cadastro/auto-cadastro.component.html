@@ -2,31 +2,32 @@
   <div class="row">
 
     <div class="card-login">
-      <div class="card">
-        <div class="card-header bg-success">
-          Cadastre-se
-        </div>
-        <div class="card-body">
+
+        <div class="card-body campos-cadastro">
           <form #formCliente="ngForm">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Digite seu nome" [(ngModel)]="cliente.nomeCliente"
+              <input type="text" class="form-control" placeholder="Nome Completo" [(ngModel)]="cliente.nomeCliente"
                 name="nomeCliente" required>
             </div>
             <div class="form-group">
-              <input type="email" class="form-control" placeholder="Digite seu e-mail" [(ngModel)]="cliente.email"
+              <input type="email" class="form-control" placeholder="E-mail" [(ngModel)]="cliente.email"
                 name="email" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Digite seu CPF" [(ngModel)]="cliente.cpf" name="cpf"
-                mask="000.000.000-00" placeholder="000.000.000-00" maxlength="14" minlength="11" required>
+              <input type="text" class="form-control" placeholder="CPF (apenas números)" [(ngModel)]="cliente.cpf" 
+                name="cpf" maxlength="11" minlength="11" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Digite seu CEP" [(ngModel)]="cliente.cep" name="cep"
+              <input type="text" class="form-control" placeholder="CEP" [(ngModel)]="cliente.cep" name="cep"
                 required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Logradouro" [(ngModel)]="cliente.logradouro"
+              <input type="text" class="form-control" placeholder="Endereço" [(ngModel)]="cliente.endereco"
                 name="logradouro" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Número" [(ngModel)]="cliente.numero"
+                name="numero" required>
             </div>
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Bairro" [(ngModel)]="cliente.bairro" name="bairro"
@@ -41,14 +42,19 @@
                 name="senha" required>
             </div>
 
-            <button class="btn btn-lg btn-info btn-info" type="submit" (click)="inserir()">Cadastrar</button>
-            <a class="btn btn-secondary" [routerLink]="['/login']">
-              <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
-            </a>
+            <div>
+              <button class="btn btn-lg btn-info" type="submit" (click)="inserir()">
+                <i class="fa-regular fa-floppy-disk"></i>
+                Cadastrar</button>
+            </div>
+            <div>
+              <a class="btn btn-lg btn-secondary" [routerLink]="['/login']">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+              </a>
+            </div>
           </form>
 
         </div>
-      </div>
     </div>
   </div>
 </div>

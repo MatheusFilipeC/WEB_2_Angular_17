@@ -16,7 +16,7 @@ export class RoupaService {
       { idRoupa: 2, nomPecaRoupa: 'Calça Jeans', precoRoupa: 40.00, prazoLavagemRoupa: 3, habilitada: false },
       { idRoupa: 3, nomPecaRoupa: 'Camisa', precoRoupa: 50.00, prazoLavagemRoupa: 4, habilitada: false },
       { idRoupa: 4, nomPecaRoupa: 'Cueca', precoRoupa: 10.00, prazoLavagemRoupa: 1, habilitada: false },
-      { idRoupa: 5, nomPecaRoupa: 'Meia', precoRoupa: 5.00, prazoLavagemRoupa: 1, habilitada: false },
+      { idRoupa: 5, nomPecaRoupa: 'Par de Meias', precoRoupa: 5.00, prazoLavagemRoupa: 1, habilitada: false },
     ];
     let roupas = roupasLocalStorage ? JSON.parse(roupasLocalStorage) : [];
     const roupasAdicionadas = roupas.some(

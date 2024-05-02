@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StatusFilterPipe } from './pipes';
+import { DataFilterPipe, StatusFilterPipe } from './pipes';
 
 @NgModule({
   declarations: [
-    StatusFilterPipe
+    StatusFilterPipe,
+    DataFilterPipe
   ],
   exports: [
-    StatusFilterPipe
+    StatusFilterPipe,
+    DataFilterPipe
   ],
   imports: [
     CommonModule
