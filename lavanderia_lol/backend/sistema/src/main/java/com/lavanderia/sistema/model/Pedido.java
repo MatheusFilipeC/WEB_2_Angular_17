@@ -13,6 +13,8 @@ import lombok.Setter;
 
 public class Pedido {
 
+  public Pedido (int id, Double valor, String statusPedido, Cliente cliente, List<RoupasPedido> roupas) {} 
+
   @Getter @Setter
   private int id;
 
@@ -27,6 +29,9 @@ public class Pedido {
 
   @Getter @Setter
   private LocalDateTime dataEntrega;
+
+  @Getter @Setter
+  private LocalDateTime dataPagamento;
 
   @Getter @Setter
   private Double valor;

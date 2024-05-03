@@ -6,13 +6,15 @@ public class RoupasPedido {
   private int roupaId;
   private String pecaRoupa;
   private Double valorPeca;
+  private int quantidade;
   private int prazo;
 
-  public RoupasPedido(int pedidoId, int roupaId, String pecaRoupa, Double valorPeca, int prazo) {
+  public RoupasPedido(int pedidoId, int roupaId, String pecaRoupa, Double valorPeca, int quantidade, int prazo) {
     this.pedidoId = pedidoId;
     this.roupaId = roupaId;
     this.pecaRoupa = pecaRoupa;
     this.valorPeca = valorPeca;
+    this.quantidade = quantidade;
     this.prazo = prazo;
   }
 
@@ -46,6 +48,14 @@ public class RoupasPedido {
 
   public void setValorPeca(Double valorPeca) {
     this.valorPeca = valorPeca;
+  }
+
+  public int getQuantidade() {
+    return quantidade;
+  }
+
+  public void setQuantidade (int quantidade) {
+    this.quantidade = quantidade;
   }
 
   public int getPrazo() {

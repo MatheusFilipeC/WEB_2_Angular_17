@@ -8,6 +8,7 @@ export class Pedido {
       public dataEstimativa?: Date,
       public dataColeta?: Date,
       public dataEntrega?: Date,
+      public dataPagamento?: Date,
       public valor?: number,
       public statusPedido?: string,
       public roupas?: RoupasPedido[],

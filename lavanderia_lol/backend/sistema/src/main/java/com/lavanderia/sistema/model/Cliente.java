@@ -18,13 +18,16 @@ public class Cliente extends Usuario {
   private String cpf;
 
   @Setter @Getter
-  private String logradouro;
+  private String telefone;
 
   @Setter @Getter
   private String endereco;
 
   @Setter @Getter
   private int numero;
+
+  @Setter @Getter
+  private String complemento;
 
   @Setter @Getter
   private String bairro;

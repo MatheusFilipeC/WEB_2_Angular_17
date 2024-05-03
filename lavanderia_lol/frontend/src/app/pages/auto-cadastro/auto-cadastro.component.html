@@ -14,6 +14,10 @@
                 name="email" required>
             </div>
             <div class="form-group">
+              <input type="text" class="form-control" placeholder="Telefone" [(ngModel)]="cliente.telefone" 
+                name="telefone" maxlength="10" minlength="8" required>
+            </div>
+            <div class="form-group">
               <input type="text" class="form-control" placeholder="CPF (apenas números)" [(ngModel)]="cliente.cpf" 
                 name="cpf" maxlength="11" minlength="11" required>
             </div>
@@ -23,11 +27,15 @@
             </div>
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Endereço" [(ngModel)]="cliente.endereco"
-                name="logradouro" required>
+                name="endereco" required>
             </div>
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Número" [(ngModel)]="cliente.numero"
                 name="numero" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Complemento" [(ngModel)]="cliente.complemento"
+                name="complemento">
             </div>
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Bairro" [(ngModel)]="cliente.bairro" name="bairro"
@@ -38,13 +46,16 @@
                 required>
             </div>
             <div class="form-group">
+              <input type="text" class="form-control" placeholder="Estado (Sigla)" [(ngModel)]="cliente.uf" name="uf"
+              maxlength="2" minlength="2" required>
+            </div>
+            <div class="form-group">
               <input type="password" class="form-control" placeholder="Digite sua senha" [(ngModel)]="cliente.senha"
                 name="senha" required>
             </div>
 
             <div>
-              <button class="btn btn-lg btn-info" type="submit" (click)="inserir()">
-                <i class="fa-regular fa-floppy-disk"></i>
+              <button class="btn btn-lg btn-info" type="button" (click)="inserir()">
                 Cadastrar</button>
             </div>
             <div>

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, NgForm} from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { Cliente, SharedModule } from '../../shared';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-auto-cadastro',
@@ -16,27 +17,22 @@ import { Cliente, SharedModule } from '../../shared';
   templateUrl: './auto-cadastro.component.html',
   styleUrl: './auto-cadastro.component.css'
 })
-export class AutoCadastroComponent {
-  momentForm: FormGroup;
-  cliente: Cliente = new Cliente();
+export class AutoCadastroComponent implements OnInit {
+  @ViewChild('formCliente') formCliente! : NgForm;
+  cliente! : Cliente
 
-  constructor(private formBuilder: FormBuilder) {
-    this.momentForm = this.formBuilder.group({
-      nomeCliente: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      cpf: ['', Validators.required],
-      cep: ['', Validators.required],
-      logradouro: ['', Validators.required],
-      bairro: ['', Validators.required],
-      cidade: ['', Validators.required],
-      senha: ['', Validators.required]
-    });
+  constructor(private clienteService: ClienteService,
+              private router: Router) { }
+
+  ngOnInit(): void {
+    this.cliente = new Cliente();
   }
 
   inserir() {
-    if (this.momentForm.valid) {
-      this.cliente = this.momentForm.value;
-    } else {
+    if (this.formCliente.valid) {
+      this.clienteService.inserir(this.cliente);
+      console.log(this.cliente);
+      this.router.navigate( ["/login"]);
     }
   }
 }

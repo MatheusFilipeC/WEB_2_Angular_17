@@ -79,11 +79,12 @@ public class ClienteREST {
     if (c != null) {
       c.setNome(cliente.getNome());
       c.setEmail(cliente.getEmail());
+      c.setTelefone(cliente.getTelefone());
       c.setSenha(cliente.getSenha());
       c.setCpf(cliente.getCpf());
-      c.setLogradouro(cliente.getLogradouro());
       c.setEndereco(cliente.getEndereco());
       c.setNumero(cliente.getNumero());
+      c.setComplemento(cliente.getComplemento());
       c.setBairro(cliente.getBairro());
       c.setCidade(cliente.getCidade());
       c.setUf(cliente.getUf());

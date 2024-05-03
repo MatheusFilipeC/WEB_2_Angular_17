@@ -108,15 +108,15 @@ public static double somarValoresRoupasDePedido(Pedido pedido) {
       Cliente cliente2 = new Cliente(4, "José", "jose@mail.com");
     
       List<RoupasPedido> roupasPedido1 = new ArrayList<>();
-      roupasPedido1.add(new RoupasPedido(1, 1, "Camisa", 15.00, 4));
-      roupasPedido1.add(new RoupasPedido(1, 2, "Calça", 25.00, 3));
+      roupasPedido1.add(new RoupasPedido(1, 1, "Camisa", 15.00, 1, 4));
+      roupasPedido1.add(new RoupasPedido(1, 2, "Calça", 25.00, 1, 3));
     
       List<RoupasPedido> roupasPedido2 = new ArrayList<>();
-      roupasPedido2.add(new RoupasPedido(2, 3, "Meia", 5.00, 1));
-      roupasPedido2.add(new RoupasPedido(2, 4, "Camiseta", 20.00, 2));
+      roupasPedido2.add(new RoupasPedido(2, 3, "Meia", 5.00, 1, 1));
+      roupasPedido2.add(new RoupasPedido(2, 4, "Camiseta", 20.00, 1, 2));
 
-      pedidos.add(new Pedido(1, null, null, null, null, 40.00, "Em andamento", cliente1, roupasPedido1));
-      pedidos.add(new Pedido(2, null, null, null, null, 25.00, "Concluído", cliente2, roupasPedido2));
+      pedidos.add(new Pedido(1, 40.00, "Em andamento", cliente1, roupasPedido1));
+      pedidos.add(new Pedido(2, 25.00, "Concluído", cliente2, roupasPedido2));
 
     }
   

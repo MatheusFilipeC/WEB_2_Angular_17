@@ -4,5 +4,6 @@ export class RoupasPedido {
     public idRoupa?: number,
     public nomeRoupa?: string,
     public valorLavagemPeca?: number,
+    public quantidade?: number,
     public prazo?: number,) {}
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Pedido } from '../shared';
+import { Pedido, Usuario } from '../shared';
 import { pedidosHardCode } from '../shared/pedidos-hardcode';
+import { LoginService } from './login.service';
 
 const LS_CHAVE: string = "Pedidos";
 
@@ -9,7 +10,9 @@ const LS_CHAVE: string = "Pedidos";
 })
 export class PedidoService {
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
+
+  usuarioLogado = this.loginService.usuarioLogado;
 
   listarTodos(): Pedido[] {
     const pedidosLocalStorage = localStorage[LS_CHAVE];
@@ -20,7 +23,7 @@ export class PedidoService {
       if (!pedidosCadastradosAdicionados) {
     pedidos = pedidos.concat(pedidosCadastrados); 
       }
-  return pedidos;
+        return pedidos;
 }
 
 inserir(pedido: Pedido): void {
