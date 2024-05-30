@@ -2,7 +2,7 @@ export class Cliente {
   constructor(
     public idCliente?: number,
     public cpf?: string,
-    public nomeCliente?: string,
+    public nome?: string,
     public email?: string,
     public endereco?: string,
     public numero?: number,

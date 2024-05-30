@@ -7,6 +7,7 @@ import { Usuario } from '../shared';
   providedIn: 'root'
 })
 export class UsuarioService {
+
   BASE_URL = "http://localhost:8080/usuarios";
 
   httpOptions = {
@@ -20,12 +21,12 @@ export class UsuarioService {
 
   listarTodos(): Observable<Usuario[] | null> {
     return this.httpClient.get<Usuario[]>(
-      this.BASE_URL, this.httpOptions).pipe(
+      this.BASE_URL, 
+      this.httpOptions).pipe(
         map((resp: HttpResponse<Usuario[]>) => {
-          if (resp.status==200) {
+          if (resp.status == 200) {
             return resp.body;
-          }
-          else {
+          } else {
             return [];
           }
         }),
@@ -66,7 +67,7 @@ export class UsuarioService {
     return this.httpClient.post<Usuario>(
       this.BASE_URL, JSON.stringify(usuario), this.httpOptions).pipe(
         map((resp: HttpResponse<Usuario>) => {
-          if (resp.status==200) {
+          if (resp.status==201) {
             return resp.body;
           }
           else {

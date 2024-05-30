@@ -92,7 +92,7 @@ public static double somarValoresRoupasDePedido(Pedido pedido) {
   public ResponseEntity<Pedido> alterarPedido(@PathVariable("id") int id, @RequestBody Pedido pedido) {
 
    Pedido p = pedidos.stream().filter(
-        usu -> usu.getId() == id).findAny().orElse(null);
+        ped -> ped.getId() == id).findAny().orElse(null);
 
     if (p != null) {
       p.setStatusPedido(pedido.getStatusPedido());

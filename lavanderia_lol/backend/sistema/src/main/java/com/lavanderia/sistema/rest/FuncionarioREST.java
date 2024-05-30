@@ -27,7 +27,7 @@ public class FuncionarioREST {
   public static List<Funcionario> funcionarios = new ArrayList<>();
 
   @GetMapping("/funcionarios")
-  public ResponseEntity<List<Funcionario>> obterTodosClientes() {
+  public ResponseEntity<List<Funcionario>> obterTodosFuncionarios() {
 
     return ResponseEntity.ok(funcionarios);
   }
@@ -47,7 +47,7 @@ public class FuncionarioREST {
   public ResponseEntity<Funcionario> inserirFuncionario(@RequestBody Funcionario funcionario) {
 
     Usuario u = usuarios.stream().filter(
-        func -> func.getEmail().equals(funcionario.getEmail())).findAny().orElse(null);
+        usu -> usu.getEmail().equals(funcionario.getEmail())).findAny().orElse(null);
 
     if (u != null) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -64,7 +64,6 @@ public class FuncionarioREST {
         funcionario.getSenha(), "FUNC");
     usuarios.add(usuario);
 
-    funcionario.setPerfil("FUNC");
     funcionario.setHabilitada(false);
     funcionarios.add(funcionario);
     

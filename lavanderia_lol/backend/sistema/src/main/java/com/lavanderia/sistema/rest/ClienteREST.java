@@ -47,8 +47,8 @@ public class ClienteREST {
   @PostMapping("/clientes")
   public ResponseEntity<Cliente> inserirCliente(@RequestBody Cliente cliente) {
 
-    Usuario u = clientes.stream().filter(
-        cli -> cli.getEmail().equals(cliente.getEmail())).findAny().orElse(null);
+    Usuario u = usuarios.stream().filter(
+        usu -> usu.getEmail().equals(cliente.getEmail())).findAny().orElse(null);
 
     if (u != null) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -64,8 +64,6 @@ public class ClienteREST {
     Usuario usuario = new Usuario(cliente.getId(), cliente.getNome(), cliente.getEmail(), cliente.getSenha(),
         "CLIENTE");
     usuarios.add(usuario);
-
-    cliente.setPerfil("CLIENTE");
     clientes.add(cliente);
     return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
   }

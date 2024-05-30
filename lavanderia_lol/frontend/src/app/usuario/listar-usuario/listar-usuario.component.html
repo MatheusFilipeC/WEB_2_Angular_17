@@ -21,7 +21,7 @@
 
     <tr *ngFor="let usuario of usuarios">
       <td> {{usuario.nome }} </td>
-      <td> {{usuario.login}} </td>
+      <td> {{usuario.email}} </td>
       <td> {{usuario.perfil}} </td>
       <td class="text-center" style="width: 300px">
         <button type="button" class="btn btn-xs btn-info" (click)="abrirModal(usuario)">
