@@ -49,7 +49,7 @@ export class NovoPedidoClienteComponent implements OnInit {
       if (this.loginService.usuarioLogado) {
         const usuarioLogado = this.loginService.usuarioLogado;
         const clientePedido: Cliente = {
-          idCliente: usuarioLogado.id,
+          id: usuarioLogado.id,
           nome: usuarioLogado.nome
         };
         this.pedido.cliente = clientePedido;

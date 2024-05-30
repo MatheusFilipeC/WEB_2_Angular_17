@@ -1,57 +1,111 @@
 import { Injectable } from '@angular/core';
 import { Funcionario } from '../shared/models/funcionario.model';
-
-const LS_CHAVE: string = "funcionarios";
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FuncionarioService {
+  BASE_URL = "http://localhost:8080/funcionarios";
 
-  constructor() { }
-  listarTodos(): Funcionario[] {
-    const funcionariosLocalStorage = localStorage[LS_CHAVE];
-    const funcionariosCadastradas: Funcionario[] = [
-      { idFuncionario: 1, nomeFuncionario: 'Maria', email: "maria@mail.com", senha: "******", dataNascimento: new Date('1985-02-21'), habilitada: false },
-      { idFuncionario: 2, nomeFuncionario: 'Mário', email: "mario@mail.com", senha: "******", dataNascimento: new Date('1988-07-12'), habilitada: false },
-    ];
-    let funcionarios = funcionariosLocalStorage ? JSON.parse(funcionariosLocalStorage) : [];
-    const funcionariosCadastradasAdicionadas = funcionarios.some(
-      (cadastrada: Funcionario) => funcionariosCadastradas.some((c) => c.idFuncionario === cadastrada.idFuncionario));
-      if (!funcionariosCadastradasAdicionadas) {
-    funcionarios = funcionarios.concat(funcionariosCadastradas); 
-      }
-  return funcionarios;
+  httpOptions = {
+    observe: "response" as "response",
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
   }
 
-  inserir(funcionario: Funcionario): void {
-    const funcionarios = this.listarTodos();
-    const novoId = Math.max(...funcionarios.map(funcionario => (funcionario.idFuncionario || 0)), 0) + 1;
-    funcionario.idFuncionario = novoId;
-    funcionario.habilitada = false;
-    funcionarios.push(funcionario);
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
+  constructor(private httpClient: HttpClient) { }
+
+  listarTodos(): Observable<Funcionario[] | null> {
+    return this.httpClient.get<Funcionario[]>(
+      this.BASE_URL,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Funcionario[]>) => {
+          if (resp.status === 200) {
+            return resp.body;
+          } else {
+            return [];
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of([]);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
   }
 
-  buscarPorId(id: number): Funcionario | undefined {
-    const funcionarios = this.listarTodos();
-    return funcionarios.find(funcionario => funcionario.idFuncionario === id);
+  inserir(funcionario: Funcionario): Observable<Funcionario | null> {
+    return this.httpClient.post<Funcionario>(this.BASE_URL, JSON.stringify(funcionario),
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Funcionario>) => {
+          if(resp.status == 201) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
   }
 
-  atualizar(funcionario: Funcionario): void {
-    const funcionarios: Funcionario[] = this.listarTodos();
-    funcionarios.forEach( (obj, index, objs) => {
-      if (funcionario.idFuncionario === obj.idFuncionario) {
-        funcionario.habilitada = false;
-        objs[index] = funcionario;
-      }
-    });
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
+  buscarPorId(id: number): Observable<Funcionario | null>  {
+    return this.httpClient.get<Funcionario>(
+      this.BASE_URL + "/" + id,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Funcionario>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of (null);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
   }
 
-  remover(id: number): void {
-    let funcionarios: Funcionario[] = this.listarTodos();
-    funcionarios = funcionarios.filter(funcionario => funcionario.idFuncionario !== id);
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
+  atualizar(funcionario: Funcionario): Observable<Funcionario | null> {
+    return this.httpClient.put<Funcionario>(this.BASE_URL + "/" + funcionario.id,
+      JSON.stringify(funcionario),
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Funcionario>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  remover(id: number): Observable<Funcionario | null> {
+    return this.httpClient.delete<Funcionario>(this.BASE_URL + "/" + id,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Funcionario>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
   }
 }

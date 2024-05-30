@@ -11,8 +11,8 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Login/E-mail</th>
                         <th>Nome</th>
+                        <th>Login/E-mail</th>
                         <th>Data de Nascimento</th>
                         <th>Senha</th>
                     </tr>
@@ -20,7 +20,7 @@
                 <tbody>
                     <tr *ngFor="let Funcionario of funcionarios; let i = index">
                         <td>
-                            <input [(ngModel)]="Funcionario.nomeFuncionario" [disabled]="!Funcionario.habilitada" />
+                            <input [(ngModel)]="Funcionario.nome" [disabled]="!Funcionario.habilitada" />
                         </td>
                         <td>
                             <input [(ngModel)]="Funcionario.email" [disabled]="!Funcionario.habilitada" />
@@ -34,8 +34,8 @@
                         <td>
                             <button class="btn btn-warning mr-2" (click)="selecionarLinha(Funcionario)">Editar</button>
                             <button class="btn btn-danger mr-2"(click)="excluirLinha($event, Funcionario)">Excluir</button>
-                            <button *ngIf="Funcionario.idFuncionario === 0" class="btn btn-info" (click)="inserir(Funcionario)">Salvar</button>
-                            <button *ngIf="Funcionario.idFuncionario !== 0" class="btn btn-success" (click)="salvarEdicao(Funcionario)">Salvar</button>
+                            <button *ngIf="Funcionario.id === 0" class="btn btn-info" (click)="inserir(Funcionario)">Salvar</button>
+                            <button *ngIf="Funcionario.id !== 0" class="btn btn-success" (click)="salvarEdicao(Funcionario)">Salvar</button>
                         </td>
                     </tr>
                 </tbody>

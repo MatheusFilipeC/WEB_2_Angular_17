@@ -93,7 +93,7 @@ export class ClienteService {
   }
 
   atualizar(cliente: Cliente): Observable<Cliente | null> {
-    return this.httpClient.put<Cliente>(this.BASE_URL + "/" + cliente.idCliente,
+    return this.httpClient.put<Cliente>(this.BASE_URL + "/" + cliente.id,
       JSON.stringify(cliente),
       this.httpOptions).pipe(
         map((resp: HttpResponse<Cliente>) => {

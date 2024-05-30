@@ -16,8 +16,9 @@ import { Funcionario } from '../../shared';
 })
 export class ManutencaoFuncionariosComponent implements OnInit {
 
-  funcionario! : Funcionario;
   funcionarios: Funcionario[] = [];
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
 
   constructor(
     private funcionarioService: FuncionarioService) { }
@@ -30,8 +31,8 @@ export class ManutencaoFuncionariosComponent implements OnInit {
 
   adicionarNovaLinha(): void {
     const novoFuncionario: Funcionario = {
-      idFuncionario: 0,
-      nomeFuncionario: '',
+      id: 0,
+      nome: '',
       email: "",
       senha: "",
       dataNascimento: new Date(),
@@ -42,20 +43,38 @@ export class ManutencaoFuncionariosComponent implements OnInit {
   }
 
   selecionarLinha(index: Funcionario): void {
-    this.linhaSelecionada = index.idFuncionario;
+    this.linhaSelecionada = index.id;
     index.habilitada = true;
   }
 
   excluirLinha ($event: any, funcionario: Funcionario): void {
     $event.preventDefault();
-      this.funcionarioService.remover(funcionario.idFuncionario!);
-      this.funcionarios = this.listarTodos();
+    if (confirm(`Deseja realmente remover o funcionário ${funcionario.nome}?`)) {
+      this.funcionarioService.remover(funcionario.id).subscribe({
+        complete: () => { this.listarTodos(); },
+        error: (err) => {
+          this.mensagem = `Erro removendo funcionário ${funcionario.id} - ${funcionario.nome}`;
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`
+        }
+      });
+    }
   }
 
-  inserir(obj: Funcionario): void {
-    this.funcionarioService.inserir(obj);
-    this.linhaSelecionada = null;
-    this.listarTodos();
+  inserir(funcionario: Funcionario): void {
+    this.funcionarioService.inserir(funcionario).subscribe({
+      next: (usuario) => {
+        this.linhaSelecionada = null;
+        this.listarTodos();
+      },
+      error: (err) => {
+        this.mensagem = `Erro inserindo funcionário ${funcionario.nome}`;
+        if (err.status == 409) {
+          this.mensagem_detalhes = "Já existe usuário com esse e-mail";
+        } else {
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`
+        }
+      }
+    });
   }
 
   salvarEdicao(obj: Funcionario): void {
@@ -65,7 +84,20 @@ export class ManutencaoFuncionariosComponent implements OnInit {
   }
 
   listarTodos(): Funcionario[] {
-    return this.funcionarioService.listarTodos();
+    this.funcionarioService.listarTodos().subscribe({
+      next: (data: Funcionario[] | null) => {
+        if (data == null) {
+          this.funcionarios = [];
+        } else {
+          this.funcionarios = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de funcionários";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.funcionarios;
   }
 }
 

@@ -1,5 +1,6 @@
 package com.lavanderia.sistema.rest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -60,6 +61,8 @@ public class FuncionarioREST {
     else
       funcionario.setId(u.getId() + 1);
 
+    funcionario.setPerfil("FUNC");
+      
     Usuario usuario = new Usuario(funcionario.getId(), funcionario.getNome(), funcionario.getEmail(),
         funcionario.getSenha(), "FUNC");
     usuarios.add(usuario);
@@ -103,8 +106,8 @@ public class FuncionarioREST {
 
   static {
 
-    funcionarios.add(new Funcionario(1, "Maria", "maria@mail.com"));
-    funcionarios.add(new Funcionario(2, "Mário", "mario@mail.com"));
+    funcionarios.add(new Funcionario(1, "Maria", "maria@mail.com", "1234", "FUNC", LocalDate.of(1990, 5, 20), false ));
+    funcionarios.add(new Funcionario(2, "Mário", "mario@mail.com", "123456", "FUNC", LocalDate.of(1996, 12, 05), false ));
 
   }
 

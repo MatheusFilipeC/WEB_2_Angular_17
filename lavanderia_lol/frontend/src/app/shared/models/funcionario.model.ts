@@ -1,7 +1,7 @@
 export class Funcionario {
   constructor(
-    public idFuncionario: number,
-    public nomeFuncionario: string,
+    public id: number,
+    public nome: string,
     public email: string,
     public senha:string,
     public dataNascimento: Date,

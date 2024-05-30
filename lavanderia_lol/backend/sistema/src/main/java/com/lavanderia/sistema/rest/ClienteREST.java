@@ -61,6 +61,8 @@ public class ClienteREST {
     else
       cliente.setId(u.getId() + 1);
 
+    cliente.setPerfil("CLIENTE");
+
     Usuario usuario = new Usuario(cliente.getId(), cliente.getNome(), cliente.getEmail(), cliente.getSenha(),
         "CLIENTE");
     usuarios.add(usuario);

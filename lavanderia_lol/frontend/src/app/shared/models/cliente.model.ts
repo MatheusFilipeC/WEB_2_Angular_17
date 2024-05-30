@@ -1,6 +1,6 @@
 export class Cliente {
   constructor(
-    public idCliente?: number,
+    public id?: number,
     public cpf?: string,
     public nome?: string,
     public email?: string,
