@@ -13,7 +13,7 @@
                 </thead>
                 <tbody *ngFor="let pedido of pedidos">
                     <tr *ngIf="pedido.statusPedido === 'Em Aberto'">
-                        <td>00{{ pedido.idPedido }}</td>
+                        <td>00{{ pedido.id }}</td>
                         <td>{{ pedido.statusPedido }}</td>
                         <td *ngIf="pedido.dataColeta !== undefined">{{ formatarData(pedido.dataColeta) }}</td>
                         <td *ngIf="pedido.dataEntrega !== undefined">{{ formatarData(pedido.dataEntrega) }}</td>

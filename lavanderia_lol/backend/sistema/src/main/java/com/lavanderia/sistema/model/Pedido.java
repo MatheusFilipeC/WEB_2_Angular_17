@@ -13,7 +13,14 @@ import lombok.Setter;
 
 public class Pedido {
 
-  public Pedido (int id, Double valor, String statusPedido, Cliente cliente, List<RoupasPedido> roupas) {} 
+  public Pedido (int id, Double valor, String statusPedido, Cliente cliente, List<RoupasPedido> roupas) {
+    this.id = id;
+    this.valor = valor;
+    this.statusPedido = statusPedido;
+    this.cliente = cliente;
+    this.roupas = roupas;
+    this.dataPedido = LocalDateTime.now();
+  } 
 
   @Getter @Setter
   private int id;

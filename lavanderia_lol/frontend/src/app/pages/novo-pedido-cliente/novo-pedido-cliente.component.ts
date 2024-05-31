@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './novo-pedido-cliente.component.html',
   styleUrl: './novo-pedido-cliente.component.css'
 })
-export class NovoPedidoClienteComponent implements OnInit {
+export class NovoPedidoClienteComponent {
   pedido: Pedido = new Pedido();
   roupas: Roupa[] = [];
   cliente: Cliente = new Cliente();
@@ -33,18 +33,14 @@ export class NovoPedidoClienteComponent implements OnInit {
     private modalService: NgbModal
   ) {}
 
-  ngOnInit(): void {
-    this.roupas = this.roupaService.listarTodos();
-  }
-
   adicionarItem(): void {
     const roupasPedido = this.pedido?.roupas ?? [];
     let valorPedido = this.pedido?.valor ?? 0;
-    if (this.roupaSelecionada && this.roupaSelecionada.precoRoupa !== undefined) {
+    if (this.roupaSelecionada && this.roupaSelecionada.preco !== undefined) {
       roupasPedido.push({
-        nomeRoupa: this.roupaSelecionada.nomPecaRoupa,
-        valorLavagemPeca: Number(this.roupaSelecionada.precoRoupa),
-        prazo: this.roupaSelecionada.prazoLavagemRoupa
+        nomeRoupa: this.roupaSelecionada.pecaRoupa,
+        valorLavagemPeca: Number(this.roupaSelecionada.preco),
+        prazo: this.roupaSelecionada.prazo
       });
       if (this.loginService.usuarioLogado) {
         const usuarioLogado = this.loginService.usuarioLogado;
@@ -54,7 +50,7 @@ export class NovoPedidoClienteComponent implements OnInit {
         };
         this.pedido.cliente = clientePedido;
   
-      valorPedido += Number(this.roupaSelecionada.precoRoupa)
+      valorPedido += Number(this.roupaSelecionada.preco)
       this.roupaSelecionada = undefined;
       if (this.pedido) {
         this.pedido.roupas = roupasPedido;

@@ -9,7 +9,7 @@
       <div *ngFor="let roupa of roupas; let i = index" class="margem-esquerda">
         <input type="radio" class="form-check-input m" name="roupa" [id]="'roupa' + i"
                [(ngModel)]="roupaSelecionada" [value]="roupa">
-        <label [for]="'roupa' + i">{{ roupa.nomPecaRoupa }} - {{ roupa.precoRoupa | currency:'BRL':'symbol':'1.2-2'}} </label><br/>
+        <label [for]="'roupa' + i">{{ roupa.pecaRoupa }} - {{ roupa.preco | currency:'BRL':'symbol':'1.2-2'}} </label><br/>
       </div>
     </div>
 

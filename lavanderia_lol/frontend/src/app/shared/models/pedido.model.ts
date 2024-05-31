@@ -3,7 +3,7 @@ import { Cliente } from "./cliente.model";
 
 export class Pedido {
     constructor(
-      public idPedido?: number,
+      public id?: number,
       public dataPedido?: Date,
       public dataEstimativa?: Date,
       public dataColeta?: Date,

@@ -15,8 +15,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './manutencao-roupas-funcionario.component.css'
 })
 export class ManutencaoRoupasFuncionarioComponent implements OnInit {
-  roupa! : Roupa;
+
   roupas: Roupa[] = [];
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
 
   constructor(
     private roupaService: RoupaService) { }
@@ -28,15 +30,28 @@ export class ManutencaoRoupasFuncionarioComponent implements OnInit {
   linhaSelecionada: any = null;
 
   listarTodos(): Roupa[] {
-    return this.roupaService.listarTodos();
+    this.roupaService.listarTodos().subscribe({
+      next: (data: Roupa[] | null) => {
+        if (data == null) {
+          this.roupas = [];
+        } else {
+          this.roupas = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de funcionários";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.roupas;
   }
 
   adicionarNovaLinha(): void {
     const novaRoupa: Roupa = {
-      idRoupa: 0,
-      nomPecaRoupa: '',
-      precoRoupa: 0,
-      prazoLavagemRoupa: 0,
+      id: 0,
+      pecaRoupa: '',
+      preco: 0,
+      prazo: 0,
       habilitada: true,
     };
     this.roupas.push(novaRoupa);
@@ -44,26 +59,55 @@ export class ManutencaoRoupasFuncionarioComponent implements OnInit {
   }
 
   selecionarLinha(index: Roupa): void {
-    this.linhaSelecionada = index.idRoupa;
+    this.linhaSelecionada = index.id;
     index.habilitada = true;
   }
 
   excluirLinha ($event: any, roupa: Roupa): void {
     $event.preventDefault();
-      this.roupaService.remover(roupa.idRoupa!);
-      this.roupas = this.listarTodos();
+    if (confirm(`Deseja realmente remover a roupa ${roupa.pecaRoupa}?`)) {
+      this.roupaService.remover(roupa.id).subscribe({
+        complete: () => { this.listarTodos(); },
+        error: (err) => {
+          this.mensagem = `Erro removendo roupa ${roupa.id} - ${roupa.pecaRoupa}`;
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`
+        }
+      });
+    }
   }
 
-  inserir(obj: Roupa): void {
-    this.roupaService.inserir(obj);
-    this.linhaSelecionada = null;
-    this.listarTodos();
+  inserir(roupa: Roupa): void {
+    this.roupaService.inserir(roupa).subscribe({
+      next: (usuario) => {
+        this.linhaSelecionada = null;
+        this.listarTodos();
+      },
+      error: (err) => {
+        this.mensagem = `Erro inserindo funcionário ${roupa.pecaRoupa}`;
+        if (err.status == 409) {
+          this.mensagem_detalhes = "Já existe um usuário com esse e-mail";
+        } else {
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`
+        }
+      }
+    });
   }
 
-  salvarEdicao(obj: Roupa): void {
-    this.linhaSelecionada = null;
-    this.roupaService.atualizar(obj);
-    this.listarTodos();
+  salvarEdicao(roupa: Roupa): void {
+    this.roupaService.atualizar(roupa).subscribe({
+      next: (usuario) => {
+        this.linhaSelecionada = null;
+        this.listarTodos();
+      },
+      error: (err) => {
+        this.mensagem = `Erro inserindo funcionário ${roupa.pecaRoupa}`;
+        if (err.status == 409) {
+          this.mensagem_detalhes = "Já existe um usuário com esse e-mail";
+        } else {
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`
+        }
+      }
+    });
   }
+
 }
-

@@ -1,59 +1,111 @@
 import { Injectable } from '@angular/core';
-import { Roupa } from '../shared';
-
-const LS_CHAVE: string = "roupas";
+import { Roupa } from '../shared/models/roupa.model';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoupaService {
+  BASE_URL = "http://localhost:8080/roupas";
 
-  constructor() { }
-  listarTodos(): Roupa[] {
-    const roupasLocalStorage = localStorage[LS_CHAVE];
-    const roupasCadastradas: Roupa[] = [
-      { idRoupa: 1, nomPecaRoupa: 'Camiseta', precoRoupa: 20.00, prazoLavagemRoupa: 2, habilitada: false },
-      { idRoupa: 2, nomPecaRoupa: 'Calça Jeans', precoRoupa: 40.00, prazoLavagemRoupa: 3, habilitada: false },
-      { idRoupa: 3, nomPecaRoupa: 'Camisa', precoRoupa: 50.00, prazoLavagemRoupa: 4, habilitada: false },
-      { idRoupa: 4, nomPecaRoupa: 'Cueca', precoRoupa: 10.00, prazoLavagemRoupa: 1, habilitada: false },
-      { idRoupa: 5, nomPecaRoupa: 'Par de Meias', precoRoupa: 5.00, prazoLavagemRoupa: 1, habilitada: false },
-    ];
-    let roupas = roupasLocalStorage ? JSON.parse(roupasLocalStorage) : [];
-    const roupasAdicionadas = roupas.some(
-      (cadastrada: Roupa) => roupasCadastradas.some((c) => c.idRoupa === cadastrada.idRoupa));
-      if (!roupasAdicionadas) {
-        roupas = roupasCadastradas };
-      return roupas;
+  httpOptions = {
+    observe: "response" as "response",
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
   }
 
-  inserir(roupa: Roupa): void {
-    const roupas = this.listarTodos();
-    const novoId = Math.max(...roupas.map(roupa => (roupa.idRoupa || 0)), 0) + 1;
-    roupa.idRoupa = novoId;
-    roupa.habilitada = false;
-    roupas.push(roupa);
-    localStorage[LS_CHAVE] = JSON.stringify(roupas);
+  constructor(private httpClient: HttpClient) { }
+
+  listarTodos(): Observable<Roupa[] | null> {
+    return this.httpClient.get<Roupa[]>(
+      this.BASE_URL,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Roupa[]>) => {
+          if (resp.status === 200) {
+            return resp.body;
+          } else {
+            return [];
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of([]);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
   }
 
-  buscarPorId(id: number): Roupa | undefined {
-    const roupas = this.listarTodos();
-    return roupas.find(roupa => roupa.idRoupa === id);
+  inserir(roupa: Roupa): Observable<Roupa | null> {
+    return this.httpClient.post<Roupa>(this.BASE_URL, JSON.stringify(roupa),
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Roupa>) => {
+          if(resp.status == 201) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
   }
 
-  atualizar(roupa: Roupa): void {
-    const roupas: Roupa[] = this.listarTodos();
-    roupas.forEach( (obj, index, objs) => {
-      if (roupa.idRoupa === obj.idRoupa) {
-        roupa.habilitada = false;
-        objs[index] = roupa;
-      }
-    });
-    localStorage[LS_CHAVE] = JSON.stringify(roupas);
+  buscarPorId(id: number): Observable<Roupa | null>  {
+    return this.httpClient.get<Roupa>(
+      this.BASE_URL + "/" + id,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Roupa>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of (null);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
   }
 
-  remover(id: number): void {
-    let roupas: Roupa[] = this.listarTodos();
-    roupas = roupas.filter(roupa => roupa.idRoupa !== id);
-    localStorage[LS_CHAVE] = JSON.stringify(roupas);
+  atualizar(roupa: Roupa): Observable<Roupa | null> {
+    return this.httpClient.put<Roupa>(this.BASE_URL + "/" + roupa.id,
+      JSON.stringify(roupa),
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Roupa>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  remover(id: number): Observable<Roupa | null> {
+    return this.httpClient.delete<Roupa>(this.BASE_URL + "/" + id,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Roupa>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
   }
 }

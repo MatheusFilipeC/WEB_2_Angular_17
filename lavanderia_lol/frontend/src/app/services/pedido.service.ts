@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Pedido, Usuario } from '../shared';
-import { pedidosHardCode } from '../shared/pedidos-hardcode';
+import { Pedido } from '../shared';
 import { LoginService } from './login.service';
 
 const LS_CHAVE: string = "Pedidos";
@@ -16,10 +15,10 @@ export class PedidoService {
 
   listarTodos(): Pedido[] {
     const pedidosLocalStorage = localStorage[LS_CHAVE];
-    const pedidosCadastrados: Pedido[] = pedidosHardCode;
+    const pedidosCadastrados: Pedido[] = [];
     let pedidos = pedidosLocalStorage ? JSON.parse(pedidosLocalStorage) : [];
     const pedidosCadastradosAdicionados = pedidos.some(
-      (cadastrado: Pedido) => pedidosCadastrados.some((c) => c.idPedido === cadastrado.idPedido));
+      (cadastrado: Pedido) => pedidosCadastrados.some((c) => c.id === cadastrado.id));
       if (!pedidosCadastradosAdicionados) {
     pedidos = pedidos.concat(pedidosCadastrados); 
       }
@@ -28,8 +27,8 @@ export class PedidoService {
 
 inserir(pedido: Pedido): void {
   const pedidos = this.listarTodos();
-  const novoId = Math.max(...pedidos.map(pedido => (pedido.idPedido || 0)), 0) + 1;
-  pedido.idPedido = novoId;
+  const novoId = Math.max(...pedidos.map(pedido => (pedido.id || 0)), 0) + 1;
+  pedido.id = novoId;
   pedido.dataPedido = new Date();
   pedido.dataColeta = this.adicionarHoras(new Date(), 2);
   pedido.dataEntrega = this.adicionarDias(pedido.dataColeta, this.encontrarMaior(pedido));
@@ -41,13 +40,13 @@ inserir(pedido: Pedido): void {
 
 buscarPorId(id: number): Pedido | undefined {
   const pedidos = this.listarTodos();
-  return pedidos.find(pedido => pedido.idPedido == id);
+  return pedidos.find(pedido => pedido.id == id);
 }
 
 atualizar(pedido: Pedido): void {
   const pedidos: Pedido[] = this.listarTodos();
   pedidos.forEach( (obj, index, objs) => {
-    if (pedido.idPedido === obj.idPedido) {
+    if (pedido.id === obj.id) {
       objs[index] = pedido;
     }
   });
@@ -56,7 +55,7 @@ atualizar(pedido: Pedido): void {
 
 remover(id: number): void {
   let pedidos: Pedido[] = this.listarTodos();
-  pedidos = pedidos.filter(pedido => pedido.idPedido !== id);
+  pedidos = pedidos.filter(pedido => pedido.id !== id);
   localStorage[LS_CHAVE] = JSON.stringify(pedidos);
 }
 
@@ -82,8 +81,8 @@ encontrarMaior(pedido: Pedido): number {
 
 recusarOrcamento (pedido: Pedido) {
   const pedidos = this.listarTodos();
-  const novoId = Math.max(...pedidos.map(pedido => (pedido.idPedido || 0)), 0) + 1;
-  pedido.idPedido = novoId;
+  const novoId = Math.max(...pedidos.map(pedido => (pedido.id || 0)), 0) + 1;
+  pedido.id = novoId;
   pedido.dataPedido = new Date();
   pedido.statusPedido = 'Rejeitado';
   pedidos.push(pedido);

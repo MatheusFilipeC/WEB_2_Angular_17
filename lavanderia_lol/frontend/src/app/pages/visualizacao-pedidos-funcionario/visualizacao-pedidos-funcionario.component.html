@@ -27,7 +27,7 @@
 
         <tbody>
           <tr *ngFor="let pedido of ordenarPedidos() | dataFilter: filtroData">
-            <td> 00{{pedido.idPedido}} </td>
+            <td> 00{{pedido.id}} </td>
             <td [ngClass]="getStatusClass(pedido.statusPedido)"> {{pedido.statusPedido}} </td>
             <td *ngIf="pedido.dataPedido !== undefined"> {{ formatarData(pedido.dataPedido) }}</td>
             <td>  

@@ -110,10 +110,10 @@ public class ClienteREST {
 
   static {
 
-    clientes.add(new Cliente(3, "João", "joao@mail.com"));
-    clientes.add(new Cliente(4, "José", "jose@mail.com"));
-    clientes.add(new Cliente(5, "Joana", "joana@mail.com"));
-    clientes.add(new Cliente(6, "Joaquina", "joaquina@mail.com"));
+    clientes.add(new Cliente(3, "João", "joao@mail.com", "1234"));
+    clientes.add(new Cliente(4, "José", "jose@mail.com", "1234"));
+    clientes.add(new Cliente(5, "Joana", "joana@mail.com", "1234"));
+    clientes.add(new Cliente(6, "Joaquina", "joaquina@mail.com", "1234"));
 
   }
 

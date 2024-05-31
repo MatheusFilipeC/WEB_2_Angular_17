@@ -28,22 +28,22 @@ public class PedidoREST {
   public static List<Pedido> pedidos = new ArrayList<>();
 
   public int encontrarMaiorPrazo(Pedido pedido) {
-        int maiorPrazo = 0;
-        for (RoupasPedido roupa : pedido.getRoupas()) {
-            if (roupa.getPrazo() > maiorPrazo) {
-                maiorPrazo = roupa.getPrazo();
-            }
-        }
-        return maiorPrazo;
+    int maiorPrazo = 0;
+    for (RoupasPedido roupa : pedido.getRoupas()) {
+      if (roupa.getPrazo() > maiorPrazo) {
+        maiorPrazo = roupa.getPrazo();
+      }
+    }
+    return maiorPrazo;
   }
 
-public static double somarValoresRoupasDePedido(Pedido pedido) {
-  double totalValorRoupas = 0.0;
-  for (RoupasPedido roupa : pedido.getRoupas()) {
+  public static double somarValoresRoupasDePedido(Pedido pedido) {
+    double totalValorRoupas = 0.0;
+    for (RoupasPedido roupa : pedido.getRoupas()) {
       totalValorRoupas += roupa.getValorPeca();
+    }
+    return totalValorRoupas;
   }
-  return totalValorRoupas;
-}
 
   @GetMapping("/pedidos")
   public ResponseEntity<List<Pedido>> obterTodosPedidos() {
@@ -104,8 +104,8 @@ public static double somarValoresRoupasDePedido(Pedido pedido) {
 
     static {
 
-      Cliente cliente1 = new Cliente(3, "João", "joao@mail.com");
-      Cliente cliente2 = new Cliente(4, "José", "jose@mail.com");
+      Cliente cliente1 = new Cliente(3, "João", "joao@mail.com", "1234");
+      Cliente cliente2 = new Cliente(4, "José", "jose@mail.com", "1234");
     
       List<RoupasPedido> roupasPedido1 = new ArrayList<>();
       roupasPedido1.add(new RoupasPedido(1, 1, "Camisa", 15.00, 1, 4));
@@ -117,6 +117,7 @@ public static double somarValoresRoupasDePedido(Pedido pedido) {
 
       pedidos.add(new Pedido(1, 40.00, "Em andamento", cliente1, roupasPedido1));
       pedidos.add(new Pedido(2, 25.00, "Concluído", cliente2, roupasPedido2));
+      pedidos.add(new Pedido(3, 25.00, "Concluído", cliente2, roupasPedido2));
 
     }
   

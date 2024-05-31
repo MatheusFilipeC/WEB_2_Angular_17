@@ -29,6 +29,23 @@ export class ManutencaoFuncionariosComponent implements OnInit {
 
   linhaSelecionada: any = null;
 
+  listarTodos(): Funcionario[] {
+    this.funcionarioService.listarTodos().subscribe({
+      next: (data: Funcionario[] | null) => {
+        if (data == null) {
+          this.funcionarios = [];
+        } else {
+          this.funcionarios = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de funcionários";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.funcionarios;
+  }
+
   adicionarNovaLinha(): void {
     const novoFuncionario: Funcionario = {
       id: 0,
@@ -94,21 +111,4 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     });
   }
 
-  listarTodos(): Funcionario[] {
-    this.funcionarioService.listarTodos().subscribe({
-      next: (data: Funcionario[] | null) => {
-        if (data == null) {
-          this.funcionarios = [];
-        } else {
-          this.funcionarios = data;
-        }
-      },
-      error: (err) => {
-        this.mensagem = "Erro buscando lista de funcionários";
-        this.mensagem_detalhes = `[${err.status}] ${err.message}`
-      }
-    });
-    return this.funcionarios;
-  }
 }
-

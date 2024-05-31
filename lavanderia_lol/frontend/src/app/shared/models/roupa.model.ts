@@ -1,8 +1,8 @@
 export class Roupa {
   constructor(
-      public idRoupa: number,
-      public nomPecaRoupa: string,
-      public precoRoupa: number,
-      public prazoLavagemRoupa: number,
+      public id: number,
+      public pecaRoupa: string,
+      public preco: number,
+      public prazo: number,
       public habilitada: boolean) {}
 }

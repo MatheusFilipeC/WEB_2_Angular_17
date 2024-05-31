@@ -2,16 +2,16 @@ package com.lavanderia.sistema.model;
 
 public class RoupasPedido {
 
-  private int pedidoId;
-  private int roupaId;
+  private int idPedido;
+  private int idRoupa;
   private String pecaRoupa;
   private Double valorPeca;
   private int quantidade;
   private int prazo;
 
-  public RoupasPedido(int pedidoId, int roupaId, String pecaRoupa, Double valorPeca, int quantidade, int prazo) {
-    this.pedidoId = pedidoId;
-    this.roupaId = roupaId;
+  public RoupasPedido(int idPedido, int idRoupa, String pecaRoupa, Double valorPeca, int quantidade, int prazo) {
+    this.idPedido = idPedido;
+    this.idRoupa = idRoupa;
     this.pecaRoupa = pecaRoupa;
     this.valorPeca = valorPeca;
     this.quantidade = quantidade;
@@ -19,19 +19,19 @@ public class RoupasPedido {
   }
 
   public int getPedidoId() {
-    return pedidoId;
+    return idPedido;
   }
 
-  public void setPedidoId(int pedidoId) {
-    this.pedidoId = pedidoId;
+  public void setPedidoId(int idPedido) {
+    this.idPedido = idPedido;
   }
 
   public int getRoupaId() {
-    return roupaId;
+    return idRoupa;
   }
 
-  public void setRoupaId(int roupaId) {
-    this.roupaId = roupaId;
+  public void setRoupaId(int idRoupa) {
+    this.idRoupa = idRoupa;
   }
 
   public String getPecaRoupa() {
