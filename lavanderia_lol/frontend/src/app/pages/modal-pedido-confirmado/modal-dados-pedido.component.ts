@@ -17,13 +17,28 @@ import { RouterModule } from '@angular/router';
 })
 export class ModalDadosPedidoComponent {
   @Input() pedido!: Pedido;
+  pedidos: Pedido[] = [];
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
 
   constructor (private pedidoService: PedidoService,
-              public activeModal: NgbActiveModal,
-              ) { }
+              public activeModal: NgbActiveModal) { }
 
   listarPedidos(): Pedido[] {
-    return this.pedidoService.listarTodos();
+    this.pedidoService.listarTodos().subscribe({
+      next: (data: Pedido[] | null) => {
+        if (data == null) {
+          this.pedidos = [];
+        } else {
+          this.pedidos = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de pedidos";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.pedidos;
   }
 
   formatarData(data: Date | undefined): string {

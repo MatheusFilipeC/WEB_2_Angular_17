@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalRecolhimentoComponent } from '../modal-confirma-recolhimento/modal-recolhimento.component';
 import { Pedido } from '../../shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,38 +14,55 @@ import { PedidoService } from '../../services';
   templateUrl: './inicial-funcionario.component.html',
   styleUrl: './inicial-funcionario.component.css'
 })
-export class InicialFuncionarioComponent {
+export class InicialFuncionarioComponent implements OnInit {
 
   statusSelecionado: string = '';
     pedidos: Pedido[] = [];
+    mensagem: string = "";
+    mensagem_detalhes: string = "";
   
-    constructor (private modalService: NgbModal,
-      private pedidoService: PedidoService) { 
-      this.pedidos = pedidoService.listarTodos();
-    }
+  constructor(private modalService: NgbModal,
+    private pedidoService: PedidoService) { }
+
+  ngOnInit(): void {
+    this.listarPedidos();
+  }
 
   listarPedidos(): Pedido[] {
-    return this.pedidoService.listarTodos();
+    this.pedidoService.listarTodos().subscribe({
+      next: (data: Pedido[] | null) => {
+        if (data == null) {
+          this.pedidos = [];
+        } else {
+          this.pedidos = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de pedidos";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.pedidos;
   }
 
   getStatusClass(statusPedido: string | undefined): string {
     switch (statusPedido) {
-        case 'Em Aberto':
-            return 'bg-warning';
-        case 'Cancelado':
-            return 'text-white bg-danger';
-        case 'Recolhido':
-            return 'text-white bg-secondary';
-        case 'Aguardando Pagamento':
-            return 'text-white bg-primary';
-        case 'Pago':
-            return 'bg-orange';
-        case 'Finalizado':
-            return 'text-white bg-success';
-        default:
-            return '';
+      case 'Em Aberto':
+        return 'bg-warning';
+      case 'Cancelado':
+        return 'text-white bg-danger';
+      case 'Recolhido':
+        return 'text-white bg-secondary';
+      case 'Aguardando Pagamento':
+        return 'text-white bg-primary';
+      case 'Pago':
+        return 'bg-orange';
+      case 'Finalizado':
+        return 'text-white bg-success';
+      default:
+        return '';
     }
-}
+  }
 
 mostrarBotao(statusPedido: string | undefined): boolean {
   const statusComBotao = ['Em Aberto'];

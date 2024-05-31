@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -20,19 +20,19 @@ import { ModalPedidoComponent } from '../modal-confirma-pagamento/modal-pedido.c
   templateUrl: './listagem-pedidos-cliente.component.html',
   styleUrl: './listagem-pedidos-cliente.component.css'
 })
-export class ListagemPedidosClienteComponent {
+export class ListagemPedidosClienteComponent implements OnInit{
   pedidos: Pedido[] = [];
-  statusSelecionado: string="";
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
+  statusSelecionado: string = "";
 
   constructor (private pedidoService: PedidoService,
-              private modalService: NgbModal) { 
-                this.pedidos = pedidoService.listarTodos();
-              }
+              private modalService: NgbModal) { }
 
-  listarPedidos(): Pedido[] {
-    return this.pedidoService.listarTodos();
+  ngOnInit(): void {
+    this.listarPedidos();
   }
-  
+
   abrirModalPedido(pedido: Pedido) {
     const modalRef = this.modalService.open(ModalPedidoComponent);
     modalRef.componentInstance.pedido = pedido;
@@ -41,6 +41,23 @@ export class ListagemPedidosClienteComponent {
   abrirModalCancelar(pedido: Pedido) {
     const modalRef = this.modalService.open(ModalCancelarComponent);
     modalRef.componentInstance.pedido = pedido;
+  }
+
+  listarPedidos(): Pedido[] {
+    this.pedidoService.listarTodos().subscribe({
+      next: (data: Pedido[] | null) => {
+        if (data == null) {
+          this.pedidos = [];
+        } else {
+          this.pedidos = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de pedidos";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.pedidos;
   }
 
   ordenarPedidos(): Pedido[] {

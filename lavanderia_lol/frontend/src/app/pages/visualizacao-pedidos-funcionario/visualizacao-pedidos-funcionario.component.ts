@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PedidoService } from '../../services';
 import { Pedido, SharedModule } from '../../shared';
 import { ModalRecolhimentoComponent } from '../modal-confirma-recolhimento/modal-recolhimento.component';
@@ -18,20 +18,35 @@ import { FormsModule} from '@angular/forms';
   styleUrl: './visualizacao-pedidos-funcionario.component.css'
 })
 
-export class VisualizacaoPedidosFuncionarioComponent {
-  statusSelecionado: string = '';
-  pedido!:Pedido;
+export class VisualizacaoPedidosFuncionarioComponent implements OnInit {
   pedidos: Pedido[] = [];
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
+  statusSelecionado: string = '';
   filtroData: string = "";
   
   constructor (private pedidoService: PedidoService,
-              private modalService: NgbModal) { 
-    this.pedidos = pedidoService.listarTodos();
+              private modalService: NgbModal) { }
+
+  ngOnInit(): void {
+    this.listarPedidos();
   }
 
-
   listarPedidos(): Pedido[] {
-    return this.pedidoService.listarTodos();
+    this.pedidoService.listarTodos().subscribe({
+      next: (data: Pedido[] | null) => {
+        if (data == null) {
+          this.pedidos = [];
+        } else {
+          this.pedidos = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de pedidos";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.pedidos;
   }
 
   getStatusClass(statusPedido: string | undefined): string {

@@ -12,5 +12,5 @@ export class Pedido {
       public valor?: number,
       public statusPedido?: string,
       public roupas?: RoupasPedido[],
-      public cliente?: Cliente) {}
+      public cliente: Cliente = new Cliente()) {}
   }

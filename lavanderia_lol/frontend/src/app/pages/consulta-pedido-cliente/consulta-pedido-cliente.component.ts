@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -17,25 +17,61 @@ import { PedidoService } from '../../services';
   templateUrl: './consulta-pedido-cliente.component.html',
   styleUrl: './consulta-pedido-cliente.component.css'
 })
-export class ConsultaPedidoClienteComponent {
-  pedidos: Pedido[] = [];
-  
-  constructor (private pedidoService: PedidoService) { 
-    this.pedidos = pedidoService.listarTodos();
-  }
-///lembrete para adicionar método que filtre apenas os pedidos do cliente logado
-  roupas: RoupasPedido[] = [];    
-  roupa: RoupasPedido | undefined;
+export class ConsultaPedidoClienteComponent implements OnInit {
   pedido: number | null = null;
-  detalhesPedido: Pedido = {};
-  roupasPedido: RoupasPedido | undefined;
+  pedidos: Pedido[] = [];
+  detalhesPedido: Pedido | null = null;
+  roupas: RoupasPedido [] = [];
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
+  
+  constructor (private pedidoService: PedidoService) { }
+
+  ngOnInit(): void {
+    this.listarPedidos();
+  }
+
+  listarPedidos(): Pedido[] {
+    this.pedidoService.listarTodos().subscribe({
+      next: (data: Pedido[] | null) => {
+        if (data == null) {
+          this.pedidos = [];
+        } else {
+          this.pedidos = data;
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de pedidos";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.pedidos;
+  }
     
   buscarPedido(pedidoNumero?: number) {
-    this.detalhesPedido = this.pedidoService.buscarPorId(pedidoNumero || 0) || {};
-    if (this.detalhesPedido && this.detalhesPedido.roupas) {
-      this.roupas = this.detalhesPedido.roupas.filter(rp => rp.idPedido == pedidoNumero);
+    if (pedidoNumero != null && pedidoNumero > 0) {
+      this.pedidoService.buscarPorId(pedidoNumero).subscribe({
+        next: (data: Pedido | null) => {
+          if (data != null) {
+            this.detalhesPedido = data;
+            this.roupas = data.roupas || [];
+          } else {
+            this.detalhesPedido = null;
+            this.roupas = [];
+            this.mensagem = "Pedido não encontrado";
+          }
+        },
+        error: (err) => {
+          this.detalhesPedido = null;
+          this.roupas = [];
+          this.mensagem = "Erro buscando pedido";
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`
+        }
+      });
     } else {
+      this.detalhesPedido = null;
       this.roupas = [];
+      this.mensagem = "Número do pedido inválido";
     }
   }
 }

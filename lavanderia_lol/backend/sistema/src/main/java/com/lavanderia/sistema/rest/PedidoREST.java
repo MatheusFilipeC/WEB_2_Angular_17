@@ -106,6 +106,8 @@ public class PedidoREST {
 
       Cliente cliente1 = new Cliente(3, "João", "joao@mail.com", "1234");
       Cliente cliente2 = new Cliente(4, "José", "jose@mail.com", "1234");
+      Cliente cliente3 = new Cliente(5, "Joana", "joana@mail.com", "1234");
+      Cliente cliente4 = new Cliente(6, "Joaquina", "joaquina@mail.com", "1234");
     
       List<RoupasPedido> roupasPedido1 = new ArrayList<>();
       roupasPedido1.add(new RoupasPedido(1, 1, "Camisa", 15.00, 1, 4));
@@ -115,9 +117,10 @@ public class PedidoREST {
       roupasPedido2.add(new RoupasPedido(2, 3, "Meia", 5.00, 1, 1));
       roupasPedido2.add(new RoupasPedido(2, 4, "Camiseta", 20.00, 1, 2));
 
-      pedidos.add(new Pedido(1, 40.00, "Em andamento", cliente1, roupasPedido1));
-      pedidos.add(new Pedido(2, 25.00, "Concluído", cliente2, roupasPedido2));
-      pedidos.add(new Pedido(3, 25.00, "Concluído", cliente2, roupasPedido2));
+      pedidos.add(new Pedido(1, 40.00, "Em Aberto", cliente1, roupasPedido1));
+      pedidos.add(new Pedido(2, 25.00, "Em Aberto", cliente2, roupasPedido2));
+      pedidos.add(new Pedido(3, 25.00, "Em Aberto", cliente3, roupasPedido2));
+      pedidos.add(new Pedido(4, 25.00, "Em Aberto", cliente4, roupasPedido2));
 
     }
   

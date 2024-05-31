@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -17,30 +17,44 @@ import { PedidoService } from '../../services';
   templateUrl: './inicial-cliente.component.html',
   styleUrl: './inicial-cliente.component.css'
 })
-export class InicialClienteComponent {
+export class InicialClienteComponent implements OnInit {
   pedidos: Pedido[] = [];
+  pedidosFiltrados: Pedido [] = [];
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
   
-  constructor (private pedidoService: PedidoService) { 
-    this.pedidos = pedidoService.listarTodos();
+  constructor (private pedidoService: PedidoService) { }
+
+  usuarioLogado = this.pedidoService.usuarioLogado;
+
+  filtrarPedidosUsuarioLogado(): void {
+    this.pedidosFiltrados = this.pedidos.filter(pedido => pedido.cliente.id === this.usuarioLogado.id);
+  }
+
+  ngOnInit(): void {
+    this.listarPedidos();
   }
 
   listarPedidos(): Pedido[] {
-    return this.pedidoService.listarTodos();
+    this.pedidoService.listarTodos().subscribe({
+      next: (data: Pedido[] | null) => {
+        if (data == null) {
+          this.pedidos = [];
+        } else {
+          this.pedidos = data;
+          this.filtrarPedidosUsuarioLogado();
+        }
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando lista de pedidos";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
+    return this.pedidos;
   }
   
   formatarData(data: Date): string {
-    const dataObj = new Date(data);
-  
-    if (isNaN(dataObj.getTime())) {
-      return 'Data inválida';
-    }
-  
-    const dia = String(dataObj.getDate()).padStart(2, '0');
-    const mes = String(dataObj.getMonth() + 1).padStart(2, '0'); 
-    const ano = String(dataObj.getFullYear());
-    const hora = String(dataObj.getHours()).padStart(2, '0');
-    const minutos = String(dataObj.getMinutes()).padStart(2, '0');
-  
-    return `${dia}-${mes}-${ano} ${hora}:${minutos}`;
+    const date = new Date(data);
+    return date.toLocaleDateString('pt-BR');
   }
 }

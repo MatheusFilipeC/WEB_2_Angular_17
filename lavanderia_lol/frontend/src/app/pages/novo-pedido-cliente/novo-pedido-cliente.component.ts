@@ -28,7 +28,6 @@ export class NovoPedidoClienteComponent {
 
   constructor(
     private pedidoService: PedidoService,
-    private roupaService: RoupaService,
     private loginService: LoginService,
     private modalService: NgbModal
   ) {}
@@ -65,9 +64,11 @@ export class NovoPedidoClienteComponent {
     modalRef.componentInstance.pedido = pedido;
   }
 
-  recusarOrcamento(pedido: Pedido): void {
-    this.pedidoService.recusarOrcamento(pedido);
+  recusarOrcamento (pedido: Pedido) {
+    pedido.dataPedido = new Date();
+    pedido.statusPedido = 'Rejeitado';
+    this.pedidoService.inserir(pedido);
+    location.reload();
   }
-
 }
 

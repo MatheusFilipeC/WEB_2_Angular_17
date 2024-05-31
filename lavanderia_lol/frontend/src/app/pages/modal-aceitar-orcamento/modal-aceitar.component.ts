@@ -18,27 +18,31 @@ export class ModalAceitarComponent {
   @Input() pedido!: Pedido;
 
   constructor(
-        public activeModal: NgbActiveModal,
-        private modalService: NgbModal,
-        private pedidoService: PedidoService) {}
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal,
+    private pedidoService: PedidoService) { }
 
-    realizarPedido(pedido: Pedido): void {
-      this.pedidoService.inserir(pedido);
-      this.activeModal.close();
-      this.abrirModalDadosPedido(this.pedido);
-    }
+  realizarPedido(pedido: Pedido): void {
+    this.pedidoService.inserir(pedido);
+    this.activeModal.close();
+    this.abrirModalDadosPedido(this.pedido);
+  }
 
-    abrirModalDadosPedido(pedido: Pedido) {
-      const modalRef = this.modalService.open(ModalDadosPedidoComponent);
-      modalRef.componentInstance.pedido = pedido;
-    }
+  abrirModalDadosPedido(pedido: Pedido) {
+    const modalRef = this.modalService.open(ModalDadosPedidoComponent);
+    modalRef.componentInstance.pedido = pedido;
+  }
 
-    encontrarMaior(pedido: Pedido): number {
-        return this.pedidoService.encontrarMaior(pedido)
+  encontrarMaior(pedido: Pedido): number {
+    if (pedido.roupas !== undefined) {
+      return pedido.roupas.reduce((maxPrazo, roupa) => Math.max(maxPrazo, roupa.prazo || 0), 0);
+    } else {
+      return 0;
     }
+  }
 
-    naoConfirma() {
-      this.activeModal.close()
-      location.reload();
-    }
+  naoConfirma() {
+    this.activeModal.close()
+    location.reload();
+  }
 }

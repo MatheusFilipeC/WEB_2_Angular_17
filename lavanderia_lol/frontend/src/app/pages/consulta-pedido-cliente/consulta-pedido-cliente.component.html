@@ -27,9 +27,9 @@
                         </table>
                     </div>
                     <div class="card-body">
-                        <p><strong>Preço Total (R$):</strong> <span [textContent]="detalhesPedido.valor"></span> </p>
-                        <p><strong>Prazo do Serviço:</strong> <span [textContent]="detalhesPedido.dataEstimativa"></span> </p>
-                        <p><strong>Situação:</strong> <span [textContent]="detalhesPedido.statusPedido"></span> </p>
+                        <p><strong>Preço Total (R$):</strong> <span [textContent]="detalhesPedido?.valor"></span> </p>
+                        <p><strong>Prazo do Serviço:</strong> <span [textContent]="detalhesPedido?.dataEstimativa"></span> </p>
+                        <p><strong>Situação:</strong> <span [textContent]="detalhesPedido?.statusPedido"></span> </p>
                     </div>
                 </div>
             </div>

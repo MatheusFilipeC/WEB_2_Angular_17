@@ -1,92 +1,118 @@
 import { Injectable } from '@angular/core';
 import { Pedido } from '../shared';
 import { LoginService } from './login.service';
-
-const LS_CHAVE: string = "Pedidos";
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
 
-  constructor(private loginService: LoginService) { }
+  BASE_URL = "http://localhost:8080/pedidos";
+
+  httpOptions = {
+    observe: "response" as "response",
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
+  constructor(private loginService: LoginService,
+    private httpClient: HttpClient) { }
 
   usuarioLogado = this.loginService.usuarioLogado;
 
-  listarTodos(): Pedido[] {
-    const pedidosLocalStorage = localStorage[LS_CHAVE];
-    const pedidosCadastrados: Pedido[] = [];
-    let pedidos = pedidosLocalStorage ? JSON.parse(pedidosLocalStorage) : [];
-    const pedidosCadastradosAdicionados = pedidos.some(
-      (cadastrado: Pedido) => pedidosCadastrados.some((c) => c.id === cadastrado.id));
-      if (!pedidosCadastradosAdicionados) {
-    pedidos = pedidos.concat(pedidosCadastrados); 
-      }
-        return pedidos;
-}
-
-inserir(pedido: Pedido): void {
-  const pedidos = this.listarTodos();
-  const novoId = Math.max(...pedidos.map(pedido => (pedido.id || 0)), 0) + 1;
-  pedido.id = novoId;
-  pedido.dataPedido = new Date();
-  pedido.dataColeta = this.adicionarHoras(new Date(), 2);
-  pedido.dataEntrega = this.adicionarDias(pedido.dataColeta, this.encontrarMaior(pedido));
-  pedido.dataEstimativa = pedido.dataEntrega;
-  pedido.statusPedido = 'Em Aberto';
-  pedidos.push(pedido);
-  localStorage[LS_CHAVE] = JSON.stringify(pedidos);
-}
-
-buscarPorId(id: number): Pedido | undefined {
-  const pedidos = this.listarTodos();
-  return pedidos.find(pedido => pedido.id == id);
-}
-
-atualizar(pedido: Pedido): void {
-  const pedidos: Pedido[] = this.listarTodos();
-  pedidos.forEach( (obj, index, objs) => {
-    if (pedido.id === obj.id) {
-      objs[index] = pedido;
-    }
-  });
-  localStorage[LS_CHAVE] = JSON.stringify(pedidos);
-}
-
-remover(id: number): void {
-  let pedidos: Pedido[] = this.listarTodos();
-  pedidos = pedidos.filter(pedido => pedido.id !== id);
-  localStorage[LS_CHAVE] = JSON.stringify(pedidos);
-}
-
-adicionarDias(data: Date, dias: number) {
-  const novaData = new Date(data);
-  novaData.setDate(novaData.getDate() + dias);
-  return novaData;
-}
-
-adicionarHoras(data: Date, horas: number) {
-  const novaData = new Date(data);
-  novaData.setHours(novaData.getHours() + horas);
-  return novaData;
-}
-
-encontrarMaior(pedido: Pedido): number {
-  if (pedido.roupas !== undefined) {
-  return pedido.roupas.reduce((maxPrazo, roupa) => Math.max(maxPrazo, roupa.prazo || 0), 0);
-  } else {
-    return 0;
+  listarTodos(): Observable<Pedido[] | null> {
+    return this.httpClient.get<Pedido[]>(
+      this.BASE_URL,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Pedido[]>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return [];
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of([]);
+          } else {
+            return throwError(() => err)
+          }
+        })
+      );
   }
-}
 
-recusarOrcamento (pedido: Pedido) {
-  const pedidos = this.listarTodos();
-  const novoId = Math.max(...pedidos.map(pedido => (pedido.id || 0)), 0) + 1;
-  pedido.id = novoId;
-  pedido.dataPedido = new Date();
-  pedido.statusPedido = 'Rejeitado';
-  pedidos.push(pedido);
-  localStorage[LS_CHAVE] = JSON.stringify(pedidos);
-  location.reload();
-}
+  inserir(pedido: Pedido): Observable<Pedido | null> {
+    return this.httpClient.post<Pedido>(this.BASE_URL,
+      JSON.stringify(pedido),
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Pedido>) => {
+          if (resp.status == 201) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  buscarPorId(id: number): Observable<Pedido | null> {
+    return this.httpClient.get<Pedido>(
+      this.BASE_URL + "/" + id,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Pedido>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          if (err.status == 404) {
+            return of(null);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
+  }
+
+  atualizar(pedido: Pedido): Observable<Pedido | null> {
+    return this.httpClient.put<Pedido>(this.BASE_URL + "/" + pedido.id,
+      JSON.stringify(pedido),
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Pedido>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError ((err, caught) => {
+          return throwError(() => err);
+        })
+      );
+  }
+
+  remover(id: number): Observable<Pedido | null> {
+    return this.httpClient.delete<Pedido>(this.BASE_URL + "/" + id,
+      this.httpOptions).pipe(
+        map((resp: HttpResponse<Pedido>) => {
+          if (resp.status == 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err, caught) => {
+          return throwError(() => err);
+        })
+      )
+  }
+
 }
