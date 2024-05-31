@@ -78,7 +78,7 @@ export class ManutencaoRoupasFuncionarioComponent implements OnInit {
 
   inserir(roupa: Roupa): void {
     this.roupaService.inserir(roupa).subscribe({
-      next: (usuario) => {
+      next: (response) => {
         this.linhaSelecionada = null;
         this.listarTodos();
       },

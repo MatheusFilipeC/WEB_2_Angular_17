@@ -79,7 +79,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
 
   inserir(funcionario: Funcionario): void {
     this.funcionarioService.inserir(funcionario).subscribe({
-      next: (usuario) => {
+      next: (response) => {
         this.linhaSelecionada = null;
         this.listarTodos();
       },

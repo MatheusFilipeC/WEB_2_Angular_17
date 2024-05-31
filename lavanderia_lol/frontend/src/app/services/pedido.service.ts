@@ -115,4 +115,12 @@ export class PedidoService {
       )
   }
 
+  determinarPrazo(pedido: Pedido): number {
+    if (pedido.roupas !== undefined) {
+      return pedido.roupas.reduce((maxPrazo, roupa) => Math.max(maxPrazo, roupa.prazo || 0), 0);
+    } else {
+      return 0;
+    }
+  }
+
 }

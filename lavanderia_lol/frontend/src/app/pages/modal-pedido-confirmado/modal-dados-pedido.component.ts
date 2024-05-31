@@ -24,23 +24,6 @@ export class ModalDadosPedidoComponent {
   constructor (private pedidoService: PedidoService,
               public activeModal: NgbActiveModal) { }
 
-  listarPedidos(): Pedido[] {
-    this.pedidoService.listarTodos().subscribe({
-      next: (data: Pedido[] | null) => {
-        if (data == null) {
-          this.pedidos = [];
-        } else {
-          this.pedidos = data;
-        }
-      },
-      error: (err) => {
-        this.mensagem = "Erro buscando lista de pedidos";
-        this.mensagem_detalhes = `[${err.status}] ${err.message}`
-      }
-    });
-    return this.pedidos;
-  }
-
   formatarData(data: Date | undefined): string {
     if (data === undefined) {
       return 'Data inválida';

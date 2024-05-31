@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { FormsModule, NgForm} from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Cliente, SharedModule } from '../../shared';
 import { ClienteService } from '../../services/cliente.service';
@@ -9,8 +9,8 @@ import { ClienteService } from '../../services/cliente.service';
   selector: 'app-auto-cadastro',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
+    CommonModule,
+    FormsModule,
     RouterModule,
     SharedModule
   ],
@@ -18,19 +18,19 @@ import { ClienteService } from '../../services/cliente.service';
   styleUrl: './auto-cadastro.component.css'
 })
 export class AutoCadastroComponent {
-  @ViewChild('formCliente') formCliente! : NgForm;
-  cliente : Cliente = new Cliente();
+  @ViewChild('formCliente') formCliente!: NgForm;
+  cliente: Cliente = new Cliente();
   mensagem: string = "";
   mensagem_detalhes: string = "";
 
   constructor(private clienteService: ClienteService,
-              private router: Router) { }
+    private router: Router) { }
 
   inserir(): void {
     if (this.formCliente.form.valid) {
       this.clienteService.inserir(this.cliente).subscribe({
-        next: (usuario) => {
-          this.router.navigate( ["/login"] );
+        next: (response) => {
+          this.router.navigate(["/login"]);
         },
         error: (err) => {
           this.mensagem = `Erro no cadastro do cliente ${this.cliente.nome}`;
@@ -42,7 +42,7 @@ export class AutoCadastroComponent {
         }
       });
       console.log(this.cliente);
-      this.router.navigate( ["/login"]);
+      this.router.navigate(["/login"]);
     }
   }
 }

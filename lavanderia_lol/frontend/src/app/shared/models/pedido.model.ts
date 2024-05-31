@@ -10,6 +10,7 @@ export class Pedido {
       public dataEntrega?: Date,
       public dataPagamento?: Date,
       public valor?: number,
+      public prazo?: number,
       public statusPedido?: string,
       public roupas?: RoupasPedido[],
       public cliente: Cliente = new Cliente()) {}

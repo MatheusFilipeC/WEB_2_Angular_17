@@ -22,12 +22,16 @@ import { ModalPedidoComponent } from '../modal-confirma-pagamento/modal-pedido.c
 })
 export class ListagemPedidosClienteComponent implements OnInit{
   pedidos: Pedido[] = [];
+  pedidosFiltrados: Pedido [] = [];
   mensagem: string = "";
   mensagem_detalhes: string = "";
   statusSelecionado: string = "";
 
   constructor (private pedidoService: PedidoService,
               private modalService: NgbModal) { }
+
+  usuarioLogado = this.pedidoService.usuarioLogado;
+
 
   ngOnInit(): void {
     this.listarPedidos();
@@ -61,8 +65,8 @@ export class ListagemPedidosClienteComponent implements OnInit{
   }
 
   ordenarPedidos(): Pedido[] {
-    const pedidosOrdenados = this.pedidos.slice();
-    pedidosOrdenados.sort((a, b) => {
+    const pedidosCliente = this.pedidosFiltrados = this.pedidos.filter(pedido => pedido.cliente.id === this.usuarioLogado.id);
+    const pedidosOrdenados = pedidosCliente.slice().sort((a, b) => {
       const dataA = a.dataPedido ? new Date(a.dataPedido).getTime() : 0;
       const dataB = b.dataPedido ? new Date(b.dataPedido).getTime() : 0;
       return dataB - dataA;
@@ -84,5 +88,9 @@ export class ListagemPedidosClienteComponent implements OnInit{
     const minutos = String(dataObj.getMinutes()).padStart(2, '0');
   
     return `${dia}-${mes}-${ano} ${hora}:${minutos}`;
+  }
+
+  temPedidos(): boolean {
+    return this.pedidosFiltrados.length > 0;
   }
 }

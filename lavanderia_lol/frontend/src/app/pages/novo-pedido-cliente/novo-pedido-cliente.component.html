@@ -26,7 +26,7 @@
       <h2>Itens do Pedido:</h2>
       <ul>
         <li *ngFor="let item of pedido.roupas">
-          {{ item.nomeRoupa }} - {{ item.valorLavagemPeca | currency:'BRL':'symbol':'1.2-2'}}
+          {{ item.pecaRoupa }} - {{ item.valorPeca | currency:'BRL':'symbol':'1.2-2'}}
         </li>
       </ul>
       <p>Total: {{ pedido.valor | currency:'BRL':'symbol':'1.2-2'}}</p>

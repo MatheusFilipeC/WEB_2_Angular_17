@@ -57,4 +57,9 @@ export class InicialClienteComponent implements OnInit {
     const date = new Date(data);
     return date.toLocaleDateString('pt-BR');
   }
+
+  temPedidosEmAberto(): boolean {
+    return this.pedidosFiltrados.some(pedido => pedido.statusPedido === 'Em Aberto');
+  }
+  
 }

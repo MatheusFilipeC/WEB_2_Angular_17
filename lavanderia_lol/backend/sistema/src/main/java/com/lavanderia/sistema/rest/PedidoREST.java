@@ -1,7 +1,5 @@
 package com.lavanderia.sistema.rest;
 
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lavanderia.sistema.model.Cliente;
 import com.lavanderia.sistema.model.Pedido;
 import com.lavanderia.sistema.model.RoupasPedido;
 
@@ -73,25 +70,29 @@ public class PedidoREST {
     else
       pedido.setId(p.getId() + 1);
 
-      int maiorPrazo = encontrarMaiorPrazo(pedido);
+    if ("Rejeitado".equals(pedido.getStatusPedido())) {
+      pedido.setDataColeta(null);
+      pedido.setDataEntrega(null);
+    } else {
       double total = somarValoresRoupasDePedido(pedido);
-      LocalDateTime dataPedido = LocalDateTime.now();
-      LocalDateTime dataColeta = dataPedido.plusHours(4);
-      LocalDateTime dataEntrega = dataColeta.plusDays(maiorPrazo);
-
-      pedido.setDataPedido(dataPedido);
-      pedido.setDataColeta(dataColeta);
-      pedido.setDataEntrega(dataEntrega);
       pedido.setValor(total);
       pedido.setStatusPedido("Em Aberto");
-      pedidos.add(pedido);
-      return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+    }
+
+    if (pedido.getRoupas() != null) {
+      for (RoupasPedido roupasPedido : pedido.getRoupas()) {
+          roupasPedido.setPedidoId(pedido.getId());
+      }
+  }
+
+    pedidos.add(pedido);
+    return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
   }
 
   @PutMapping("/pedidos/{id}")
   public ResponseEntity<Pedido> alterarPedido(@PathVariable("id") int id, @RequestBody Pedido pedido) {
 
-   Pedido p = pedidos.stream().filter(
+    Pedido p = pedidos.stream().filter(
         ped -> ped.getId() == id).findAny().orElse(null);
 
     if (p != null) {
@@ -102,26 +103,4 @@ public class PedidoREST {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 
-    static {
-
-      Cliente cliente1 = new Cliente(3, "João", "joao@mail.com", "1234");
-      Cliente cliente2 = new Cliente(4, "José", "jose@mail.com", "1234");
-      Cliente cliente3 = new Cliente(5, "Joana", "joana@mail.com", "1234");
-      Cliente cliente4 = new Cliente(6, "Joaquina", "joaquina@mail.com", "1234");
-    
-      List<RoupasPedido> roupasPedido1 = new ArrayList<>();
-      roupasPedido1.add(new RoupasPedido(1, 1, "Camisa", 15.00, 1, 4));
-      roupasPedido1.add(new RoupasPedido(1, 2, "Calça", 25.00, 1, 3));
-    
-      List<RoupasPedido> roupasPedido2 = new ArrayList<>();
-      roupasPedido2.add(new RoupasPedido(2, 3, "Meia", 5.00, 1, 1));
-      roupasPedido2.add(new RoupasPedido(2, 4, "Camiseta", 20.00, 1, 2));
-
-      pedidos.add(new Pedido(1, 40.00, "Em Aberto", cliente1, roupasPedido1));
-      pedidos.add(new Pedido(2, 25.00, "Em Aberto", cliente2, roupasPedido2));
-      pedidos.add(new Pedido(3, 25.00, "Em Aberto", cliente3, roupasPedido2));
-      pedidos.add(new Pedido(4, 25.00, "Em Aberto", cliente4, roupasPedido2));
-
-    }
-  
 }
