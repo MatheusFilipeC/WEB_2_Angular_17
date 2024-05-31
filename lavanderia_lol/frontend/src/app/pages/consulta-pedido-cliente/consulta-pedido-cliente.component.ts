@@ -17,61 +17,50 @@ import { PedidoService } from '../../services';
   templateUrl: './consulta-pedido-cliente.component.html',
   styleUrl: './consulta-pedido-cliente.component.css'
 })
-export class ConsultaPedidoClienteComponent implements OnInit {
-  pedido: number | null = null;
+export class ConsultaPedidoClienteComponent {
+  id: number | null = null;
   pedidos: Pedido[] = [];
-  detalhesPedido: Pedido | null = null;
+  pedido: Pedido | null = null;
   roupas: RoupasPedido [] = [];
   mensagem: string = "";
   mensagem_detalhes: string = "";
   
   constructor (private pedidoService: PedidoService) { }
 
-  ngOnInit(): void {
-    this.listarPedidos();
-  }
+  pedidoEncontrado: boolean = false;
+  usuarioLogado = this.pedidoService.usuarioLogado;
 
-  listarPedidos(): Pedido[] {
-    this.pedidoService.listarTodos().subscribe({
-      next: (data: Pedido[] | null) => {
-        if (data == null) {
-          this.pedidos = [];
-        } else {
-          this.pedidos = data;
-        }
-      },
-      error: (err) => {
-        this.mensagem = "Erro buscando lista de pedidos";
-        this.mensagem_detalhes = `[${err.status}] ${err.message}`
-      }
-    });
-    return this.pedidos;
-  }
-    
-  buscarPedido(pedidoNumero?: number) {
-    if (pedidoNumero != null && pedidoNumero > 0) {
-      this.pedidoService.buscarPorId(pedidoNumero).subscribe({
+  buscarPedido(idPedido: number) {
+      this.pedidoService.buscarPorId(idPedido).subscribe({
         next: (data: Pedido | null) => {
           if (data != null) {
-            this.detalhesPedido = data;
-            this.roupas = data.roupas || [];
+            if (data.cliente.id === this.usuarioLogado.id) {
+              this.pedido = data;
+              this.roupas = data.roupas || [];
+              this.pedidoEncontrado = true;
+            } else {
+              this.mensagem = "Cliente não possui nenhum pedido com esse número";
+            }
           } else {
-            this.detalhesPedido = null;
-            this.roupas = [];
-            this.mensagem = "Pedido não encontrado";
+            this.pedidoEncontrado = false;
+            this.mensagem = "Cliente não possui nenhum pedido com esse número";
           }
         },
         error: (err) => {
-          this.detalhesPedido = null;
-          this.roupas = [];
           this.mensagem = "Erro buscando pedido";
           this.mensagem_detalhes = `[${err.status}] ${err.message}`
         }
       });
-    } else {
-      this.detalhesPedido = null;
-      this.roupas = [];
-      this.mensagem = "Número do pedido inválido";
-    }
   }
+
+formatarData(data: Date | undefined): string {
+  if (data) {
+    const date = new Date(data);
+    return date.toLocaleDateString('pt-BR');
+  } else {
+    return 'Data inválida';
+  }
+}
+
+  
 }
