@@ -79,15 +79,27 @@ public class FuncionarioREST {
 
     Funcionario f = funcionarios.stream().filter(
         func -> func.getId() == id).findAny().orElse(null);
+    Usuario u = usuarios.stream().filter(
+          user -> user.getId() == id).findAny().orElse(null);
+    Usuario usu = usuarios.stream().filter(
+          user -> (user.getId() != id) && user.getEmail().equals(funcionario.getEmail())).findAny().orElse(null);
 
-    if (f != null) {
+    if (f != null && u != null && usu == null) {
       f.setNome(funcionario.getNome());
       f.setEmail(funcionario.getEmail());
       f.setSenha(funcionario.getSenha());
       f.setDataNascimento(funcionario.getDataNascimento());
+      u.setNome(funcionario.getNome());
+      u.setEmail(funcionario.getEmail());
+      u.setSenha(funcionario.getSenha());
       return ResponseEntity.ok(f);
     } else
+    if (usu != null) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+    } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
   }
 
   @DeleteMapping("/funcionarios/{id}")
@@ -95,9 +107,12 @@ public class FuncionarioREST {
 
     Funcionario funcionario = funcionarios.stream().filter(
         func -> func.getId() == id).findAny().orElse(null);
+    Usuario usuario = usuarios.stream().filter(
+        func -> func.getId() == id).findAny().orElse(null);
 
-    if (funcionario != null) {
+    if (funcionario != null && usuario != null) {
       funcionarios.removeIf(f -> f.getId() == id);
+      usuarios.removeIf(f -> f.getId() == id);
       return ResponseEntity.ok(funcionario);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

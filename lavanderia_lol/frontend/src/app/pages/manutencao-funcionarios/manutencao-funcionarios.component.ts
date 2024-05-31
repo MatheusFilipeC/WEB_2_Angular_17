@@ -69,7 +69,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
       error: (err) => {
         this.mensagem = `Erro inserindo funcionário ${funcionario.nome}`;
         if (err.status == 409) {
-          this.mensagem_detalhes = "Já existe usuário com esse e-mail";
+          this.mensagem_detalhes = "Já existe um usuário com esse e-mail";
         } else {
           this.mensagem_detalhes = `[${err.status}] ${err.message}`
         }
@@ -77,10 +77,21 @@ export class ManutencaoFuncionariosComponent implements OnInit {
     });
   }
 
-  salvarEdicao(obj: Funcionario): void {
-    this.linhaSelecionada = null;
-    this.funcionarioService.atualizar(obj);
-    this.listarTodos();
+  salvarEdicao(funcionario: Funcionario): void {
+    this.funcionarioService.atualizar(funcionario).subscribe({
+      next: (usuario) => {
+        this.linhaSelecionada = null;
+        this.listarTodos();
+      },
+      error: (err) => {
+        this.mensagem = `Erro inserindo funcionário ${funcionario.nome}`;
+        if (err.status == 409) {
+          this.mensagem_detalhes = "Já existe um usuário com esse e-mail";
+        } else {
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`
+        }
+      }
+    });
   }
 
   listarTodos(): Funcionario[] {
