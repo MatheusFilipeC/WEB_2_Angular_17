@@ -112,7 +112,8 @@ public class UsuarioREST {
     usuarios.add(new Usuario(4, "José", "jose", "1234", "CLIENTE"));
     usuarios.add(new Usuario(5, "Joana", "joana", "1234", "CLIENTE"));
     usuarios.add(new Usuario(6, "Joaquina", "joaquina", "1234", "CLIENTE"));
-
+    usuarios.add(new Usuario(7, "Admin", "admin", "admin", "FUNC"));
+    usuarios.add(new Usuario(8, "Cliente", "cliente", "cliente", "CLIENTE"));
   }
 
 }
