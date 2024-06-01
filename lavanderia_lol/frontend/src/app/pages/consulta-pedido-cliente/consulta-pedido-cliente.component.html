@@ -10,7 +10,7 @@
       </div>
 
       <div id="pedidoDetalhes" *ngIf="pedidoEncontrado">
-        <h3>Dados do Pedido</h3>
+        <h3>Dados do Pedido nº {{ pedido?.id }}</h3>
         <div class="card">
           <div class="card-body">
             <table class="table table-bordered">
@@ -22,14 +22,15 @@
               </thead>
               <tbody>
                 <tr *ngFor="let roupa of roupas">
-                  <td [textContent]="roupa.pecaRoupa"></td>
-                  <td [textContent]="roupa.valorPeca"></td>
+                  <td> {{ roupa.pecaRoupa }}</td>
+                  <td> {{ roupa.valorPeca | currency:'BRL':'symbol':'1.2-2' }} </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="card-body">
-            <p><strong>Preço Total (R$):</strong> {{ pedido?.valor }} </p>
+            <p><strong>Preço Total:</strong> {{ pedido?.valor | currency:'BRL':'symbol':'1.2-2' }} </p>
+            <p><strong>Prazo do Serviço:</strong> {{ pedido?.prazo }} dias </p>
             <p><strong>Estimativa de Entrega:</strong> {{ formatarData(pedido?.dataEstimativa) }}</p>
             <p><strong>Situação:</strong> {{ pedido?.statusPedido }} </p>
           </div>

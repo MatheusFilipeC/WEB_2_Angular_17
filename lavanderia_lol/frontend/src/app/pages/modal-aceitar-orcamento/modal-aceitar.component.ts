@@ -34,20 +34,15 @@ export class ModalAceitarComponent {
       next: (cliente: Cliente | null) => {
         if (cliente !== null) {
           pedido.cliente = cliente;
-          pedido.dataPedido = new Date();
-          let dataColeta = new Date(pedido.dataPedido);
-          dataColeta.setHours(dataColeta.getHours() + 4);
-          pedido.dataColeta = dataColeta;
-          pedido.prazo = this.pedidoService.determinarPrazo(pedido);
-          let dataEntrega = new Date(dataColeta);
-          dataEntrega.setDate(dataEntrega.getDate() + pedido.prazo);
-          pedido.dataEntrega = dataEntrega;
-          pedido.dataEstimativa = pedido.dataEntrega;
           this.pedidoService.inserir(pedido).subscribe({
-            next: (response) => {
-              console.log(this.pedido)
-              this.activeModal.close();
-              this.abrirModalDadosPedido(this.pedido);
+            next: (response: Pedido | null) => {
+              if (response !== null) {
+                this.pedido = response;
+                this.activeModal.close();
+                this.abrirModalDadosPedido(this.pedido);
+              } else {
+                this.mensagem = 'Pedido não encontrado';
+              }
             },
             error: (err) => {
               this.mensagem = `Erro ao recusar orçamento do pedido ${pedido.id}`;
@@ -76,6 +71,11 @@ export class ModalAceitarComponent {
   }
 
   determinarPrazo(pedido: Pedido): number {
-    return this.pedidoService.determinarPrazo(pedido);
+    if (pedido.roupas !== undefined) {
+      return pedido.roupas.reduce((maxPrazo, roupa) => Math.max(maxPrazo, roupa.prazo || 0), 0);
+    } else {
+      return 0;
+    }
   }
+
 }

@@ -18,7 +18,7 @@
             <td>{{ pedido.statusPedido }}</td>
             <td *ngIf="pedido.dataColeta !== undefined">{{ formatarData(pedido.dataColeta) }}</td>
             <td *ngIf="pedido.dataEntrega !== undefined">{{ formatarData(pedido.dataEntrega) }}</td>
-            <td>{{ pedido.valor }}</td>
+            <td> {{ pedido.valor | currency:'BRL':'symbol':'1.2-2' }} </td>
           </tr>
         </tbody>
       </table>

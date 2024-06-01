@@ -31,26 +31,24 @@ export class ConsultaPedidoClienteComponent {
   usuarioLogado = this.pedidoService.usuarioLogado;
 
   buscarPedido(idPedido: number) {
-      this.pedidoService.buscarPorId(idPedido).subscribe({
-        next: (data: Pedido | null) => {
-          if (data != null) {
-            if (data.cliente.id === this.usuarioLogado.id) {
-              this.pedido = data;
-              this.roupas = data.roupas || [];
-              this.pedidoEncontrado = true;
-            } else {
-              this.mensagem = "Cliente não possui nenhum pedido com esse número";
-            }
+    this.pedidoEncontrado = false;
+    this.pedidoService.buscarPorId(idPedido).subscribe({
+      next: (data: Pedido | null) => {
+        if (data != null) {
+          if (data.cliente.id === this.usuarioLogado.id) {
+            this.pedido = data;
+            this.roupas = data.roupas || [];
+            this.pedidoEncontrado = true;
           } else {
-            this.pedidoEncontrado = false;
             this.mensagem = "Cliente não possui nenhum pedido com esse número";
           }
-        },
-        error: (err) => {
-          this.mensagem = "Erro buscando pedido";
-          this.mensagem_detalhes = `[${err.status}] ${err.message}`
-        }
-      });
+        } 
+      },
+      error: (err) => {
+        this.mensagem = "Erro buscando pedido";
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`
+      }
+    });
   }
 
 formatarData(data: Date | undefined): string {
@@ -58,9 +56,8 @@ formatarData(data: Date | undefined): string {
     const date = new Date(data);
     return date.toLocaleDateString('pt-BR');
   } else {
-    return 'Data inválida';
+    return 'Sem data estimada';
   }
 }
-
   
 }

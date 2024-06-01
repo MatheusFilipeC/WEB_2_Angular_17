@@ -30,7 +30,7 @@
           <tr *ngFor="let pedido of ordenarPedidos() | statusFilter: statusSelecionado">
             <td> {{pedido.id}} </td>
             <td> {{pedido.statusPedido}} </td>
-            <td> R${{pedido.valor}} </td>
+            <td> {{ pedido.valor | currency:'BRL':'symbol':'1.2-2' }} </td>
             <td> {{ formatarData(pedido.dataPedido) }} </td>
 
             <td>

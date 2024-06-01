@@ -34,7 +34,7 @@ export class NovoPedidoClienteComponent implements OnInit {
     private clienteService: ClienteService,
     private roupaService: RoupaService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   usuarioLogado = this.pedidoService.usuarioLogado;
 
@@ -42,7 +42,7 @@ export class NovoPedidoClienteComponent implements OnInit {
     this.listarRoupas();
   }
 
-  listarRoupas(): Roupa [] {
+  listarRoupas(): Roupa[] {
     this.roupaService.listarTodos().subscribe({
       next: (data: Roupa[] | null) => {
         if (data == null) {
@@ -88,12 +88,15 @@ export class NovoPedidoClienteComponent implements OnInit {
       next: (cliente: Cliente | null) => {
         if (cliente !== null) {
           pedido.cliente = cliente;
-          pedido.dataPedido = new Date();
-          pedido.prazo = this.pedidoService.determinarPrazo(pedido);
           pedido.statusPedido = 'Rejeitado';
           this.pedidoService.inserir(pedido).subscribe({
-            next: (response) => {
-              location.reload();
+            next: (response: Pedido | null) => {
+              if (response !== null) {
+                this.pedido = response;
+                location.reload();
+              } else {
+                this.mensagem = 'Pedido não encontrado';
+              }
             },
             error: (err) => {
               this.mensagem = `Erro ao recusar orçamento do pedido ${pedido.id}`;

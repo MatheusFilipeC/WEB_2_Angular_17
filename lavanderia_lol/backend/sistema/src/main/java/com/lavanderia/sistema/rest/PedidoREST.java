@@ -1,5 +1,6 @@
 package com.lavanderia.sistema.rest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +25,7 @@ public class PedidoREST {
 
   public static List<Pedido> pedidos = new ArrayList<>();
 
-  public int encontrarMaiorPrazo(Pedido pedido) {
+  public int determinarPrazo(Pedido pedido) {
     int maiorPrazo = 0;
     for (RoupasPedido roupa : pedido.getRoupas()) {
       if (roupa.getPrazo() > maiorPrazo) {
@@ -71,9 +72,23 @@ public class PedidoREST {
       pedido.setId(p.getId() + 1);
 
     if ("Rejeitado".equals(pedido.getStatusPedido())) {
-      pedido.setDataColeta(null);
-      pedido.setDataEntrega(null);
+      pedido.setDataPedido(LocalDateTime.now());
+      int prazo = determinarPrazo(pedido);
+      pedido.setPrazo(prazo);
+      double total = somarValoresRoupasDePedido(pedido);
+      pedido.setValor(total);
     } else {
+      int prazo = determinarPrazo(pedido);
+      pedido.setPrazo(prazo);
+      pedido.setDataPedido(LocalDateTime.now());
+
+      LocalDateTime dataColeta = pedido.getDataPedido().plusHours(4);
+      pedido.setDataColeta(dataColeta);
+
+      LocalDateTime dataEntrega = dataColeta.plusDays(prazo);
+      pedido.setDataEntrega(dataEntrega);
+      pedido.setDataEstimativa(dataEntrega);
+
       double total = somarValoresRoupasDePedido(pedido);
       pedido.setValor(total);
       pedido.setStatusPedido("Em Aberto");
@@ -81,9 +96,9 @@ public class PedidoREST {
 
     if (pedido.getRoupas() != null) {
       for (RoupasPedido roupasPedido : pedido.getRoupas()) {
-          roupasPedido.setPedidoId(pedido.getId());
+        roupasPedido.setPedidoId(pedido.getId());
       }
-  }
+    }
 
     pedidos.add(pedido);
     return ResponseEntity.status(HttpStatus.CREATED).body(pedido);

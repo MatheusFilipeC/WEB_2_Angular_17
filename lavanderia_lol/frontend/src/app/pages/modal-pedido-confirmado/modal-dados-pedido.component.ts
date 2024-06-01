@@ -21,8 +21,7 @@ export class ModalDadosPedidoComponent {
   mensagem: string = "";
   mensagem_detalhes: string = "";
 
-  constructor (private pedidoService: PedidoService,
-              public activeModal: NgbActiveModal) { }
+  constructor (public activeModal: NgbActiveModal) { }
 
   formatarData(data: Date | undefined): string {
     if (data === undefined) {
