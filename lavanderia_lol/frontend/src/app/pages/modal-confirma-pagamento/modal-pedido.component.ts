@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Pedido } from '../../shared';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PedidoService } from '../../services';
+import { ModalPagamentoRealizadoComponent } from '../modal-pagamento-realizado/modal-pagamento-realizado.component';
 
 @Component({
   selector: 'app-modal-pedido',
@@ -17,11 +18,20 @@ export class ModalPedidoComponent {
   @Input() pedido!: Pedido;
 
   constructor(public activeModal: NgbActiveModal,
-    private pedidoService: PedidoService) {}
+    private modalService: NgbModal,
+    private pedidoService: PedidoService) { }
 
     atualizarPagamento(pedido: Pedido): void {
       pedido.statusPedido = "Pago";
-      this.pedidoService.atualizar(this.pedido);
+      pedido.dataPagamento = new Date();
       this.activeModal.close();
+      this.pedidoService.atualizar(this.pedido).subscribe({
+      });
+      this.abrirModalPagamento(pedido);
     }
+ 
+  abrirModalPagamento(pedido: Pedido) {
+    const modalRef = this.modalService.open(ModalPagamentoRealizadoComponent);
+    modalRef.componentInstance.pedido = pedido;
+  }
   }

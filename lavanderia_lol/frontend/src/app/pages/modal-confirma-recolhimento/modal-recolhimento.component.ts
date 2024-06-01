@@ -16,17 +16,20 @@ import { ModalConfirmadoComponent } from '../modal-pedido-recolhido/modal-confir
 })
 export class ModalRecolhimentoComponent {
   @Input() pedido!: Pedido;
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
 
-  constructor(public activeModal: NgbActiveModal, 
-              private modalService: NgbModal, 
-              private pedidoService: PedidoService) {}
+  constructor(public activeModal: NgbActiveModal,
+              private modalService: NgbModal,
+              private pedidoService: PedidoService) { }
 
   recolher($event: any, pedido: Pedido): void {
     $event.preventDefault();
     this.activeModal.close();
-    this.abrirModalConfirmado(pedido)
-      pedido.statusPedido = "Recolhido";
-      this.pedidoService.atualizar(this.pedido);
+    this.abrirModalConfirmado(pedido);
+    pedido.statusPedido = "Recolhido";
+    this.pedidoService.atualizar(this.pedido).subscribe({
+    });
   }
 
   abrirModalConfirmado(pedido: Pedido) {

@@ -10,15 +10,24 @@
             <th>Data da Coleta</th>
             <th>Data de Entrega</th>
             <th>Valor</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody *ngFor="let pedido of pedidosFiltrados">
           <tr *ngIf="pedido.statusPedido === 'Em Aberto'">
             <td>00{{ pedido.id }}</td>
-            <td>{{ pedido.statusPedido }}</td>
+            <td [ngClass]="getStatusClass(pedido.statusPedido)"> {{pedido.statusPedido}} </td>
             <td *ngIf="pedido.dataColeta !== undefined">{{ formatarData(pedido.dataColeta) }}</td>
             <td *ngIf="pedido.dataEntrega !== undefined">{{ formatarData(pedido.dataEntrega) }}</td>
             <td> {{ pedido.valor | currency:'BRL':'symbol':'1.2-2' }} </td>
+
+            <td>
+              <button type="button" class="btn btn-xs btn-danger" *ngIf="pedido.statusPedido === 'Em Aberto'"
+              (click)="abrirModalCancelar(pedido)">
+              <i class="fa fa-times" aria-hidden="true"></i>
+              Cancelar
+            </button>
+            </td>
           </tr>
         </tbody>
       </table>

@@ -16,4 +16,5 @@ export class ModalConfirmadoComponent {
   @Input() pedido!: Pedido;
   
   constructor(public activeModal: NgbActiveModal) {}
+
 }

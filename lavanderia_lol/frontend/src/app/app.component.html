@@ -80,7 +80,7 @@
             <a *ngIf="temPermissao('CLIENTE')" ngbDropdownItem href="#" routerLink="/cliente"
               (click)="$event.preventDefault()"> Página Inicial </a>
 
-            <a *ngIf="temPermissao('CLIENTE')" ngbDropdownItem href="#" routerLink="/cliente/pedido/novo"
+            <a *ngIf="temPermissao('CLIENTE')" ngbDropdownItem href="#" routerLink="/cliente/novo"
               (click)="$event.preventDefault()"> Novo Pedido </a>
 
             <a *ngIf="temPermissao('CLIENTE')" ngbDropdownItem href="#" routerLink="/cliente/consulta"
@@ -107,7 +107,6 @@
 
               <a *ngIf="temPermissao('FUNC')" ngbDropdownItem href="#" routerLink="/usuarios">
                 Usuários</a>
-
           </div>
         </li>
       </ul>

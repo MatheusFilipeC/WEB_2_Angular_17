@@ -25,11 +25,11 @@ export class DataFilterPipe implements PipeTransform {
       switch (filtro) {
         case 'hoje':
           return dataPedido.toDateString() === hoje.toDateString();
-        case 'semana':
-          const inicioSemana = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - hoje.getDay());
-          const fimSemana = new Date(inicioSemana);
-          fimSemana.setDate(fimSemana.getDate() + 6);
-          return dataPedido >= inicioSemana && dataPedido <= fimSemana;
+          case 'semana':
+            const inicioSemana = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() - hoje.getDay() + (hoje.getDay() === 0 ? -6 : 1));
+            const fimSemana = new Date(inicioSemana);
+            fimSemana.setDate(fimSemana.getDate() + 6);
+            return dataPedido >= inicioSemana && dataPedido <= fimSemana;
         case 'mes':
           return mesPedido === hoje.getMonth() && anoPedido === hoje.getFullYear();
         case 'ano':

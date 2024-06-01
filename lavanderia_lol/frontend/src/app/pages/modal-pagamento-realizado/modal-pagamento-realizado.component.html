@@ -1,0 +1,13 @@
+<div class="modal-header d-flex justify-content-center">
+
+  <h4 class="modal-title" id="modalLabel"> </h4>
+</div>
+
+<div class="modal-body text-center">
+  <h4>Pagamento do pedido 00{{pedido.id}} confirmado </h4>
+  <h4 *ngIf="pedido.dataPagamento !== undefined">Data do pagamento: {{ formatarData(pedido.dataPagamento) }} </h4>
+  </div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()"> Fechar </button>
+</div>

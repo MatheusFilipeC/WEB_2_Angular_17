@@ -109,13 +109,15 @@ export class VisualizacaoPedidosFuncionarioComponent implements OnInit {
 
   confirmarLavagem(pedido: Pedido): void {
     pedido.statusPedido = "Aguardando Pagamento";
-    this.pedidoService.atualizar(pedido);
-  }
+    this.pedidoService.atualizar(pedido).subscribe({
+    });
+}
 
   finalizarPedido(pedido: Pedido): void {
     pedido.statusPedido = "Finalizado";
-    this.pedidoService.atualizar(pedido);
-  }
+    this.pedidoService.atualizar(pedido).subscribe({
+    });
+}
 
   ordenarPedidos(): Pedido[] {
     const pedidosOrdenados = this.pedidos.slice();
@@ -140,7 +142,7 @@ export class VisualizacaoPedidosFuncionarioComponent implements OnInit {
     const hora = String(dataObj.getHours()).padStart(2, '0');
     const minutos = String(dataObj.getMinutes()).padStart(2, '0');
 
-    return `${dia}-${mes}-${ano} ${hora}:${minutos}`;
+    return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
   }
 
 }

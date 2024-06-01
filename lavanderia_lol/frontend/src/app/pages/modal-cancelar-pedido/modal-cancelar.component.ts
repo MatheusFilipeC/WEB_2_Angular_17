@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Pedido } from '../../shared';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PedidoService } from '../../services';
@@ -15,14 +15,18 @@ import { PedidoService } from '../../services';
 })
 export class ModalCancelarComponent {
   @Input() pedido!: Pedido;
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
 
   constructor(public activeModal: NgbActiveModal,
-    private pedidoService: PedidoService,) {}
+              private pedidoService: PedidoService,) {}
 
-atualizarCancelar(pedido: Pedido): void {
+
+cancelar(pedido: Pedido): void {
       pedido.statusPedido = "Cancelado";
-      this.pedidoService.atualizar(this.pedido);
       this.activeModal.close();
+      this.pedidoService.atualizar(this.pedido).subscribe({
+      });
   }
 }
 

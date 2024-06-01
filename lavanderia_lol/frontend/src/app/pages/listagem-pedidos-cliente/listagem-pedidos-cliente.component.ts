@@ -12,23 +12,23 @@ import { ModalPedidoComponent } from '../modal-confirma-pagamento/modal-pedido.c
   selector: 'app-listagem-pedidos-cliente',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
+    CommonModule,
+    FormsModule,
     RouterModule,
     SharedModule
   ],
   templateUrl: './listagem-pedidos-cliente.component.html',
   styleUrl: './listagem-pedidos-cliente.component.css'
 })
-export class ListagemPedidosClienteComponent implements OnInit{
+export class ListagemPedidosClienteComponent implements OnInit {
   pedidos: Pedido[] = [];
-  pedidosFiltrados: Pedido [] = [];
+  pedidosFiltrados: Pedido[] = [];
   mensagem: string = "";
   mensagem_detalhes: string = "";
   statusSelecionado: string = "";
 
-  constructor (private pedidoService: PedidoService,
-              private modalService: NgbModal) { }
+  constructor(private pedidoService: PedidoService,
+    private modalService: NgbModal) { }
 
   usuarioLogado = this.pedidoService.usuarioLogado;
 
@@ -76,21 +76,43 @@ export class ListagemPedidosClienteComponent implements OnInit{
 
   formatarData(data: Date): string {
     const dataObj = new Date(data);
-  
+
     if (isNaN(dataObj.getTime())) {
       return 'Data inválida';
     }
-  
+
     const dia = String(dataObj.getDate()).padStart(2, '0');
-    const mes = String(dataObj.getMonth() + 1).padStart(2, '0'); 
+    const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
     const ano = String(dataObj.getFullYear());
     const hora = String(dataObj.getHours()).padStart(2, '0');
     const minutos = String(dataObj.getMinutes()).padStart(2, '0');
-  
-    return `${dia}-${mes}-${ano} ${hora}:${minutos}`;
+
+    return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
   }
 
   temPedidos(): boolean {
     return this.pedidosFiltrados.length > 0;
   }
+
+  getStatusClass(statusPedido: string | undefined): string {
+    switch (statusPedido) {
+      case 'Em Aberto':
+        return 'bg-warning';
+      case 'Cancelado':
+        return 'text-white bg-danger';
+      case 'Rejeitado':
+        return 'text-white bg-danger';
+      case 'Recolhido':
+        return 'text-white bg-secondary';
+      case 'Aguardando Pagamento':
+        return 'text-white bg-primary';
+      case 'Pago':
+        return 'bg-orange';
+      case 'Finalizado':
+        return 'text-white bg-success';
+      default:
+        return '';
+    }
+  }
+
 }

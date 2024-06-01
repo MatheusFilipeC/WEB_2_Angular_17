@@ -112,6 +112,7 @@ public class PedidoREST {
 
     if (p != null) {
       p.setStatusPedido(pedido.getStatusPedido());
+      p.setDataPagamento(pedido.getDataPagamento());
 
       return ResponseEntity.ok(p);
     } else

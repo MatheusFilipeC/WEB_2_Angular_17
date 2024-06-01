@@ -17,10 +17,10 @@ import { PedidoService } from '../../services';
 export class InicialFuncionarioComponent implements OnInit {
 
   statusSelecionado: string = '';
-    pedidos: Pedido[] = [];
-    mensagem: string = "";
-    mensagem_detalhes: string = "";
-  
+  pedidos: Pedido[] = [];
+  mensagem: string = "";
+  mensagem_detalhes: string = "";
+
   constructor(private modalService: NgbModal,
     private pedidoService: PedidoService) { }
 
@@ -51,6 +51,8 @@ export class InicialFuncionarioComponent implements OnInit {
         return 'bg-warning';
       case 'Cancelado':
         return 'text-white bg-danger';
+      case 'Rejeitado':
+        return 'text-white bg-danger';
       case 'Recolhido':
         return 'text-white bg-secondary';
       case 'Aguardando Pagamento':
@@ -64,40 +66,40 @@ export class InicialFuncionarioComponent implements OnInit {
     }
   }
 
-mostrarBotao(statusPedido: string | undefined): boolean {
-  const statusComBotao = ['Em Aberto'];
+  mostrarBotao(statusPedido: string | undefined): boolean {
+    const statusComBotao = ['Em Aberto'];
     return statusPedido !== undefined && statusComBotao.includes(statusPedido);
-}
-
-ordenarPedidos(): Pedido[] {
-  const pedidosOrdenados = this.pedidos.slice();
-  pedidosOrdenados.sort((a, b) => {
-    const dataA = a.dataPedido ? new Date(a.dataPedido).getTime() : 0;
-    const dataB = b.dataPedido ? new Date(b.dataPedido).getTime() : 0;
-    return dataA - dataB;
-  });
-  return pedidosOrdenados;
-}
-
-abrirModalRecolhimento(pedido: Pedido) {
-  const modalRef = this.modalService.open(ModalRecolhimentoComponent);
-  modalRef.componentInstance.pedido = pedido;
-}
-
-formatarData(data: Date): string {
-  const dataObj = new Date(data);
-
-  if (isNaN(dataObj.getTime())) {
-    return 'Data inválida';
   }
 
-  const dia = String(dataObj.getDate()).padStart(2, '0');
-  const mes = String(dataObj.getMonth() + 1).padStart(2, '0'); 
-  const ano = String(dataObj.getFullYear());
-  const hora = String(dataObj.getHours()).padStart(2, '0');
-  const minutos = String(dataObj.getMinutes()).padStart(2, '0');
+  ordenarPedidos(): Pedido[] {
+    const pedidosOrdenados = this.pedidos.slice();
+    pedidosOrdenados.sort((a, b) => {
+      const dataA = a.dataPedido ? new Date(a.dataPedido).getTime() : 0;
+      const dataB = b.dataPedido ? new Date(b.dataPedido).getTime() : 0;
+      return dataA - dataB;
+    });
+    return pedidosOrdenados;
+  }
 
-  return `${dia}-${mes}-${ano} ${hora}:${minutos}`;
-}
+  abrirModalRecolhimento(pedido: Pedido) {
+    const modalRef = this.modalService.open(ModalRecolhimentoComponent);
+    modalRef.componentInstance.pedido = pedido;
+  }
+
+  formatarData(data: Date): string {
+    const dataObj = new Date(data);
+
+    if (isNaN(dataObj.getTime())) {
+      return 'Data inválida';
+    }
+
+    const dia = String(dataObj.getDate()).padStart(2, '0');
+    const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+    const ano = String(dataObj.getFullYear());
+    const hora = String(dataObj.getHours()).padStart(2, '0');
+    const minutos = String(dataObj.getMinutes()).padStart(2, '0');
+
+    return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
+  }
 
 }
