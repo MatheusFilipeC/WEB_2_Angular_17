@@ -10,8 +10,9 @@ import lombok.Setter;
 
 public class Cliente extends Usuario {
 
-  public Cliente (int id, String nome, String email, String senha) {
+  public Cliente (int id, String nome, String email, String cpf) {
     super(id, nome, email, null, null);
+    this.cpf = cpf;
   }
 
   @Setter @Getter

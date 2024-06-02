@@ -30,19 +30,18 @@ export class AutoCadastroComponent {
     if (this.formCliente.form.valid) {
       this.clienteService.inserir(this.cliente).subscribe({
         next: (response) => {
+          console.log(this.cliente);
           this.router.navigate(["/login"]);
         },
         error: (err) => {
           this.mensagem = `Erro no cadastro do cliente ${this.cliente.nome}`;
           if (err.status == 409) {
-            this.mensagem_detalhes = "Já existe um cliente cadastrado com esse e-mail";
+            this.mensagem_detalhes = "Já existe um cliente cadastrado com esse e-mail ou com esse CPF";
           } else {
             this.mensagem_detalhes = `[${err.status}] ${err.message}`
           }
         }
       });
-      console.log(this.cliente);
-      this.router.navigate(["/login"]);
     }
   }
 }

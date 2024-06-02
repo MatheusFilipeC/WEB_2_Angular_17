@@ -12,10 +12,9 @@ import lombok.Setter;
 
 public class Funcionario extends Usuario {
 
-  public Funcionario(int id, String nome, String email, String senha, String perfil, LocalDate dataNascimento, boolean habilitada) {
-    super(id, nome, email, senha, perfil); 
+  public Funcionario(int id, String nome, String email, LocalDate dataNascimento) {
+    super(id, nome, email, null, null); 
     this.dataNascimento = dataNascimento;
-    this.habilitada = habilitada;
   }
 
   @Setter @Getter

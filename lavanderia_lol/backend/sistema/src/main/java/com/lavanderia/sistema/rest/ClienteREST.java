@@ -50,7 +50,10 @@ public class ClienteREST {
     Usuario u = usuarios.stream().filter(
         usu -> usu.getEmail().equals(cliente.getEmail())).findAny().orElse(null);
 
-    if (u != null) {
+    Cliente c = clientes.stream().filter(
+        cli -> cli.getCpf().equals(cliente.getCpf())).findAny().orElse(null);   
+
+    if (u != null || c != null) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
@@ -110,10 +113,10 @@ public class ClienteREST {
 
   static {
 
-    clientes.add(new Cliente(3, "João", "joao@mail.com", "1234"));
-    clientes.add(new Cliente(4, "José", "jose@mail.com", "1234"));
-    clientes.add(new Cliente(5, "Joana", "joana@mail.com", "1234"));
-    clientes.add(new Cliente(6, "Joaquina", "joaquina@mail.com", "1234"));
+    clientes.add(new Cliente(3, "João", "joao@mail.com", "22222222222"));
+    clientes.add(new Cliente(4, "José", "jose@mail.com", "33333333333"));
+    clientes.add(new Cliente(5, "Joana", "joana@mail.com", "44444444444"));
+    clientes.add(new Cliente(6, "Joaquina", "joaquina@mail.com","55555555555"));
 
   }
 

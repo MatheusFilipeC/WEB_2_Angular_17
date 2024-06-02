@@ -1,0 +1,19 @@
+CREATE DATABASE lavanderia_lol;
+
+/***** TABELA USUÁRIOS *****/
+create table tb_usuarios (
+id_usu integer primary key generated always as
+identity,
+nome_usu varchar(100) not null,
+email_usu varchar(30) not null,
+senha_usu varchar(100) not null,
+perfil_usu varchar(10) not null
+);
+
+/*****************/
+
+/***** TABELA CLIENTES *****/
+
+/*****************/
+
+/***** TABELA FUNCIONÁRIOS *****/
