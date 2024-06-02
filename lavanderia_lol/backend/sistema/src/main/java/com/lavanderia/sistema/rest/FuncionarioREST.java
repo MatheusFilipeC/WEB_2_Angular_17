@@ -123,6 +123,7 @@ public class FuncionarioREST {
 
     funcionarios.add(new Funcionario(1, "Maria", "maria@mail.com", LocalDate.of(1990, 5, 20) ));
     funcionarios.add(new Funcionario(2, "Mário", "mario@mail.com", LocalDate.of(1996, 12, 05) ));
+    funcionarios.add(new Funcionario(7, "Admin", "admin", null));
 
   }
 

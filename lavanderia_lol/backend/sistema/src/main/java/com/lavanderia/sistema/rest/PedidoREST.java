@@ -38,10 +38,10 @@ public class PedidoREST {
   public static double somarValoresRoupasDePedido(Pedido pedido) {
     double totalValorRoupas = 0.0;
     for (RoupasPedido roupa : pedido.getRoupas()) {
-      totalValorRoupas += roupa.getValorPeca();
+      totalValorRoupas += roupa.getValorPeca() * roupa.getQuantidade();
     }
     return totalValorRoupas;
-  }
+}
 
   @GetMapping("/pedidos")
   public ResponseEntity<List<Pedido>> obterTodosPedidos() {

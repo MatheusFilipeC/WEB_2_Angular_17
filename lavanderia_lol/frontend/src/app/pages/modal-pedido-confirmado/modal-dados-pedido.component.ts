@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Pedido } from '../../shared';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PedidoService } from '../../services';
 import { RouterModule } from '@angular/router';
 
 @Component({

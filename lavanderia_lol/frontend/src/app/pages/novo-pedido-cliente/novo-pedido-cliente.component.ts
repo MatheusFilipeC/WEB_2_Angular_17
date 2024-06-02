@@ -68,14 +68,27 @@ export class NovoPedidoClienteComponent implements OnInit {
         quantidade: 1,
         prazo: this.roupaSelecionada.prazo
       }
+  
       this.pedido.roupas = this.pedido.roupas || [];
-      this.pedido.roupas.push(roupaAdicionada);
+      
+      const roupaExistente = this.pedido.roupas.find(
+        item => item.idRoupa === roupaAdicionada.idRoupa
+      );
+  
+      if (roupaExistente) {
+        roupaExistente.quantidade = (roupaExistente.quantidade || 0) + 1;
+      } else {
+        this.pedido.roupas.push(roupaAdicionada);
+      }
+      
       this.calcularTotal();
     }
   }
 
   calcularTotal() {
-    this.pedido.valor = this.pedido.roupas?.reduce((total, roupa) => total + roupa.valorPeca, 0) || 0;
+    this.pedido.valor = (this.pedido.roupas ?? []).reduce((total, item) => {
+      return total + ((item.valorPeca ?? 0) * (item.quantidade ?? 0));
+    }, 0);
   }
 
   abrirModalAceitar(pedido: Pedido): void {

@@ -2,8 +2,7 @@ CREATE DATABASE lavanderia_lol;
 
 /***** TABELA USUÁRIOS *****/
 create table tb_usuarios (
-id_usu integer primary key generated always as
-identity,
+id_usu integer primary key generated always as identity,
 nome_usu varchar(100) not null,
 email_usu varchar(30) not null,
 senha_usu varchar(100) not null,
@@ -13,7 +12,73 @@ perfil_usu varchar(10) not null
 /*****************/
 
 /***** TABELA CLIENTES *****/
+create table tb_clientes (
+id_cliente integer primary key, 
+nome_cliente varchar(100) not null,
+email_cliente varchar(30) not null unique,
+cpf varchar(14) not null unique,
+telefone varchar(12),
+endereco varchar(50),
+numero varchar(10),
+complemento varchar(20),
+bairro varchar (30),
+cep varchar (11),
+cidade varchar (30),
+uf varchar (2),
+FOREIGN KEY (id_cliente) REFERENCES tb_usuarios(id_usu)
+);
 
 /*****************/
 
 /***** TABELA FUNCIONÁRIOS *****/
+create table tb_funcionarios (
+id_func integer primary key,
+nome_func varchar(100) not null,
+email_func varchar(30) not null unique,
+data_nascimento date,
+FOREIGN KEY (id_func) REFERENCES tb_usuarios(id_usu)
+);
+
+/*****************/
+
+/***** TABELA ROUPAS *****/
+create table tb_roupas (
+id_roupa integer primary key generated always as identity,
+peca_roupa varchar (50) not null,
+preco numeric (10, 2) not null,
+prazo integer not null,
+habilitada boolean
+);
+
+/*****************/
+
+/***** TABELA PEDIDOS *****/
+create table tb_pedidos (
+id_pedido integer primary key generated always as identity,
+data_pedido TIMESTAMP not null,
+data_estimativa TIMESTAMP,
+data_coleta TIMESTAMP,
+data_entrega TIMESTAMP,
+data_pagamento TIMESTAMP,
+valor_total numeric (10, 2),
+prazo integer,
+status varchar (50),
+id_cli integer,
+FOREIGN KEY (id_cli) REFERENCES tb_clientes(id_cliente)
+);
+
+/*****************/
+
+/***** TABELA ROUPASPEDIDO *****/
+create table tb_roupas_pedido (
+id_ped integer,
+id_roupa integer,
+peca_roupa varchar (50),
+valor_peca numeric (10, 2),
+quantidade integer,
+prazo integer,
+PRIMARY KEY (id_ped, id_roupa),
+FOREIGN KEY (id_ped) REFERENCES tb_pedidos(id_pedido),
+FOREIGN KEY (id_roupa) REFERENCES tb_roupas(id_roupa)
+);
+
