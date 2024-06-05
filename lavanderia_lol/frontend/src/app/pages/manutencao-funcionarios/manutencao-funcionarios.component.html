@@ -29,7 +29,7 @@
               <input [(ngModel)]="Funcionario.dataNascimento" [disabled]="!Funcionario.habilitada" />
             </td>
             <td>
-              <input [(ngModel)]="Funcionario.senha" [disabled]="!Funcionario.habilitada" />
+              <input type="password" [(ngModel)]="Funcionario.senha" [disabled]="!Funcionario.habilitada" />
             </td>
             <td>
               <button class="btn btn-warning mr-2" (click)="selecionarLinha(Funcionario)">Editar</button>

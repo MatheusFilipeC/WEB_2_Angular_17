@@ -1,6 +1,5 @@
 <h1> Cadastro de Novo Cliente</h1>
-<div *ngIf="mensagem.length> 0" class="alert alert-danger alert-dismissible fade show"
-  role="alert">
+<div *ngIf="mensagem.length> 0" class="alert alert-danger alert-dismissible fade show" role="alert">
   <h4 class="alert-heading"> {{mensagem}}</h4>
   <p class="alert-heading"> {{mensagem_detalhes}}</p>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -11,124 +10,125 @@
 
     <div class="card-login">
 
-        <div class="card-body campos-cadastro">
-          <form #formCliente="ngForm">
+      <div class="card-body campos-cadastro">
+        <form #formCliente="ngForm">
 
-            <div class="form-group">
-              <label for="nome">Nome:</label>
-              <input type="text" class="form-control" id="nome" name="nomeCliente" placeholder="Nome Completo" [(ngModel)]="cliente.nome"
-              #nome="ngModel" minlength="2" required>
-              <div *ngIf="nome.errors && (nome.dirty || nome.touched)" class="alert alert-danger">
-                <div [hidden]="!nome.errors['required']"> Digite seu nome completo. </div>
-                <div [hidden]="!nome.errors['minlength']"> O nome deve conter ao menos 2 caracteres. </div>
-              </div>
+          <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nomeCliente" placeholder="Nome Completo"
+              [(ngModel)]="cliente.nome" #nome="ngModel" minlength="2" required>
+            <div *ngIf="nome.errors && (nome.dirty || nome.touched)" class="alert alert-danger">
+              <div [hidden]="!nome.errors['required']"> Digite seu nome completo. </div>
+              <div [hidden]="!nome.errors['minlength']"> O nome deve conter ao menos 2 caracteres. </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" [(ngModel)]="cliente.email"
-                #email="ngModel" minlength="2" required>
-              <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
-                <div [hidden]="!email.errors['required']"> Digite seu e-mail. </div>
-                <div [hidden]="!email.errors['minlength']"> O email deve conter ao menos 2 caracteres. </div>
-              </div>
+          <div class="form-group">
+            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail"
+              [(ngModel)]="cliente.email" #email="ngModel" minlength="2" required>
+            <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+              <div [hidden]="!email.errors['required']"> Digite seu e-mail. </div>
+              <div [hidden]="!email.errors['minlength']"> O email deve conter ao menos 2 caracteres. </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone" [(ngModel)]="cliente.telefone" 
-                #telefone="ngModel" maxlength="10" minlength="8" required>
-                <div *ngIf="telefone.errors && (telefone.dirty || telefone.touched)" class="alert alert-danger">
-                  <div [hidden]="!telefone.errors['required']"> Digite o seu telefone. </div>
-                  <div [hidden]="!telefone.errors['minlength']"> Digite o número completo </div>
-                </div>
+          <div class="form-group">
+            <input mask="0 0000-0000" class="form-control" id="telefone" name="telefone" placeholder="Celular"
+              [(ngModel)]="cliente.telefone" #telefone="ngModel" maxlength="11" minlength="9" required>
+            <div *ngIf="telefone.errors && (telefone.dirty || telefone.touched)" class="alert alert-danger">
+              <div [hidden]="!telefone.errors['required']"> Digite o seu número do celular. </div>
+              <div [hidden]="!telefone.errors['minlength']"> Digite o número completo </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF (apenas números)" [(ngModel)]="cliente.cpf" 
-                #cpf="ngModel" maxlength="11" minlength="11" required>
-                <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
-                  <div [hidden]="!cpf.errors['required']"> Digite o seu CPF. </div>
-                  <div [hidden]="!cpf.errors['minlength']"> Digite o número completo </div>
-                </div>
+          <div class="form-group">
+            <input mask="CPF_CNPJ" class="form-control" id="cpf" name="cpf" placeholder="CPF (apenas números)"
+              [(ngModel)]="cliente.cpf" #cpf="ngModel" minlength="11" maxlength="14" required>
+            <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
+              <div [hidden]="!cpf.errors['required']"> Digite o seu CPF. </div>
+              <div [hidden]="!cpf.errors['minlength']"> Digite o número completo </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" [(ngModel)]="cliente.cep" 
-              #cep="ngModel"maxlength="9" minlength="8"required>
-              <div *ngIf="cep.errors && (cep.dirty || cep.touched)" class="alert alert-danger">
-                <div [hidden]="!cep.errors['required']"> Digite o seu CEP. </div>
-                <div [hidden]="!cep.errors['minlength']"> Digite o número completo </div>
-              </div>
+          <div class="form-group">
+            <input mask="00.000-000" class="form-control" id="cep" name="cep" placeholder="CEP" [(ngModel)]="cliente.cep"
+              #cep="ngModel" minlength="8" required>
+            <div *ngIf="cep.errors && (cep.dirty || cep.touched)" class="alert alert-danger">
+              <div [hidden]="!cep.errors['required']"> Digite o seu CEP. </div>
+              <div [hidden]="!cep.errors['minlength']"> Digite o número completo </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço" [(ngModel)]="cliente.endereco"
-                #endereco="ngModel" minlength="3" required>
-                <div *ngIf="endereco.errors && (endereco.dirty || endereco.touched)" class="alert alert-danger">
-                  <div [hidden]="!endereco.errors['required']"> Digite o seu Endereço. </div>
-                  <div [hidden]="!endereco.errors['minlength']"> O endereço deve conter ao menos 3 caracteres </div>
-                </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço"
+              [(ngModel)]="cliente.endereco" #endereco="ngModel" minlength="3" required>
+            <div *ngIf="endereco.errors && (endereco.dirty || endereco.touched)" class="alert alert-danger">
+              <div [hidden]="!endereco.errors['required']"> Digite o seu Endereço. </div>
+              <div [hidden]="!endereco.errors['minlength']"> O endereço deve conter ao menos 3 caracteres </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" [(ngModel)]="cliente.numero"
-                #numero="ngModel" required>
-                <div *ngIf="numero.errors && (numero.dirty || numero.touched)" class="alert alert-danger">
-                  <div [hidden]="!numero.errors['required']"> Digite o número do endereço. </div>
-                </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="numero" name="numero" placeholder="Número"
+              [(ngModel)]="cliente.numero" #numero="ngModel" required>
+            <div *ngIf="numero.errors && (numero.dirty || numero.touched)" class="alert alert-danger">
+              <div [hidden]="!numero.errors['required']"> Digite o número do endereço. </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" name="complemento" placeholder="Complemento" [(ngModel)]="cliente.complemento">
-            </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="complemento" placeholder="Complemento"
+              [(ngModel)]="cliente.complemento">
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" [(ngModel)]="cliente.bairro"
-              #bairro="ngModel" minlength="2" required>
-              <div *ngIf="bairro.errors && (bairro.dirty || bairro.touched)" class="alert alert-danger">
-                <div [hidden]="!bairro.errors['required']"> Digite o bairro. </div>
-                <div [hidden]="!bairro.errors['minlength']"> O bairro deve conter ao menos 2 caracteres </div>
-              </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro"
+              [(ngModel)]="cliente.bairro" #bairro="ngModel" minlength="2" required>
+            <div *ngIf="bairro.errors && (bairro.dirty || bairro.touched)" class="alert alert-danger">
+              <div [hidden]="!bairro.errors['required']"> Digite o bairro. </div>
+              <div [hidden]="!bairro.errors['minlength']"> O bairro deve conter ao menos 2 caracteres </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" [(ngModel)]="cliente.cidade"
-              #cidade="ngModel" minlength="2" required>
-                <div *ngIf="cidade.errors && (cidade.dirty || cidade.touched)" class="alert alert-danger">
-                  <div [hidden]="!cidade.errors['required']"> Digite a cidade. </div>
-                  <div [hidden]="!cidade.errors['minlength']"> A cidade deve conter ao menos 2 caracteres </div>
-                </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade"
+              [(ngModel)]="cliente.cidade" #cidade="ngModel" minlength="2" required>
+            <div *ngIf="cidade.errors && (cidade.dirty || cidade.touched)" class="alert alert-danger">
+              <div [hidden]="!cidade.errors['required']"> Digite a cidade. </div>
+              <div [hidden]="!cidade.errors['minlength']"> A cidade deve conter ao menos 2 caracteres </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" id="uf" name="uf" placeholder="Estado (Sigla)" [(ngModel)]="cliente.uf"
-              #uf="ngModel" maxlength="2" minlength="2" required>
-              <div *ngIf="uf.errors && (uf.dirty || uf.touched)" class="alert alert-danger">
-                <div [hidden]="!uf.errors['required']"> Digite a Unidade Federativa. </div>
-                <div [hidden]="!uf.errors['minlength']"> A unidade federativa deve conter 2 caracteres </div>
-              </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="uf" name="uf" placeholder="Estado (Sigla)"
+              [(ngModel)]="cliente.uf" #uf="ngModel" maxlength="2" minlength="2" required>
+            <div *ngIf="uf.errors && (uf.dirty || uf.touched)" class="alert alert-danger">
+              <div [hidden]="!uf.errors['required']"> Digite a Unidade Federativa. </div>
+              <div [hidden]="!uf.errors['minlength']"> A unidade federativa deve conter 2 caracteres </div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" [(ngModel)]="cliente.senha"
-                #senha="ngModel" maxlength="20" minlength="4" required>
-                <div *ngIf="senha.errors && (senha.dirty || senha.touched)" class="alert alert-danger">
-                  <div [hidden]="!senha.errors['required']"> Digite uma senha. </div>
-                  <div [hidden]="!senha.errors['minlength']"> A senha deve conter ao menos 4 caracteres </div>
-                </div>   
+          <div class="form-group">
+            <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha"
+              [(ngModel)]="cliente.senha" #senha="ngModel" maxlength="20" minlength="4" required>
+            <div *ngIf="senha.errors && (senha.dirty || senha.touched)" class="alert alert-danger">
+              <div [hidden]="!senha.errors['required']"> Digite uma senha. </div>
+              <div [hidden]="!senha.errors['minlength']"> A senha deve conter ao menos 4 caracteres </div>
             </div>
+          </div>
 
-            <div>
-              <button class="btn btn-lg btn-info" type="button" (click)="inserir()">
-                Cadastrar</button>
-            </div>
-            <div>
-              <a class="btn btn-lg btn-secondary" [routerLink]="['/login']">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
-              </a>
-            </div>
-          </form>
+          <div>
+            <button class="btn btn-lg btn-info" type="button" (click)="inserir()">
+              Cadastrar</button>
+          </div>
+          <div>
+            <a class="btn btn-lg btn-secondary" [routerLink]="['/login']">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+            </a>
+          </div>
+        </form>
 
-        </div>
+      </div>
     </div>
   </div>
 </div>

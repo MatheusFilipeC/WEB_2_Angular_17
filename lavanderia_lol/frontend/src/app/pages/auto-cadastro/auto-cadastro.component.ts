@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Cliente, SharedModule } from '../../shared';
 import { ClienteService } from '../../services/cliente.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-auto-cadastro',
@@ -12,7 +13,8 @@ import { ClienteService } from '../../services/cliente.service';
     CommonModule,
     FormsModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    NgxMaskDirective
   ],
   templateUrl: './auto-cadastro.component.html',
   styleUrl: './auto-cadastro.component.css'
@@ -30,7 +32,7 @@ export class AutoCadastroComponent {
     if (this.formCliente.form.valid) {
       this.clienteService.inserir(this.cliente).subscribe({
         next: (response) => {
-          console.log(this.cliente);
+          console.log(response);
           this.router.navigate(["/login"]);
         },
         error: (err) => {
