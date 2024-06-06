@@ -1,8 +1,8 @@
 package com.lavanderia.sistema.rest;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +23,24 @@ import com.lavanderia.sistema.model.Usuario;
 
 public class ClienteREST {
 
-  public static List<Usuario> usuarios = UsuarioREST.obterTodosUsuarios();
   public static List<Cliente> clientes = new ArrayList<>();
+  private final UsuarioREST usuarioRest;
+
+  public ClienteREST(UsuarioREST usuarioRest) {
+    this.usuarioRest = usuarioRest;
+  }
+
+  private String gerarSenha() {
+    Random random = new Random();
+    StringBuilder stringBuilder = new StringBuilder();
+
+    for (int i = 0; i < 4; i++) {
+      int digit = random.nextInt(10); // Gera um número aleatório de 0 a 9
+      stringBuilder.append(digit);
+    }
+
+    return stringBuilder.toString();
+  }
 
   @GetMapping("/clientes")
   public ResponseEntity<List<Cliente>> obterTodosClientes() {
@@ -47,29 +63,29 @@ public class ClienteREST {
   @PostMapping("/clientes")
   public ResponseEntity<Cliente> inserirCliente(@RequestBody Cliente cliente) {
 
-    Usuario u = usuarios.stream().filter(
-        usu -> usu.getEmail().equals(cliente.getEmail())).findAny().orElse(null);
 
     Cliente c = clientes.stream().filter(
         cli -> cli.getCpf().equals(cliente.getCpf())).findAny().orElse(null);   
 
-    if (u != null || c != null) {
+    if (c != null) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    u = usuarios.stream().max(Comparator.comparing(Usuario::getId)).orElse(null);
+    String senhaGerada = gerarSenha();
 
-    if (u == null)
-      cliente.setId(1);
-    else
-      cliente.setId(u.getId() + 1);
+    Usuario usuario = new Usuario(0, cliente.getNome(), cliente.getEmail(), senhaGerada, "CLIENTE");
 
-    cliente.setPerfil("CLIENTE");
+    ResponseEntity<Usuario> response = usuarioRest.inserirUsuario(usuario);
+    if (response.getStatusCode() == HttpStatus.CONFLICT) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+    }
 
-    Usuario usuario = new Usuario(cliente.getId(), cliente.getNome(), cliente.getEmail(), cliente.getSenha(),
-        "CLIENTE");
-    usuarios.add(usuario);
+    Usuario usuarioCriado = response.getBody();
+    cliente.setId(usuarioCriado.getId());
+    cliente.setSenha(usuarioCriado.getSenha());
+
     clientes.add(cliente);
+    System.out.println("Cliente criado: " + cliente);
     return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
   }
 

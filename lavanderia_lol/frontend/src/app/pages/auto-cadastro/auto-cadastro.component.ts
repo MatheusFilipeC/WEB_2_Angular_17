@@ -5,6 +5,8 @@ import { Router, RouterModule } from '@angular/router';
 import { Cliente, SharedModule } from '../../shared';
 import { ClienteService } from '../../services/cliente.service';
 import { NgxMaskDirective } from 'ngx-mask';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalSenhaGeradaComponent } from '../modal-senha-gerada/modal-senha-gerada.component';
 
 @Component({
   selector: 'app-auto-cadastro',
@@ -26,24 +28,35 @@ export class AutoCadastroComponent {
   mensagem_detalhes: string = "";
 
   constructor(private clienteService: ClienteService,
-    private router: Router) { }
+              private router: Router,
+              private modalService: NgbModal) { }
 
-  inserir(): void {
-    if (this.formCliente.form.valid) {
-      this.clienteService.inserir(this.cliente).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.router.navigate(["/login"]);
-        },
-        error: (err) => {
-          this.mensagem = `Erro no cadastro do cliente ${this.cliente.nome}`;
-          if (err.status == 409) {
-            this.mensagem_detalhes = "Já existe um cliente cadastrado com esse e-mail ou com esse CPF";
-          } else {
-            this.mensagem_detalhes = `[${err.status}] ${err.message}`
+    inserir(): void {
+      if (this.formCliente.form.valid) {
+        this.clienteService.inserir(this.cliente).subscribe({
+          next: (response: Cliente | null) => {
+            if (response !== null) {
+              this.cliente = response;
+              this.router.navigate(["/login"]);
+              this.abrirModalSenha(this.cliente);
+            } else {
+              this.mensagem = 'Cliente não encontrado';
+            }
+          },
+          error: (err) => {
+            this.mensagem = `Erro no cadastro do cliente ${this.cliente.nome}`;
+            if (err.status == 409) {
+              this.mensagem_detalhes = "Já existe um cliente cadastrado com esse e-mail ou com esse CPF";
+            } else {
+              this.mensagem_detalhes = `[${err.status}] ${err.message}`
+            }
           }
-        }
-      });
+        });
+      }
     }
-  }
+
+    abrirModalSenha(cliente: Cliente): void {
+      const modalRef = this.modalService.open(ModalSenhaGeradaComponent);
+      modalRef.componentInstance.cliente = cliente;
+    }
 }
