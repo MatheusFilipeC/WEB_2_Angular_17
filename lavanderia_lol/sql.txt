@@ -16,6 +16,7 @@ create table tb_clientes (
 id_cliente integer primary key, 
 nome_cliente varchar(100) not null,
 email_cliente varchar(30) not null unique,
+senha_cliente varchar (30),
 cpf varchar(14) not null unique,
 telefone varchar(12),
 endereco varchar(50),
@@ -35,6 +36,7 @@ create table tb_funcionarios (
 id_func integer primary key,
 nome_func varchar(100) not null,
 email_func varchar(30) not null unique,
+senha_funcionario varchar (30),
 data_nascimento date,
 FOREIGN KEY (id_func) REFERENCES tb_usuarios(id_usu)
 );
