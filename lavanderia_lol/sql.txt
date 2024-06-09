@@ -8,6 +8,10 @@ email_usu varchar(30) not null,
 senha_usu varchar(100) not null,
 perfil_usu varchar(10) not null
 );
+INSERT INTO tb_usuarios (nome_usu, email_usu, senha_usu, perfil_usu)
+VALUES ('Admin', 'admin', 'admin', 'FUNC');
+INSERT INTO tb_usuarios (nome_usu, email_usu, senha_usu, perfil_usu)
+VALUES ('Cliente', 'cliente', 'cliente', 'CLIENTE');
 
 /*****************/
 

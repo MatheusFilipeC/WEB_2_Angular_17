@@ -1,6 +1,5 @@
 package com.lavanderia.sistema.rest;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +23,7 @@ import com.lavanderia.sistema.model.Usuario;
 
 public class FuncionarioREST {
 
-  public static List<Usuario> usuarios = UsuarioREST.obterTodosUsuarios();
+  public static List<Usuario> usuarios = new ArrayList<>();
   public static List<Funcionario> funcionarios = new ArrayList<>();
 
   @GetMapping("/funcionarios")
@@ -121,9 +120,7 @@ public class FuncionarioREST {
 
   static {
 
-    funcionarios.add(new Funcionario(1, "Maria", "maria@mail.com", LocalDate.of(1990, 5, 20) ));
-    funcionarios.add(new Funcionario(2, "Mário", "mario@mail.com", LocalDate.of(1996, 12, 05) ));
-    funcionarios.add(new Funcionario(7, "Admin", "admin", null));
+    funcionarios.add(new Funcionario(1, "Admin", "admin"));
 
   }
 

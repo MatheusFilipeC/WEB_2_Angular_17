@@ -129,11 +129,7 @@ public class ClienteREST {
 
   static {
 
-    clientes.add(new Cliente(3, "João", "joao@mail.com", "22222222222"));
-    clientes.add(new Cliente(4, "José", "jose@mail.com", "33333333333"));
-    clientes.add(new Cliente(5, "Joana", "joana@mail.com", "44444444444"));
-    clientes.add(new Cliente(6, "Joaquina", "joaquina@mail.com","55555555555"));
-    clientes.add(new Cliente(8, "Cliente", "cliente","66666666666"));
+    clientes.add(new Cliente(2, "Cliente", "cliente", "22222222222"));
 
   }
 

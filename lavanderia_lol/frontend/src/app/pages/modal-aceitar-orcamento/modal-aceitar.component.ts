@@ -45,7 +45,7 @@ export class ModalAceitarComponent {
               }
             },
             error: (err) => {
-              this.mensagem = `Erro ao recusar orçamento do pedido ${pedido.id}`;
+              this.mensagem = `Erro ao realizar pedido ${pedido.id}`;
               this.mensagem_detalhes = `[${err.status}] ${err.message}`
             }
           });
