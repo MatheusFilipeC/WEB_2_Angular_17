@@ -47,12 +47,12 @@ public class UsuarioREST {
   }
 
   @GetMapping("/usuarios/{id}")
-  public ResponseEntity<Usuario> obterUsuarioPorId(@PathVariable("id") int id) {
+  public ResponseEntity<Usuario> obterUsuarioPorId(@PathVariable int id) {
     Optional<Usuario> op = usuarioRepository.findById(Integer.valueOf(id));
     if (op.isPresent())
       return ResponseEntity.ok(op.get());
     else
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 
   @PostMapping("/usuarios")
@@ -61,14 +61,13 @@ public class UsuarioREST {
     if (op.isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).body(op.get());
     } else {
-      usuario.setId(-1);
       usuarioRepository.save(usuario);
       return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
   }
 
   @PutMapping("/usuarios/{id}")
-  public ResponseEntity<Usuario> alterarUsuario(@PathVariable("id") int id, @RequestBody Usuario usuario) {
+  public ResponseEntity<Usuario> alterarUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
     Optional<Usuario> op = usuarioRepository.findById(Integer.valueOf(id));
     if (op.isPresent()) {
       usuario.setId(id);
@@ -80,7 +79,7 @@ public class UsuarioREST {
   }
 
   @DeleteMapping("/usuarios/{id}")
-  public ResponseEntity<Usuario> removerUsuario(@PathVariable("id") int id) {
+  public ResponseEntity<Usuario> removerUsuario(@PathVariable int id) {
     Optional<Usuario> op = usuarioRepository.findById(Integer.valueOf(id));
     if (op.isPresent()) {
       usuarioRepository.delete(op.get());

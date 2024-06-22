@@ -50,7 +50,7 @@ public class PedidoREST {
   }
 
   @GetMapping("/pedidos/{id}")
-  public ResponseEntity<Pedido> obterPedidoPorId(@PathVariable("id") int id) {
+  public ResponseEntity<Pedido> obterPedidoPorId(@PathVariable int id) {
 
     Pedido p = pedidos.stream().filter(
         pedi -> pedi.getId() == id).findAny().orElse(null);
@@ -105,7 +105,7 @@ public class PedidoREST {
   }
 
   @PutMapping("/pedidos/{id}")
-  public ResponseEntity<Pedido> alterarPedido(@PathVariable("id") int id, @RequestBody Pedido pedido) {
+  public ResponseEntity<Pedido> alterarPedido(@PathVariable int id, @RequestBody Pedido pedido) {
 
     Pedido p = pedidos.stream().filter(
         ped -> ped.getId() == id).findAny().orElse(null);

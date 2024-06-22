@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Cliente, SharedModule } from '../../shared';
+import { Cliente, SharedModule, Usuario } from '../../shared';
 import { ClienteService } from '../../services/cliente.service';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

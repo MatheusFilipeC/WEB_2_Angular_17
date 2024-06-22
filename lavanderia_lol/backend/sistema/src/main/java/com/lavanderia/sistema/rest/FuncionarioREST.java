@@ -1,9 +1,10 @@
 package com.lavanderia.sistema.rest;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,84 +18,99 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lavanderia.sistema.model.Funcionario;
 import com.lavanderia.sistema.model.Usuario;
+import com.lavanderia.sistema.repository.FuncionarioRepository;
+import com.lavanderia.sistema.repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
 
 @CrossOrigin
 @RestController
 
 public class FuncionarioREST {
 
-  public static List<Usuario> usuarios = new ArrayList<>();
+  @Autowired private FuncionarioRepository funcionarioRepository;
+  @Autowired private UsuarioRepository usuarioRepository;
+
   public static List<Funcionario> funcionarios = new ArrayList<>();
+  private final UsuarioREST usuarioRest;
+
+  public FuncionarioREST(UsuarioREST usuarioRest) {
+    this.usuarioRest = usuarioRest;
+  }
 
   @GetMapping("/funcionarios")
   public ResponseEntity<List<Funcionario>> obterTodosFuncionarios() {
-
+    List <Funcionario> funcionarios = funcionarioRepository.findAllByOrderByIdAsc();
     return ResponseEntity.ok(funcionarios);
   }
 
   @GetMapping("/funcionarios/{id}")
-  public ResponseEntity<Funcionario> obterFuncionarioPorId(@PathVariable("id") int id) {
-
-    Funcionario f = funcionarios.stream().filter(func -> func.getId() == id).findAny().orElse(null);
-
-    if (f == null)
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+  public ResponseEntity<Funcionario> obterFuncionarioPorId(@PathVariable int id) {
+    Optional<Funcionario> op = funcionarioRepository.findById(Integer.valueOf(id));
+    if (op.isPresent())
+      return ResponseEntity.ok(op.get());
     else
-      return ResponseEntity.ok(f);
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 
   @PostMapping("/funcionarios")
+  @Transactional
   public ResponseEntity<Funcionario> inserirFuncionario(@RequestBody Funcionario funcionario) {
 
-    Usuario u = usuarios.stream().filter(
-        usu -> usu.getEmail().equals(funcionario.getEmail())).findAny().orElse(null);
-
-    if (u != null) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
-
-    u = usuarios.stream().max(Comparator.comparing(Usuario::getId)).orElse(null);
-
-    if (u == null)
-      funcionario.setId(1);
-    else
-      funcionario.setId(u.getId() + 1);
-
-    funcionario.setPerfil("FUNC");
-      
-    Usuario usuario = new Usuario(funcionario.getId(), funcionario.getNome(), funcionario.getEmail(),
-        funcionario.getSenha(), "FUNC");
-    usuarios.add(usuario);
-
-    funcionario.setHabilitada(false);
-    funcionarios.add(funcionario);
-    
-    return ResponseEntity.status(HttpStatus.CREATED).body(funcionario);
+      Usuario usuario = new Usuario();
+      usuario.setNome(funcionario.getNome());
+      usuario.setEmail(funcionario.getEmail());
+      usuario.setSenha(funcionario.getSenha());
+      usuario.setPerfil("FUNC");
+  
+      ResponseEntity<Usuario> responseUsuario = usuarioRest.inserirUsuario(usuario);
+  
+      if (responseUsuario.getStatusCode() == HttpStatus.CONFLICT) {
+          return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      }
+  
+      Usuario usuarioCriado = responseUsuario.getBody();
+      if (usuarioCriado == null || usuarioCriado.getId() == 0) {
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      }
+  
+      int idUsuario = usuarioCriado.getId();
+      funcionario.setId(idUsuario);
+      funcionario.setHabilitada(false);
+  
+      funcionarioRepository.save(funcionario);
+      return ResponseEntity.status(HttpStatus.CREATED).body(funcionario);
   }
+  
 
   @PutMapping("/funcionarios/{id}")
-  public ResponseEntity<Funcionario> alterarFuncionario(@PathVariable("id") int id,
+  @Transactional
+  public ResponseEntity<Funcionario> alterarFuncionario(@PathVariable int id,
       @RequestBody Funcionario funcionario) {
 
-    Funcionario f = funcionarios.stream().filter(
-        func -> func.getId() == id).findAny().orElse(null);
-    Usuario u = usuarios.stream().filter(
-          user -> user.getId() == id).findAny().orElse(null);
-    Usuario usu = usuarios.stream().filter(
-          user -> (user.getId() != id) && user.getEmail().equals(funcionario.getEmail())).findAny().orElse(null);
+    Optional<Funcionario> op = funcionarioRepository.findById(Integer.valueOf(id));
+    if (op.isPresent()) {
+      Funcionario funcionarioExistente = op.get();
 
-    if (f != null && u != null && usu == null) {
-      f.setNome(funcionario.getNome());
-      f.setEmail(funcionario.getEmail());
-      f.setSenha(funcionario.getSenha());
-      f.setDataNascimento(funcionario.getDataNascimento());
-      u.setNome(funcionario.getNome());
-      u.setEmail(funcionario.getEmail());
-      u.setSenha(funcionario.getSenha());
-      return ResponseEntity.ok(f);
-    } else
-    if (usu != null) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      funcionarioExistente.setNome(funcionario.getNome());
+      funcionarioExistente.setEmail(funcionario.getEmail());
+      funcionarioExistente.setSenha(funcionario.getSenha());
+      funcionarioExistente.setDataNascimento(funcionario.getDataNascimento());
+      funcionarioExistente.setHabilitada(false);
+      funcionarioRepository.save(funcionarioExistente);
+
+      Optional<Usuario> usuarioOptional = usuarioRepository.findById(funcionarioExistente.getId());
+      if (usuarioOptional.isPresent()) {
+          Usuario usuarioExistente = usuarioOptional.get();
+          usuarioExistente.setNome(funcionario.getNome());
+          usuarioExistente.setEmail(funcionario.getEmail());
+          usuarioExistente.setSenha(funcionario.getSenha());
+          usuarioRepository.save(usuarioExistente);
+      } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      }
+
+      return ResponseEntity.ok(funcionarioExistente);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
@@ -102,26 +118,27 @@ public class FuncionarioREST {
   }
 
   @DeleteMapping("/funcionarios/{id}")
-  public ResponseEntity<Funcionario> removerFuncionario(@PathVariable("id") int id) {
-
-    Funcionario funcionario = funcionarios.stream().filter(
-        func -> func.getId() == id).findAny().orElse(null);
-    Usuario usuario = usuarios.stream().filter(
-        func -> func.getId() == id).findAny().orElse(null);
-
-    if (funcionario != null && usuario != null) {
-      funcionarios.removeIf(f -> f.getId() == id);
-      usuarios.removeIf(f -> f.getId() == id);
-      return ResponseEntity.ok(funcionario);
-    } else {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
+  public ResponseEntity<Funcionario> removerUsuario(@PathVariable int id) {
+      Optional<Funcionario> op = funcionarioRepository.findById(Integer.valueOf(id));
+      if (op.isPresent()) {
+          Funcionario funcionario = op.get();
+          
+          // Primeiro, exclui o Funcionario
+          funcionarioRepository.delete(funcionario);
+          System.out.println("Funcionario excluído: " + funcionario.getId());
+  
+          // Em seguida, exclui o Usuario correspondente
+          Optional<Usuario> usuarioOptional = usuarioRepository.findById(funcionario.getId());
+          usuarioOptional.ifPresent(usuario -> {
+              usuarioRepository.delete(usuario);
+              System.out.println("Usuario excluído: " + usuario.getId());
+          });
+  
+          return ResponseEntity.ok(funcionario);
+      } else {
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      }
   }
-
-  static {
-
-    funcionarios.add(new Funcionario(1, "Admin", "admin"));
-
-  }
+  
 
 }

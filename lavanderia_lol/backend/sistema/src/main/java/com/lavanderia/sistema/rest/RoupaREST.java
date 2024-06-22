@@ -31,7 +31,7 @@ public class RoupaREST {
   }
 
   @GetMapping("/roupas/{id}")
-  public ResponseEntity<Roupa> obterRoupaPorId(@PathVariable("id") int id) {
+  public ResponseEntity<Roupa> obterRoupaPorId(@PathVariable int id) {
 
     Roupa r = roupas.stream().filter(
         rou -> rou.getId() == id).findAny().orElse(null);
@@ -63,7 +63,7 @@ public class RoupaREST {
   }
 
   @PutMapping("/roupas/{id}")
-  public ResponseEntity<Roupa> alterarRoupa(@PathVariable("id") int id, @RequestBody Roupa roupa) {
+  public ResponseEntity<Roupa> alterarRoupa(@PathVariable int id, @RequestBody Roupa roupa) {
 
     Roupa r = roupas.stream().filter(
         rou -> rou.getId() == id).findAny().orElse(null);
@@ -78,7 +78,7 @@ public class RoupaREST {
   }
 
   @DeleteMapping("/roupas/{id}")
-  public ResponseEntity<Roupa> removerRoupa(@PathVariable("id") int id) {
+  public ResponseEntity<Roupa> removerRoupa(@PathVariable int id) {
 
     Roupa roupa = roupas.stream().filter(
         rou -> rou.getId() == id).findAny().orElse(null);

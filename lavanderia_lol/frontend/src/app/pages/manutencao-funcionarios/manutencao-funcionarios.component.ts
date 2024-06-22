@@ -52,7 +52,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
       nome: '',
       email: "",
       senha: "",
-      dataNascimento: new Date(),
+      dataNascimento: "",
       habilitada: true,
     };
     this.funcionarios.push(novoFuncionario);
@@ -96,7 +96,7 @@ export class ManutencaoFuncionariosComponent implements OnInit {
 
   salvarEdicao(funcionario: Funcionario): void {
     this.funcionarioService.atualizar(funcionario).subscribe({
-      next: (usuario) => {
+      next: (response) => {
         this.linhaSelecionada = null;
         this.listarTodos();
       },

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Cliente } from '../../shared';
+import { Cliente, Usuario } from '../../shared';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -14,7 +14,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalSenhaGeradaComponent {
   @Input() cliente!: Cliente;
-  
   constructor(public activeModal: NgbActiveModal) {}
 
 }
