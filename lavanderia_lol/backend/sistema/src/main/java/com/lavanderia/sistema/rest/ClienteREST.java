@@ -72,10 +72,12 @@ public class ClienteREST {
       usuario.setEmail(cliente.getEmail());
       usuario.setSenha(gerarSenha());
       usuario.setPerfil("CLIENTE");
+
+      Optional<Cliente> op = clienteRepository.findByCpf(cliente.getCpf());
   
       ResponseEntity<Usuario> responseUsuario = usuarioRest.inserirUsuario(usuario);
   
-      if (responseUsuario.getStatusCode() == HttpStatus.CONFLICT) {
+      if (responseUsuario.getStatusCode() == HttpStatus.CONFLICT || op.isPresent()) {
           return ResponseEntity.status(HttpStatus.CONFLICT).build();
       }
   

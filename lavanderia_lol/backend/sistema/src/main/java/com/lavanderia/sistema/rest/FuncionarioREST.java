@@ -118,20 +118,17 @@ public class FuncionarioREST {
   }
 
   @DeleteMapping("/funcionarios/{id}")
+  @Transactional
   public ResponseEntity<Funcionario> removerUsuario(@PathVariable int id) {
       Optional<Funcionario> op = funcionarioRepository.findById(Integer.valueOf(id));
       if (op.isPresent()) {
           Funcionario funcionario = op.get();
           
-          // Primeiro, exclui o Funcionario
           funcionarioRepository.delete(funcionario);
-          System.out.println("Funcionario excluído: " + funcionario.getId());
   
-          // Em seguida, exclui o Usuario correspondente
           Optional<Usuario> usuarioOptional = usuarioRepository.findById(funcionario.getId());
           usuarioOptional.ifPresent(usuario -> {
-              usuarioRepository.delete(usuario);
-              System.out.println("Usuario excluído: " + usuario.getId());
+            usuarioRepository.delete(usuario);
           });
   
           return ResponseEntity.ok(funcionario);

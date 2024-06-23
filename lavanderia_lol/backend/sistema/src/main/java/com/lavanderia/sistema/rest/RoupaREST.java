@@ -1,9 +1,10 @@
 package com.lavanderia.sistema.rest;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,81 +17,72 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lavanderia.sistema.model.Roupa;
+import com.lavanderia.sistema.repository.RoupaReposiory;
 
 @CrossOrigin
 @RestController
 
 public class RoupaREST {
 
+  @Autowired
+  private RoupaReposiory roupaRepository;
+
   public static List<Roupa> roupas = new ArrayList<>();
 
   @GetMapping("/roupas")
   public ResponseEntity<List<Roupa>> obterTodasRoupas() {
-
+    List <Roupa> roupas = roupaRepository.findAllByOrderByIdAsc();
     return ResponseEntity.ok(roupas);
   }
 
   @GetMapping("/roupas/{id}")
-  public ResponseEntity<Roupa> obterRoupaPorId(@PathVariable int id) {
-
-    Roupa r = roupas.stream().filter(
-        rou -> rou.getId() == id).findAny().orElse(null);
-
-    if (r == null)
+  public ResponseEntity<Roupa> obterRoupaPorId(@PathVariable("id") int id) {
+    Optional<Roupa> op = roupaRepository.findById(Integer.valueOf(id));
+    if (op.isPresent()) {
+      return ResponseEntity.ok(op.get());
+    } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    else
-      return ResponseEntity.ok(r);
+    }
   }
 
   @PostMapping("/roupas")
   public ResponseEntity<Roupa> inserirRoupa(@RequestBody Roupa roupa) {
-
-    Roupa r = roupas.stream().filter(
-        rou -> rou.getPecaRoupa().equals(roupa.getPecaRoupa())).findAny().orElse(null);
-
-    if (r != null) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
-    r = roupas.stream().max(Comparator.comparing(Roupa::getId)).orElse(null);
-
-    if (r == null)
-      roupa.setId(1);
-    else
-      roupa.setId(r.getId() + 1);
+    Optional<Roupa> op = roupaRepository.findByPecaRoupa(roupa.getPecaRoupa());
+    if (op.isPresent()) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(op.get());
+    } else {
+      roupa.setId(-1);
       roupa.setHabilitada(false);
-    roupas.add(roupa);
-    return ResponseEntity.status(HttpStatus.CREATED).body(roupa);
+      roupaRepository.save(roupa);
+      return ResponseEntity.status(HttpStatus.CREATED).body(roupa);
+    }
   }
 
   @PutMapping("/roupas/{id}")
-  public ResponseEntity<Roupa> alterarRoupa(@PathVariable int id, @RequestBody Roupa roupa) {
-
-    Roupa r = roupas.stream().filter(
-        rou -> rou.getId() == id).findAny().orElse(null);
-
-    if (r != null) {
-      r.setPecaRoupa(roupa.getPecaRoupa());
-      r.setPreco(roupa.getPreco());
-      r.setPrazo(roupa.getPrazo());
-      return ResponseEntity.ok(r);
-    } else
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-  }
-
-  @DeleteMapping("/roupas/{id}")
-  public ResponseEntity<Roupa> removerRoupa(@PathVariable int id) {
-
-    Roupa roupa = roupas.stream().filter(
-        rou -> rou.getId() == id).findAny().orElse(null);
-
-    if (roupa != null) {
-      roupas.removeIf(r -> r.getId() == id);
+  public ResponseEntity<Roupa> alterarRoupa(@PathVariable("id") int id, @RequestBody Roupa roupa) {
+    Optional<Roupa> op = roupaRepository.findById(Integer.valueOf(id));
+    if (op.isPresent()) {
+      roupa.setPecaRoupa(roupa.getPecaRoupa());
+      roupa.setPreco(roupa.getPreco());
+      roupa.setPrazo(roupa.getPrazo());
+      roupa.setHabilitada(false);
+      roupaRepository.save(roupa);
       return ResponseEntity.ok(roupa);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
 
+  @DeleteMapping("/roupas/{id}")
+  public ResponseEntity<Roupa> removerRoupa(@PathVariable("id") int id) {
+    Optional<Roupa> op = roupaRepository.findById(Integer.valueOf(id));
+    if (op.isPresent()) {
+      roupaRepository.delete(op.get());
+      return ResponseEntity.ok (op.get());
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+  }  
     static {
 
     roupas.add(new Roupa(1, "Camiseta", 20.00, 2, false));
