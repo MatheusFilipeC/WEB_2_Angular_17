@@ -21,8 +21,6 @@ import com.lavanderia.sistema.model.RoupasPedido;
 import com.lavanderia.sistema.repository.PedidoRepository;
 import com.lavanderia.sistema.repository.RoupasPedidoRepository;
 
-import jakarta.transaction.Transactional;
-
 @CrossOrigin
 @RestController
 
@@ -71,7 +69,6 @@ public class PedidoREST {
   }
 
   @PostMapping("/pedidos")
-  @Transactional
   public ResponseEntity<Pedido> inserirPedido(@RequestBody Pedido pedido) {
 
     if ("Rejeitado".equals(pedido.getStatusPedido())) {
