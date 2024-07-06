@@ -107,16 +107,14 @@ public class PedidoREST {
   }
 
   @PutMapping("/pedidos/{id}")
-  public ResponseEntity<Pedido> alterarPedido(@PathVariable int id, @RequestBody Pedido pedido) {
+  public ResponseEntity<Pedido> alterarPedido(@PathVariable("id") int id, @RequestBody Pedido pedido) {
+    Optional<Pedido> op = pedidoRepository.findById(Integer.valueOf(id));
 
-    Pedido p = pedidos.stream().filter(
-        ped -> ped.getId() == id).findAny().orElse(null);
-
-    if (p != null) {
-      p.setStatusPedido(pedido.getStatusPedido());
-      p.setDataPagamento(pedido.getDataPagamento());
-
-      return ResponseEntity.ok(p);
+    if (op.isPresent()) {
+      pedido.setStatusPedido(pedido.getStatusPedido());
+      pedido.setDataPagamento(pedido.getDataPagamento());
+      pedidoRepository.save(pedido);
+      return ResponseEntity.ok(pedido);
     } else
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
