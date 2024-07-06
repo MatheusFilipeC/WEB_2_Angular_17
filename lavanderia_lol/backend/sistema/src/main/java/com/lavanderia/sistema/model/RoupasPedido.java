@@ -1,70 +1,53 @@
 package com.lavanderia.sistema.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+
+
+@Entity
+@Table (name = "tb_roupas_pedido")
 public class RoupasPedido {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column (name = "id_item")
+  @Getter @Setter
+  private int id;
+
+  @Column (name = "id_pedido")
+  @Getter @Setter
   private int idPedido;
+
+  @Column (name = "id_roupa")
+  @Getter @Setter
   private int idRoupa;
+
+  @Column (name = "peca_roupa")
+  @Getter @Setter
   private String pecaRoupa;
+
+  @Column (name = "valor_peca")
+  @Getter @Setter
   private Double valorPeca;
+
+  @Column (name = "quantidade")
+  @Getter @Setter
   private int quantidade;
+
+  @Column (name = "prazo")
+  @Getter @Setter
   private int prazo;
-
-  public RoupasPedido(int idPedido, int idRoupa, String pecaRoupa, Double valorPeca, int quantidade, int prazo) {
-    this.idPedido = idPedido;
-    this.idRoupa = idRoupa;
-    this.pecaRoupa = pecaRoupa;
-    this.valorPeca = valorPeca;
-    this.quantidade = quantidade;
-    this.prazo = prazo;
-  }
-
-  public int getPedidoId() {
-    return idPedido;
-  }
-
-  public void setPedidoId(int idPedido) {
-    this.idPedido = idPedido;
-  }
-
-  public int getRoupaId() {
-    return idRoupa;
-  }
-
-  public void setRoupaId(int idRoupa) {
-    this.idRoupa = idRoupa;
-  }
-
-  public String getPecaRoupa() {
-    return pecaRoupa;
-  }
-
-  public void setPecaRoupa(String pecaRoupa) {
-    this.pecaRoupa = pecaRoupa;
-  }
-
-  public Double getValorPeca () {
-    return valorPeca;
-  }
-
-  public void setValorPeca(Double valorPeca) {
-    this.valorPeca = valorPeca;
-  }
-
-  public int getQuantidade() {
-    return quantidade;
-  }
-
-  public void setQuantidade (int quantidade) {
-    this.quantidade = quantidade;
-  }
-
-  public int getPrazo() {
-    return prazo;
-  }
-
-  public void setPrazo(int prazo) {
-    this.prazo = prazo;
-  }
 
 }
 

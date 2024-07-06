@@ -2,9 +2,10 @@ package com.lavanderia.sistema.rest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,11 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lavanderia.sistema.model.Pedido;
 import com.lavanderia.sistema.model.RoupasPedido;
+import com.lavanderia.sistema.repository.PedidoRepository;
+import com.lavanderia.sistema.repository.RoupasPedidoRepository;
+
+import jakarta.transaction.Transactional;
 
 @CrossOrigin
 @RestController
 
 public class PedidoREST {
+
+  @Autowired
+  private PedidoRepository pedidoRepository;
+
+  @Autowired
+  private RoupasPedidoRepository roupasPedidoRepository;
 
   public static List<Pedido> pedidos = new ArrayList<>();
 
@@ -45,31 +56,23 @@ public class PedidoREST {
 
   @GetMapping("/pedidos")
   public ResponseEntity<List<Pedido>> obterTodosPedidos() {
-
+    List<Pedido> pedidos = pedidoRepository.findAll();
     return ResponseEntity.ok(pedidos);
   }
 
   @GetMapping("/pedidos/{id}")
-  public ResponseEntity<Pedido> obterPedidoPorId(@PathVariable int id) {
-
-    Pedido p = pedidos.stream().filter(
-        pedi -> pedi.getId() == id).findAny().orElse(null);
-
-    if (p == null)
+  public ResponseEntity<Pedido> obterPedidoPorId(@PathVariable("id") int id) {
+    Optional<Pedido> op = pedidoRepository.findById(Integer.valueOf(id));
+    if (op.isPresent()) {
+      return ResponseEntity.ok(op.get());
+    } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    else
-      return ResponseEntity.ok(p);
+    }
   }
 
   @PostMapping("/pedidos")
+  @Transactional
   public ResponseEntity<Pedido> inserirPedido(@RequestBody Pedido pedido) {
-
-    Pedido p = pedidos.stream().max(Comparator.comparing(Pedido::getId)).orElse(null);
-
-    if (p == null)
-      pedido.setId(1);
-    else
-      pedido.setId(p.getId() + 1);
 
     if ("Rejeitado".equals(pedido.getStatusPedido())) {
       pedido.setDataPedido(LocalDateTime.now());
@@ -94,13 +97,15 @@ public class PedidoREST {
       pedido.setStatusPedido("Em Aberto");
     }
 
+    pedidoRepository.save(pedido);
+
     if (pedido.getRoupas() != null) {
       for (RoupasPedido roupasPedido : pedido.getRoupas()) {
-        roupasPedido.setPedidoId(pedido.getId());
+        roupasPedido.setIdPedido(pedido.getId());
+        roupasPedidoRepository.save(roupasPedido);
       }
     }
 
-    pedidos.add(pedido);
     return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
   }
 
