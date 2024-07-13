@@ -125,22 +125,6 @@ export const routes: Routes = [
     data: {
     role: 'FUNC'
     }
-  },
-  {
-    path: 'usuarios/novo',
-    component: InserirEditarUsuarioComponent,
-    canActivate: [authGuard],
-    data: {
-    role: 'FUNC'
-    }
-  },
-    {
-    path: 'usuarios/editar/:id',
-    component: InserirEditarUsuarioComponent,
-    canActivate: [authGuard],
-    data: {
-    role: 'FUNC'
-    }
   }
   
 ];

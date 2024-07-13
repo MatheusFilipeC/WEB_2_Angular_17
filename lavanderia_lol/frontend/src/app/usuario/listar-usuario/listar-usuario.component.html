@@ -11,12 +11,7 @@
       <th>Nome</th>
       <th>Login</th>
       <th>Perfil</th>
-      <th class="text-center">
-        <a [routerLink]="['/usuarios/novo']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-          Novo
-        </a>
-      </th>
+      <th class="text-center">Detalhes do Usuário</th>
     </tr>
 
     <tr *ngFor="let usuario of usuarios">
@@ -26,17 +21,8 @@
       <td class="text-center" style="width: 300px">
         <button type="button" class="btn btn-xs btn-info" (click)="abrirModal(usuario)">
           <i class="fa fa-eye" aria-hidden="true"></i>
-          Ver
+          Detalhes
         </button>
-        <a [routerLink]="['/usuarios/editar', usuario.id]" href="#" title="Editar" alt="Editar"
-          class="btn btn-xs btn-warning">
-          <i class="fa fa-edit" aria-hidden="true"></i>
-          Editar
-        </a>
-        <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, usuario)">
-          <i class="fa fa-times" aria-hidden="true"></i>
-          Remover
-        </a>
       </td>
     </tr>
   </tbody>

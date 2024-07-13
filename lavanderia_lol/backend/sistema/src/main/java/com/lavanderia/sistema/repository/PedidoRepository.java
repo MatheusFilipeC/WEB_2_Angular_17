@@ -1,16 +1,20 @@
 package com.lavanderia.sistema.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
 import com.lavanderia.sistema.model.Pedido;
-
-import java.util.Optional;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
-    @Query("SELECT p FROM Pedido p LEFT JOIN FETCH p.cliente LEFT JOIN FETCH p.roupas WHERE p.id = :id")
-    Optional<Pedido> findByIdWithDetails(@Param("id") int id);
-}
+    List<Pedido> findAllByOrderById();
 
+    @Query("SELECT p.cliente.id AS id_cliente, COUNT(p.id) AS quantidade_pedidos, SUM(p.valor) AS valor_total_gasto " +
+           "FROM Pedido p " +
+           "WHERE p.statusPedido NOT IN ('Rejeitado', 'Cancelado') " +
+           "GROUP BY p.cliente.id " +
+           "ORDER BY COUNT(p.id) DESC")
+
+    List<Object> findTopClientsByOrders();
+
+}

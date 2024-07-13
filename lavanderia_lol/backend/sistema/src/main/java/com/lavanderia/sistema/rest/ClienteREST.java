@@ -54,6 +54,7 @@ public class ClienteREST {
   }
 
   @GetMapping("/clientes/{id}")
+  
   public ResponseEntity<Cliente> obterClientePorId(@PathVariable("id") int id) {
     Optional<Cliente> op = clienteRepository.findById(Integer.valueOf(id));
     if (op.isPresent()) {

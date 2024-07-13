@@ -54,7 +54,7 @@ public class PedidoREST {
 
   @GetMapping("/pedidos")
   public ResponseEntity<List<Pedido>> obterTodosPedidos() {
-    List<Pedido> pedidos = pedidoRepository.findAll();
+    List<Pedido> pedidos = pedidoRepository.findAllByOrderById();
     return ResponseEntity.ok(pedidos);
   }
 
