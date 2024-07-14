@@ -9,12 +9,13 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
     List<Pedido> findAllByOrderById();
 
-    @Query("SELECT p.cliente.id AS id_cliente, COUNT(p.id) AS quantidade_pedidos, SUM(p.valor) AS valor_total_gasto " +
+    @Query("SELECT c.id AS id_cliente, c.nome AS nome_cliente, " +
+           "COUNT(p.id) AS quantidade_pedidos, SUM(p.valor) AS valor_total_gasto " +
            "FROM Pedido p " +
+           "JOIN p.cliente c " +
            "WHERE p.statusPedido NOT IN ('Rejeitado', 'Cancelado') " +
-           "GROUP BY p.cliente.id " +
+           "GROUP BY c.id, c.nome " +
            "ORDER BY COUNT(p.id) DESC")
-
-    List<Object> findTopClientsByOrders();
+    List<Object[]> findTopClientsByOrders();
 
 }

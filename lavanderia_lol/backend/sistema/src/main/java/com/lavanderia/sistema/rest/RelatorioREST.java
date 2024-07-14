@@ -29,8 +29,8 @@ public class RelatorioREST {
   }
 
   @GetMapping("/relatorio/fieis")
-  public ResponseEntity<List<Object>> obterClientesFieis() {
-    List<Object> relatorios = pedidoRepository.findTopClientsByOrders();
+  public ResponseEntity<List<Object[]>> obterClientesFieis() {
+    List<Object[]> relatorios = pedidoRepository.findTopClientsByOrders();
     return ResponseEntity.ok(relatorios);
   }
 
