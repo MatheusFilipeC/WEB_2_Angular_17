@@ -5,6 +5,7 @@ import jsPDF from 'jspdf';
 import { Cliente } from '../../shared';
 import { ClienteService } from '../../services/cliente.service';
 import { RelatorioService } from '../../services/relatorio.service';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-relatorio-funcionario',
@@ -23,16 +24,38 @@ export class RelatorioFuncionarioComponent {
   dataInicial: string = "";
   dataFinal: string = "";
   clientesFieis: any[] = [];
+  relatorio: any;
 
   constructor(private clienteService: ClienteService,
               private relatorioService: RelatorioService
-              ) { }
+  ) { }
 
   gerarRelatorioReceitas() {
+    this.relatorioService.obterReceitas(this.dataInicial, this.dataFinal).subscribe(
+      data => {
+        this.relatorio = data;
+        this.gerarPDF(data);
+      },
+      error => {
+        console.error('Erro ao obter relatório de receitas:', error);
+      }
+    );
+  }
+
+  gerarPDF(data: any[]) {
     const doc = new jsPDF();
-    doc.text('Relatório de Receitas', 10, 10);
-    doc.text(`Período: ${this.dataInicial} - ${this.dataFinal}`, 10, 20);
-    doc.save('relatorio_receitas.pdf');
+
+    const colunas = ['Data', 'Valor'];
+    const linhas = data.map(item => [item[0], item[1]]);
+
+    doc.text('Relatório de Receitas', 14, 16);
+    (doc as any).autoTable({
+      head: [colunas],
+      body: linhas,
+      startY: 20,
+    });
+
+    doc.save('relatorio-receitas.pdf');
   }
 
   gerarRelatorioClientes() {
@@ -54,15 +77,17 @@ export class RelatorioFuncionarioComponent {
 
   gerarPDFClientes() {
     const doc = new jsPDF();
-    doc.text('Lista de Clientes:', 10, 20);
-    let startY = 40;
-    this.clientes.forEach((cliente, index) => {
-      const texto = `
-      nome: ${cliente.nome}, email: ${cliente.email}`;
-      doc.text(texto, 10, startY);
-      startY += 10;
+    doc.text('Lista de Clientes', 14, 16);
+  
+    const colunas = ['Nome', 'Email'];
+    const linhas = this.clientes.map(cliente => [cliente.nome, cliente.email]);
+  
+    (doc as any).autoTable({
+      head: [colunas],
+      body: linhas,
+      startY: 20,
     });
-
+  
     doc.save('relatorio_clientes.pdf');
   }
 
@@ -85,16 +110,22 @@ export class RelatorioFuncionarioComponent {
 
   gerarPDFClientesFieis() {
     const doc = new jsPDF();
-    doc.text('Relatório de Clientes Fieis', 10, 10);
-    
-    let startY = 30;
-    this.clientesFieis.forEach((cliente, index) => {
-      const texto = `${index + 1}º Cliente com mais pedidos: ${cliente[1]}. Número total de pedidos: ${cliente[2]}. 
-      Valor total gasto pelo cliente: R$ ${cliente[3].toFixed(2)}`;
-      doc.text(texto, 10, startY);
-      startY += 20; 
+    doc.text('Relatório de Clientes Fieis', 14, 16);
+  
+    const colunas = ['Posição', 'Nome', 'Número de Pedidos', 'Valor Total Gasto'];
+    const linhas = this.clientesFieis.map((cliente, index) => [
+      `${index + 1}º`,
+      cliente[1],
+      cliente[2],
+      `R$ ${cliente[3].toFixed(2)}`
+    ]);
+  
+    (doc as any).autoTable({
+      head: [colunas],
+      body: linhas,
+      startY: 20,
     });
-
+  
     doc.save('relatorio_clientes_fieis.pdf');
   }
 

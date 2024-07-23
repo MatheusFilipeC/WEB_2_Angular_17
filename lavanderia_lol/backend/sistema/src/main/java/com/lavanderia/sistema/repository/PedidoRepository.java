@@ -1,8 +1,11 @@
 package com.lavanderia.sistema.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import com.lavanderia.sistema.model.Pedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
@@ -17,5 +20,14 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
            "GROUP BY c.id, c.nome " +
            "ORDER BY COUNT(p.id) DESC")
     List<Object[]> findTopClientsByOrders();
+
+        @Query("SELECT DATE(p.dataPedido) AS dia, SUM(p.valor) AS receita_diaria " +
+           "FROM Pedido p " +
+           "WHERE (:dataInicial IS NULL OR p.dataPedido >= :dataInicial) " +
+           "AND (:dataFinal IS NULL OR p.dataPedido <= :dataFinal) " +
+           "GROUP BY DATE(p.dataPedido) " +
+           "ORDER BY DATE(p.dataPedido)")
+    List<Object[]> findReceitaByPeriodo(@Param("dataInicial") LocalDateTime dataInicial, 
+                                        @Param("dataFinal") LocalDateTime dataFinal);
 
 }

@@ -6,7 +6,7 @@ export class Cliente {
     public cpf?: string,
     public telefone?: string,
     public endereco?: string,
-    public numero?: number,
+    public numero?: string,
     public complemento?: number,
     public bairro?: string,
     public cep?: string,

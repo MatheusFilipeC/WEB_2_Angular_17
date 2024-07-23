@@ -1,4 +1,6 @@
-CREATE DATABASE lavanderia_lol_teste;
+CREATE DATABASE lavanderia_lol;
+
+\connect lavanderia_lol;
 
 /***** TABELA USUÁRIOS *****/
 create table tb_usuarios (
@@ -20,7 +22,7 @@ create table tb_clientes (
 id_cliente integer primary key, 
 nome_cliente varchar(100) not null,
 email_cliente varchar(30) not null unique,
-senha_cliente varchar(30)
+senha_cliente varchar(30),
 cpf varchar(14) not null unique,
 telefone varchar(12),
 endereco varchar(50),
@@ -32,6 +34,9 @@ cidade varchar (30),
 uf varchar (2),
 FOREIGN KEY (id_cliente) REFERENCES tb_usuarios(id_usu)
 );
+
+INSERT INTO tb_clientes (id_cliente, nome_cliente, email_cliente, senha_cliente, cpf)
+VALUES (2, 'Cliente', 'cliente', 'cliente', '000000000');
 
 /*****************/
 
@@ -46,6 +51,9 @@ habilitada boolean,
 FOREIGN KEY (id_func) REFERENCES tb_usuarios(id_usu)
 );
 
+INSERT INTO tb_funcionarios (id_func, nome_func, email_func, senha_func)
+VALUES (1, 'Admin', 'admin', 'admin');
+
 /*****************/
 
 /***** TABELA ROUPAS *****/
@@ -56,6 +64,17 @@ preco numeric (10, 2) not null,
 prazo integer not null,
 habilitada boolean
 );
+
+INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
+VALUES ('Camiseta', 10.0, 2, false);
+INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
+VALUES ('Calça Jeans', 15.0, 3, false);
+INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
+VALUES ('Camisa', 20.0, 4, false);
+INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
+VALUES ('Cueca', 5.0, 1, false);
+INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
+VALUES ('Meia', 5.0, 1, false);
 
 /*****************/
 
@@ -73,3 +92,20 @@ status varchar (50),
 id_cli integer,
 FOREIGN KEY (id_cli) REFERENCES tb_clientes(id_cliente)
 );
+
+/*****************/
+
+/***** TABELA ROUPAS_PEDIDO *****/
+create table tb_roupas_pedido (
+id_item integer primary key generated always as identity,
+id_pedido integer,
+id_roupa integer,
+peca_roupa character varying(50),
+valor_peca numeric(10,2),
+quantidade integer,
+prazo integer,
+FOREIGN KEY (id_pedido) REFERENCES tb_pedidos (id_pedido),
+FOREIGN KEY (id_roupa) REFERENCES tb_roupas (id_roupa)
+);
+
+

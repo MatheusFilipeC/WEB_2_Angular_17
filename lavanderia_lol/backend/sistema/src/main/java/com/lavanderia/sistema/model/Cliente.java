@@ -45,7 +45,7 @@ public class Cliente {
 
   @Column(name = "numero")
   @Setter @Getter
-  private int numero;
+  private String numero;
 
   @Column(name = "complemento")
   @Setter @Getter
