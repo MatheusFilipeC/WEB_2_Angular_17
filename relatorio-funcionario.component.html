@@ -1,0 +1,19 @@
+  <div>
+    <h2>Relatório de Receitas</h2>
+    <label>Data Inicial: <input type="date" [(ngModel)]="dataInicial"></label>
+    <label>Data Final: <input type="date" [(ngModel)]="dataFinal"></label>
+    <button (click)="gerarRelatorioReceitas()">Gerar Relatório em PDF</button>
+  </div>
+
+<div>
+  <h2>Relatório de Clientes</h2>
+  <button (click)="gerarRelatorioClientes()">Gerar Relatório em PDF</button>
+</div>
+
+<div>
+  <h2>Relatório de Clientes Fiéis</h2>
+  <button (click)="gerarRelatorioClientesFieis()">Gerar Relatório em PDF</button>
+</div>
+
+
+
