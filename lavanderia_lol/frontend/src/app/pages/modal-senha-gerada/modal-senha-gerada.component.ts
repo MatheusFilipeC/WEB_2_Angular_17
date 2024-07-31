@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Cliente, Usuario } from '../../shared';
+import { Cliente } from '../../shared';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

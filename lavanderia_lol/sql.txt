@@ -51,8 +51,8 @@ habilitada boolean,
 FOREIGN KEY (id_func) REFERENCES tb_usuarios(id_usu)
 );
 
-INSERT INTO tb_funcionarios (id_func, nome_func, email_func, senha_func)
-VALUES (1, 'Admin', 'admin', 'admin');
+INSERT INTO tb_funcionarios (id_func, nome_func, email_func, senha_func, habilitada)
+VALUES (1, 'Admin', 'admin', 'admin', false);
 
 /*****************/
 
