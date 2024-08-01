@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="container mt-5">
+      <h2>Consulta de Pedido</h2>
+      <div class="form-group">
+        <label for="pedidoNumber">Número do Pedido:</label>
+        <input type="text" class="form-control" id="pedidoNumber" placeholder="Digite o número do pedido"
+          [(ngModel)]="id">
+        <button class="btn btn-primary mt-2" (click)="id !== null ? buscarPedido(id) : null">Buscar</button>
+      </div>
+
+      <div id="pedidoDetalhes" *ngIf="pedidoEncontrado">
+        <h3>Dados do Pedido nº {{ pedido?.id }}</h3>
+        <div class="card">
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Peça de roupa</th>
+                  <th>Valor por peça (R$)</th>
+                  <th>Quantidade solicitada</th>
+                  <th>Valor total dessa peça (R$)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let roupa of roupas">
+                  <td> {{ roupa.pecaRoupa }}</td>
+                  <td> {{ roupa.valorPeca | currency:'BRL':'symbol':'1.2-2' }} </td>
+                  <td> {{ roupa.quantidade }}</td>
+                  <td> {{ (roupa.valorPeca) * (roupa.quantidade ?? 0)| currency:'BRL':'symbol':'1.2-2' }} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-body">
+            <p><strong>Preço Total:</strong> {{ pedido?.valor | currency:'BRL':'symbol':'1.2-2' }} </p>
+            <p><strong>Prazo do Serviço:</strong> {{ pedido?.prazo }} dias </p>
+            <p><strong>Estimativa de Entrega:</strong> {{ formatarData(pedido?.dataEstimativa) }}</p>
+            <p><strong>Situação:</strong> {{ pedido?.statusPedido }} </p>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!pedidoEncontrado">
+        <h4>{{ mensagem }}</h4>
+      </div>
+
+    </div>
+  </div>
+</div>

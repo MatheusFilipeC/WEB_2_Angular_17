@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="container mt-5">
+
+      <h2>Página Inicial</h2>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Número do Pedido</th>
+            <th>Nome do Cliente</th>
+            <th>Status do Pedido</th>
+            <th>Data do Pedido</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody *ngFor="let pedido of ordenarPedidos()">
+          <tr *ngIf="pedido.statusPedido === 'Em Aberto'">
+            <td> 00{{pedido.id}} </td>
+            <td> {{pedido.cliente.nome}} </td>
+            <td [ngClass]="getStatusClass(pedido.statusPedido)"> {{pedido.statusPedido}} </td>
+            <td *ngIf="pedido.dataPedido !== undefined"> {{ formatarData(pedido.dataPedido) }}</td>
+            <td>  
+              <button *ngIf="mostrarBotao(pedido.statusPedido)"
+              class="btn btn-primary"
+              (click)="abrirModalRecolhimento(pedido)">
+              Confirmar Recolhimento
+          </button>
+        </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
