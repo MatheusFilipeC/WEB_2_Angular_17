@@ -24,7 +24,7 @@ nome_cliente varchar(100) not null,
 email_cliente varchar(30) not null unique,
 senha_cliente varchar(30),
 cpf varchar(14) not null unique,
-telefone varchar(12),
+telefone varchar(20),
 endereco varchar(50),
 numero varchar(10),
 complemento varchar(20),
@@ -66,15 +66,14 @@ habilitada boolean
 );
 
 INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
-VALUES ('Camiseta', 10.0, 2, false);
-INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
-VALUES ('Calça Jeans', 15.0, 3, false);
+VALUES ('Calça', 15.0, 3, false);
 INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
 VALUES ('Camisa', 20.0, 4, false);
-INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
-VALUES ('Cueca', 5.0, 1, false);
+VALUES ('Camiseta', 10.0, 2, false);
 INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
 VALUES ('Meia', 5.0, 1, false);
+INSERT INTO tb_roupas (peca_roupa, preco, prazo, habilitada)
+VALUES ('Cueca', 5.0, 1, false);
 
 /*****************/
 
