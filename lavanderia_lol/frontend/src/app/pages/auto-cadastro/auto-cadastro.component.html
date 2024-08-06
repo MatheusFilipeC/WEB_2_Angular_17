@@ -34,7 +34,7 @@
 
           <div class="form-group">
             <input mask="(00)0 0000-0000" class="form-control" id="telefone" name="telefone" placeholder="Celular"
-              [(ngModel)]="cliente.telefone" #telefone="ngModel" maxlength="15" minlength="13" required>
+              [(ngModel)]="cliente.telefone" #telefone="ngModel" maxlength="15" minlength="11" required>
             <div *ngIf="telefone.errors && (telefone.dirty || telefone.touched)" class="alert alert-danger">
               <div [hidden]="!telefone.errors['required']"> Digite o seu número do celular. </div>
               <div [hidden]="!telefone.errors['minlength']"> Digite o número completo </div>
