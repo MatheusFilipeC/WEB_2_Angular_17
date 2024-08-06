@@ -31,22 +31,24 @@ export class RelatorioFuncionarioComponent {
   ) { }
 
   gerarRelatorioReceitas() {
-    this.relatorioService.obterReceitas(this.dataInicial, this.dataFinal).subscribe(
-      data => {
+    this.relatorioService.obterReceitas().subscribe({
+      next: (data) => {
         this.relatorio = data;
-        this.gerarPDF(data);
+        this.gerarPDFReceitas(data);
       },
-      error => {
+      error: (error) => {
         console.error('Erro ao obter relatório de receitas:', error);
       }
-    );
+    });
   }
 
-  gerarPDF(data: any[]) {
+  gerarPDFReceitas(data: any[]) {
     const doc = new jsPDF();
-
     const colunas = ['Data', 'Valor'];
-    const linhas = data.map(item => [item[0], item[1]]);
+    const linhas = data.map(item => [
+      item[0], 
+      this.formatarValor(item[1])
+    ]);
 
     doc.text('Relatório de Receitas', 14, 16);
     (doc as any).autoTable({
@@ -127,6 +129,10 @@ export class RelatorioFuncionarioComponent {
     });
   
     doc.save('relatorio_clientes_fieis.pdf');
+  }
+
+  formatarValor(valor: number): string {
+    return `R$ ${valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
 
 }

@@ -1,14 +1,6 @@
 <div>
   <h2>Relatório de Receitas</h2>
-  <label>Data Inicial: <input type="date" [(ngModel)]="dataInicial"></label>
-  <label>Data Final: <input type="date" [(ngModel)]="dataFinal"></label>
   <button (click)="gerarRelatorioReceitas()">Gerar Relatório em PDF</button>
-  <div *ngIf="relatorio">
-    <h3>Receita Diária</h3>
-    <ul>
-      <li *ngFor="let item of relatorio">{{ item[0] }}: {{ item[1] | currency }}</li>
-    </ul>
-  </div>
 </div>
 
 <div>

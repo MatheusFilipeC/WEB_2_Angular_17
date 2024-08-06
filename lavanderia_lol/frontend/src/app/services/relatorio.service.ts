@@ -15,15 +15,7 @@ export class RelatorioService {
     return this.http.get<any[]>(`${this.baseUrl}/relatorio/fieis`);
   }
 
-  obterReceitas(dataInicial?: string, dataFinal?: string): Observable<any> {
-    let params = new HttpParams();
-    if (dataInicial) {
-      params = params.set('dataInicial', dataInicial);
-    }
-    if (dataFinal) {
-      params = params.set('dataFinal', dataFinal);
-    }
-
-    return this.http.get<any>(`${this.baseUrl}/relatorio/receitas`, { params });
+  obterReceitas(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/relatorio/receitas`);
   }
 }
